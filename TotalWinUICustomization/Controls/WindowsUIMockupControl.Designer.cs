@@ -64,13 +64,12 @@ namespace TotalWinUICustomization
             window_MessageBox = new Panel();
             InfoWindowAndText = new Label();
             hyperlinkText = new LinkLabel();
-            buttonX_MessageBox = new Label();
             button_MessageBox = new Label();
             font_MessageBox = new Label();
             titleBar_MessageBox = new Panel();
             font_MessageBoxTitleBar = new Label();
+            buttonX_MessageBox = new Label();
             panelActiveWindow = new Panel();
-            activeWindowBorder = new Border();
             menu = new Panel();
             font_menuNormal = new Label();
             font_menuDisabled = new Label();
@@ -107,7 +106,6 @@ namespace TotalWinUICustomization
             window_MessageBox.BorderStyle = BorderStyle.Fixed3D;
             window_MessageBox.Controls.Add(InfoWindowAndText);
             window_MessageBox.Controls.Add(hyperlinkText);
-            window_MessageBox.Controls.Add(buttonX_MessageBox);
             window_MessageBox.Controls.Add(button_MessageBox);
             window_MessageBox.Controls.Add(font_MessageBox);
             window_MessageBox.Controls.Add(titleBar_MessageBox);
@@ -131,10 +129,12 @@ namespace TotalWinUICustomization
             InfoWindowAndText.Size = new Size(58, 24);
             InfoWindowAndText.TabIndex = 11;
             InfoWindowAndText.Text = "Tooltip";
+            InfoWindowAndText.Click += InfoWindowAndText_Click;
             // 
             // hyperlinkText
             // 
             hyperlinkText.AutoSize = true;
+            hyperlinkText.BackColor = Color.Transparent;
             hyperlinkText.LinkColor = SystemColors.HotTrack;
             hyperlinkText.Location = new Point(6, 65);
             hyperlinkText.Name = "hyperlinkText";
@@ -142,17 +142,7 @@ namespace TotalWinUICustomization
             hyperlinkText.TabIndex = 10;
             hyperlinkText.TabStop = true;
             hyperlinkText.Text = "Hyperlink";
-            // 
-            // buttonX_MessageBox
-            // 
-            buttonX_MessageBox.BorderStyle = BorderStyle.FixedSingle;
-            buttonX_MessageBox.FlatStyle = FlatStyle.Flat;
-            buttonX_MessageBox.Location = new Point(355, 3);
-            buttonX_MessageBox.Name = "buttonX_MessageBox";
-            buttonX_MessageBox.Size = new Size(29, 29);
-            buttonX_MessageBox.TabIndex = 9;
-            buttonX_MessageBox.Text = "✕";
-            buttonX_MessageBox.TextAlign = ContentAlignment.MiddleCenter;
+            hyperlinkText.Click += font_hyperlinkText_Click;
             // 
             // button_MessageBox
             // 
@@ -184,11 +174,12 @@ namespace TotalWinUICustomization
             titleBar_MessageBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             titleBar_MessageBox.BackColor = SystemColors.ActiveCaption;
             titleBar_MessageBox.Controls.Add(font_MessageBoxTitleBar);
+            titleBar_MessageBox.Controls.Add(buttonX_MessageBox);
             titleBar_MessageBox.ForeColor = SystemColors.ControlText;
             titleBar_MessageBox.Location = new Point(2, 2);
             titleBar_MessageBox.Margin = new Padding(0);
             titleBar_MessageBox.Name = "titleBar_MessageBox";
-            titleBar_MessageBox.Size = new Size(384, 31);
+            titleBar_MessageBox.Size = new Size(382, 33);
             titleBar_MessageBox.TabIndex = 7;
             titleBar_MessageBox.Click += titleBar_MessageBox_Click;
             // 
@@ -205,47 +196,52 @@ namespace TotalWinUICustomization
             font_MessageBoxTitleBar.Text = "Message Box";
             font_MessageBoxTitleBar.Click += font_MessageBoxTitleBar_Click;
             // 
+            // buttonX_MessageBox
+            // 
+            buttonX_MessageBox.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            buttonX_MessageBox.BackColor = SystemColors.Control;
+            buttonX_MessageBox.BorderStyle = BorderStyle.FixedSingle;
+            buttonX_MessageBox.FlatStyle = FlatStyle.Flat;
+            buttonX_MessageBox.Location = new Point(350, 2);
+            buttonX_MessageBox.Name = "buttonX_MessageBox";
+            buttonX_MessageBox.Size = new Size(29, 29);
+            buttonX_MessageBox.TabIndex = 9;
+            buttonX_MessageBox.Text = "✕";
+            buttonX_MessageBox.TextAlign = ContentAlignment.MiddleCenter;
+            buttonX_MessageBox.Click += controlBox_MessageBox_Click;
+            // 
             // panelActiveWindow
             // 
-            panelActiveWindow.BackColor = Color.Lime;
+            panelActiveWindow.BackColor = SystemColors.Control;
             panelActiveWindow.BorderStyle = BorderStyle.Fixed3D;
-            panelActiveWindow.Controls.Add(activeWindowBorder);
             panelActiveWindow.Controls.Add(menu);
             panelActiveWindow.Controls.Add(textbox_ActiveWindow);
             panelActiveWindow.Controls.Add(titleBar_ActiveWindow);
-            panelActiveWindow.Location = new Point(31, 63);
+            panelActiveWindow.Location = new Point(29, 61);
             panelActiveWindow.Margin = new Padding(0);
             panelActiveWindow.Name = "panelActiveWindow";
-            panelActiveWindow.Size = new Size(480, 200);
+            panelActiveWindow.Size = new Size(512, 200);
             panelActiveWindow.TabIndex = 10;
-            // 
-            // activeWindowBorder
-            // 
-            activeWindowBorder.BackColor = Color.Transparent;
-            activeWindowBorder.ForeColor = Color.Red;
-            activeWindowBorder.Location = new Point(6, 6);
-            activeWindowBorder.Name = "activeWindowBorder";
-            activeWindowBorder.Size = new Size(467, 185);
-            activeWindowBorder.TabIndex = 12;
-            activeWindowBorder.Text = "border1";
             // 
             // menu
             // 
+            menu.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             menu.BackColor = SystemColors.Menu;
             menu.Controls.Add(font_menuNormal);
             menu.Controls.Add(font_menuDisabled);
             menu.Controls.Add(font_menuSelected);
-            menu.Location = new Point(6, 37);
+            menu.Location = new Point(2, 35);
             menu.Margin = new Padding(0);
             menu.Name = "menu";
-            menu.Size = new Size(463, 28);
+            menu.Size = new Size(505, 29);
             menu.TabIndex = 11;
+            menu.Click += menu_Click;
             // 
             // font_menuNormal
             // 
             font_menuNormal.AutoSize = true;
             font_menuNormal.ForeColor = SystemColors.MenuText;
-            font_menuNormal.Location = new Point(5, 3);
+            font_menuNormal.Location = new Point(5, 5);
             font_menuNormal.Name = "font_menuNormal";
             font_menuNormal.Size = new Size(59, 20);
             font_menuNormal.TabIndex = 1;
@@ -256,7 +252,7 @@ namespace TotalWinUICustomization
             // 
             font_menuDisabled.AutoSize = true;
             font_menuDisabled.ForeColor = SystemColors.GrayText;
-            font_menuDisabled.Location = new Point(70, 3);
+            font_menuDisabled.Location = new Point(70, 5);
             font_menuDisabled.Name = "font_menuDisabled";
             font_menuDisabled.Size = new Size(68, 20);
             font_menuDisabled.TabIndex = 2;
@@ -268,7 +264,7 @@ namespace TotalWinUICustomization
             font_menuSelected.AutoSize = true;
             font_menuSelected.BackColor = SystemColors.MenuHighlight;
             font_menuSelected.ForeColor = SystemColors.HighlightText;
-            font_menuSelected.Location = new Point(144, 3);
+            font_menuSelected.Location = new Point(144, 5);
             font_menuSelected.Name = "font_menuSelected";
             font_menuSelected.Size = new Size(66, 20);
             font_menuSelected.TabIndex = 3;
@@ -277,23 +273,24 @@ namespace TotalWinUICustomization
             // 
             // textbox_ActiveWindow
             // 
+            textbox_ActiveWindow.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             textbox_ActiveWindow.BackColor = SystemColors.Window;
             textbox_ActiveWindow.BorderStyle = BorderStyle.Fixed3D;
             textbox_ActiveWindow.Controls.Add(font_ActiveWindow);
             textbox_ActiveWindow.Controls.Add(selectedText);
             textbox_ActiveWindow.Controls.Add(ScrollBarActiveWindow);
-            textbox_ActiveWindow.Location = new Point(6, 64);
+            textbox_ActiveWindow.Location = new Point(2, 65);
             textbox_ActiveWindow.Name = "textbox_ActiveWindow";
-            textbox_ActiveWindow.Size = new Size(463, 126);
+            textbox_ActiveWindow.Size = new Size(505, 130);
             textbox_ActiveWindow.TabIndex = 10;
             textbox_ActiveWindow.Click += textbox_ActiveWindow_Click;
             // 
             // font_ActiveWindow
             // 
             font_ActiveWindow.AutoSize = true;
-            font_ActiveWindow.BackColor = SystemColors.Window;
+            font_ActiveWindow.BackColor = Color.Transparent;
             font_ActiveWindow.Font = new Font("Segoe UI", 9F);
-            font_ActiveWindow.Location = new Point(3, 3);
+            font_ActiveWindow.Location = new Point(1, 1);
             font_ActiveWindow.Name = "font_ActiveWindow";
             font_ActiveWindow.Size = new Size(95, 20);
             font_ActiveWindow.TabIndex = 9;
@@ -306,22 +303,24 @@ namespace TotalWinUICustomization
             selectedText.AutoSize = true;
             selectedText.BackColor = SystemColors.Highlight;
             selectedText.ForeColor = SystemColors.HighlightText;
-            selectedText.Location = new Point(3, 29);
+            selectedText.Location = new Point(1, 27);
             selectedText.Margin = new Padding(3);
             selectedText.Name = "selectedText";
             selectedText.Size = new Size(97, 20);
             selectedText.TabIndex = 1;
             selectedText.Text = "Selected Text";
+            selectedText.Click += selectedText_Click;
             // 
             // ScrollBarActiveWindow
             // 
-            ScrollBarActiveWindow.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+            ScrollBarActiveWindow.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             ScrollBarActiveWindow.LargeChange = 5;
-            ScrollBarActiveWindow.Location = new Point(432, 0);
+            ScrollBarActiveWindow.Location = new Point(474, 1);
             ScrollBarActiveWindow.Maximum = 20;
             ScrollBarActiveWindow.Name = "ScrollBarActiveWindow";
-            ScrollBarActiveWindow.Size = new Size(26, 122);
+            ScrollBarActiveWindow.Size = new Size(26, 124);
             ScrollBarActiveWindow.TabIndex = 0;
+            ScrollBarActiveWindow.ValueChanged += ScrollBar_Clicked;
             // 
             // titleBar_ActiveWindow
             // 
@@ -331,13 +330,12 @@ namespace TotalWinUICustomization
             titleBar_ActiveWindow.Controls.Add(buttonMaximize_ActiveWindow);
             titleBar_ActiveWindow.Controls.Add(font_ActiveWindowTitleBar);
             titleBar_ActiveWindow.Controls.Add(buttonX_ActiveWindow);
-            titleBar_ActiveWindow.Location = new Point(6, 6);
+            titleBar_ActiveWindow.Location = new Point(2, 2);
             titleBar_ActiveWindow.Margin = new Padding(0);
             titleBar_ActiveWindow.Name = "titleBar_ActiveWindow";
-            titleBar_ActiveWindow.Size = new Size(463, 31);
+            titleBar_ActiveWindow.Size = new Size(505, 33);
             titleBar_ActiveWindow.TabIndex = 8;
             titleBar_ActiveWindow.Click += titleBar_ActiveWindow_Click;
-            titleBar_ActiveWindow.Paint += titleBar_ActiveWindow_Paint;
             // 
             // buttonMinimize_ActiveWindow
             // 
@@ -346,9 +344,9 @@ namespace TotalWinUICustomization
             buttonMinimize_ActiveWindow.BorderStyle = BorderStyle.FixedSingle;
             buttonMinimize_ActiveWindow.FlatStyle = FlatStyle.Flat;
             buttonMinimize_ActiveWindow.Font = new Font("Webdings", 9F, FontStyle.Regular, GraphicsUnit.Point, 2);
-            buttonMinimize_ActiveWindow.Location = new Point(369, 2);
+            buttonMinimize_ActiveWindow.Location = new Point(411, 2);
             buttonMinimize_ActiveWindow.Name = "buttonMinimize_ActiveWindow";
-            buttonMinimize_ActiveWindow.Size = new Size(29, 27);
+            buttonMinimize_ActiveWindow.Size = new Size(29, 29);
             buttonMinimize_ActiveWindow.TabIndex = 12;
             buttonMinimize_ActiveWindow.Text = "0";
             buttonMinimize_ActiveWindow.TextAlign = ContentAlignment.MiddleCenter;
@@ -361,9 +359,9 @@ namespace TotalWinUICustomization
             buttonMaximize_ActiveWindow.BorderStyle = BorderStyle.FixedSingle;
             buttonMaximize_ActiveWindow.FlatStyle = FlatStyle.Flat;
             buttonMaximize_ActiveWindow.Font = new Font("Webdings", 9F, FontStyle.Regular, GraphicsUnit.Point, 2);
-            buttonMaximize_ActiveWindow.Location = new Point(400, 2);
+            buttonMaximize_ActiveWindow.Location = new Point(442, 2);
             buttonMaximize_ActiveWindow.Name = "buttonMaximize_ActiveWindow";
-            buttonMaximize_ActiveWindow.Size = new Size(29, 27);
+            buttonMaximize_ActiveWindow.Size = new Size(29, 29);
             buttonMaximize_ActiveWindow.TabIndex = 11;
             buttonMaximize_ActiveWindow.Text = "1";
             buttonMaximize_ActiveWindow.TextAlign = ContentAlignment.MiddleCenter;
@@ -388,9 +386,9 @@ namespace TotalWinUICustomization
             buttonX_ActiveWindow.BackColor = SystemColors.Control;
             buttonX_ActiveWindow.BorderStyle = BorderStyle.FixedSingle;
             buttonX_ActiveWindow.FlatStyle = FlatStyle.Flat;
-            buttonX_ActiveWindow.Location = new Point(431, 2);
+            buttonX_ActiveWindow.Location = new Point(473, 2);
             buttonX_ActiveWindow.Name = "buttonX_ActiveWindow";
-            buttonX_ActiveWindow.Size = new Size(29, 27);
+            buttonX_ActiveWindow.Size = new Size(29, 29);
             buttonX_ActiveWindow.TabIndex = 10;
             buttonX_ActiveWindow.Text = "✕";
             buttonX_ActiveWindow.TextAlign = ContentAlignment.MiddleCenter;
@@ -418,10 +416,9 @@ namespace TotalWinUICustomization
             titleBar_InactiveWindow.Location = new Point(2, 2);
             titleBar_InactiveWindow.Margin = new Padding(0);
             titleBar_InactiveWindow.Name = "titleBar_InactiveWindow";
-            titleBar_InactiveWindow.Size = new Size(474, 31);
+            titleBar_InactiveWindow.Size = new Size(474, 33);
             titleBar_InactiveWindow.TabIndex = 12;
             titleBar_InactiveWindow.Click += titleBar_InactiveWindow_Click;
-            titleBar_InactiveWindow.Paint += titleBar_InactiveWindow_Paint;
             // 
             // buttonMinimize_InactiveWindow
             // 
@@ -430,7 +427,7 @@ namespace TotalWinUICustomization
             buttonMinimize_InactiveWindow.BorderStyle = BorderStyle.FixedSingle;
             buttonMinimize_InactiveWindow.FlatStyle = FlatStyle.Flat;
             buttonMinimize_InactiveWindow.Font = new Font("Webdings", 9F, FontStyle.Regular, GraphicsUnit.Point, 2);
-            buttonMinimize_InactiveWindow.Location = new Point(380, 1);
+            buttonMinimize_InactiveWindow.Location = new Point(380, 2);
             buttonMinimize_InactiveWindow.Name = "buttonMinimize_InactiveWindow";
             buttonMinimize_InactiveWindow.Size = new Size(29, 29);
             buttonMinimize_InactiveWindow.TabIndex = 15;
@@ -445,7 +442,7 @@ namespace TotalWinUICustomization
             buttonMaximize_InactiveWindow.BorderStyle = BorderStyle.FixedSingle;
             buttonMaximize_InactiveWindow.FlatStyle = FlatStyle.Flat;
             buttonMaximize_InactiveWindow.Font = new Font("Webdings", 9F, FontStyle.Regular, GraphicsUnit.Point, 2);
-            buttonMaximize_InactiveWindow.Location = new Point(411, 1);
+            buttonMaximize_InactiveWindow.Location = new Point(411, 2);
             buttonMaximize_InactiveWindow.Name = "buttonMaximize_InactiveWindow";
             buttonMaximize_InactiveWindow.Size = new Size(29, 29);
             buttonMaximize_InactiveWindow.TabIndex = 14;
@@ -459,7 +456,7 @@ namespace TotalWinUICustomization
             buttonX_InactiveWindow.BackColor = SystemColors.Control;
             buttonX_InactiveWindow.BorderStyle = BorderStyle.FixedSingle;
             buttonX_InactiveWindow.FlatStyle = FlatStyle.Flat;
-            buttonX_InactiveWindow.Location = new Point(442, 1);
+            buttonX_InactiveWindow.Location = new Point(442, 2);
             buttonX_InactiveWindow.Name = "buttonX_InactiveWindow";
             buttonX_InactiveWindow.Size = new Size(29, 29);
             buttonX_InactiveWindow.TabIndex = 13;
@@ -486,14 +483,13 @@ namespace TotalWinUICustomization
             desktopWindow.Location = new Point(0, 0);
             desktopWindow.Margin = new Padding(0);
             desktopWindow.Name = "desktopWindow";
-            desktopWindow.Size = new Size(536, 337);
+            desktopWindow.Size = new Size(570, 340);
             desktopWindow.TabIndex = 14;
             desktopWindow.Click += window_Desktop_Click;
             // 
             // WindowsUIMockupControl
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.None;
             AutoValidate = AutoValidate.EnablePreventFocusChange;
             BackColor = SystemColors.Desktop;
             Controls.Add(window_MessageBox);
@@ -501,10 +497,10 @@ namespace TotalWinUICustomization
             Controls.Add(panelInactiveWindow);
             Controls.Add(desktopWindow);
             Margin = new Padding(0);
-            MaximumSize = new Size(536, 335);
-            MinimumSize = new Size(536, 335);
+            MaximumSize = new Size(570, 340);
+            MinimumSize = new Size(570, 340);
             Name = "WindowsUIMockupControl";
-            Size = new Size(536, 335);
+            Size = new Size(570, 340);
             window_MessageBox.ResumeLayout(false);
             window_MessageBox.PerformLayout();
             titleBar_MessageBox.ResumeLayout(false);
@@ -552,6 +548,5 @@ namespace TotalWinUICustomization
         private LinkLabel hyperlinkText;
         private Label selectedText;
         private Label InfoWindowAndText;
-        private Border activeWindowBorder;
     }
 }

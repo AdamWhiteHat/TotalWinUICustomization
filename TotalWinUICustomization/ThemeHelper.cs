@@ -73,15 +73,14 @@ InfoText{ColorHelper.ColorToString(control.InfoTextColor)}
 InfoWindow{ColorHelper.ColorToString(control.InfoWindowColor)}
 GrayText={ColorHelper.ColorToString(control.GrayTextColor)}
 HotTrackingColor={ColorHelper.ColorToString(control.HotTrackingColor)}
-Scrollbar{ColorHelper.ColorToString(control.ScrollbarColor)}
+Scrollbar={ColorHelper.ColorToString(control.ScrollbarColor)}
+ActiveBorder={ColorHelper.ColorToString(control.ActiveBorderColor)}
+InactiveBorder={ColorHelper.ColorToString(control.InactiveBorderColor)}
+WindowFrame={ColorHelper.ColorToString(control.WindowFrameColor)}
 ";
 
             /*
             @$"
-            ActiveBorder{ColorHelper.ColorToString(control)}
-            InactiveBorder{ColorHelper.ColorToString(control)}
-            WindowFrame{ColorHelper.ColorToString(control)}
-
             AppWorkspace{ColorHelper.ColorToString(control)}
             MenuBar{ColorHelper.ColorToString(control)}
 

@@ -12,9 +12,9 @@ namespace TotalWinUICustomization
             this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             InitializeComponent();
             windowsuiMockupControl = new WindowsUIMockupControl();
-            windowsuiMockupControl.AutoValidate = AutoValidate.EnablePreventFocusChange;
-            windowsuiMockupControl.Location = new Point(9, 9);
+            windowsuiMockupControl.Location = new Point(2, 2);
             windowsuiMockupControl.Name = "WindowsUiMockupControl";
+            windowsuiMockupControl.ColorUiElementClicked += WindowsuiMockupControl_ColorUiElementClicked;
             Controls.Add(windowsuiMockupControl);
 
             this.AllowTransparency = true;
@@ -24,48 +24,96 @@ namespace TotalWinUICustomization
         {
             foreach (var item in Enum.GetValues(typeof(WindowsUiElements)).OfType<WindowsUiElements>())
             {
-                comboBoxPropertySelection.Items.Add(item);
+                bool isFont = Helpers.EnumToIsFontDictionary[item];
+
+                if (isFont)
+                {
+                    comboBoxFontSelection.Items.Add(item);
+                }
+                else
+                {
+                    comboBoxPropertySelection.Items.Add(item);
+                }
+
                 Color itemColor = RegistryHelper.GetWindowsColor(item);
                 windowsuiMockupControl.UpdateControlColor(item, itemColor);
             }
+        }
 
+        private void WindowsuiMockupControl_ColorUiElementClicked(object sender, ColorUiElementClickedEventArgs e)
+        {
+            bool isFont = Helpers.EnumToIsFontDictionary[e.ElementClicked];
+            WindowsUiElements? secondary = Helpers.EnumToCompanionEnum[e.ElementClicked];
 
-            Border b = new Border();
-            b.Location = new Point(37, 44);
-            b.BringToFront();
-            b.Size = new Size(347, 115);
-            b.Name = "border1";
-            b.BringToFront();
-            panel1.Controls.Add(b);
-            b.BringToFront();
-
+            if (isFont)
+            {
+                comboBoxFontSelection.SelectedItem = e.ElementClicked;
+                if (secondary != null)
+                {
+                    comboBoxPropertySelection.SelectedItem = secondary.Value;
+                }
+                else
+                {
+                    comboBoxPropertySelection.SelectedIndex = -1;
+                }
+            }
+            else
+            {
+                comboBoxPropertySelection.SelectedItem = e.ElementClicked;
+                if (secondary != null)
+                {
+                    comboBoxFontSelection.SelectedItem = secondary.Value;
+                }
+                else
+                {
+                    comboBoxFontSelection.SelectedIndex = -1;
+                }
+            }
         }
 
         private void ComboBoxPropertySelection_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBoxPropertySelection.SelectedIndex == -1)
             {
-                panelItemControls.Enabled = false;
+                PanelPropertyControls.Enabled = false;
             }
             else
             {
-                if (!panelItemControls.Enabled)
+                if (!PanelPropertyControls.Enabled)
                 {
-                    panelItemControls.Enabled = true;
+                    PanelPropertyControls.Enabled = true;
                 }
                 WindowsUiElements selectedProperty = (WindowsUiElements)comboBoxPropertySelection.Items[comboBoxPropertySelection.SelectedIndex];
                 Color selectedColor = RegistryHelper.GetWindowsColor(selectedProperty);
-                panelItemColorSwatch.BackColor = selectedColor;
+                panelPropertyColorSwatch.BackColor = selectedColor;
             }
         }
 
-        private void buttonItemColor_Click(object sender, EventArgs e)
+        private void comboBoxFontSelection_SelectedIndexChanged(object sender, EventArgs e)
         {
-            colorPickerDialog.Color = panelItemColorSwatch.BackColor;
+            if (comboBoxFontSelection.SelectedIndex == -1)
+            {
+                panelFontControls.Enabled = false;
+            }
+            else
+            {
+                if (!panelFontControls.Enabled)
+                {
+                    panelFontControls.Enabled = true;
+                }
+                WindowsUiElements selectedProperty = (WindowsUiElements)comboBoxFontSelection.Items[comboBoxFontSelection.SelectedIndex];
+                Color selectedColor = RegistryHelper.GetWindowsColor(selectedProperty);
+                panelFontColorSwatch.BackColor = selectedColor;
+            }
+        }
+
+        private void buttonPropertyColor_Click(object sender, EventArgs e)
+        {
+            colorPickerDialog.Color = panelPropertyColorSwatch.BackColor;
             if (colorPickerDialog.ShowDialog() == DialogResult.OK)
             {
                 Color selectedColor = colorPickerDialog.Color;
-                panelItemColorSwatch.BackColor = selectedColor;
+                panelPropertyColorSwatch.BackColor = selectedColor;
                 WindowsUiElements selectedProperty = (WindowsUiElements)comboBoxPropertySelection.Items[comboBoxPropertySelection.SelectedIndex];
                 windowsuiMockupControl.UpdateControlColor(selectedProperty, selectedColor);
                 RegistryHelper.SetWindowsColor(selectedProperty, selectedColor);
@@ -80,9 +128,9 @@ namespace TotalWinUICustomization
                 Color selectedColor = colorPickerDialog.Color;
                 panelFontColorSwatch.BackColor = selectedColor;
 
-                //WindowsUiElements selectedProperty = (WindowsUiElements)comboBoxPropertySelection.Items[comboBoxPropertySelection.SelectedIndex];
-                //windowsuiMockupControl.UpdateControlColor(selectedProperty, selectedColor);
-                //RegistryHelper.SetWindowsColor(selectedProperty, selectedColor);
+                WindowsUiElements selectedProperty = (WindowsUiElements)comboBoxFontSelection.Items[comboBoxFontSelection.SelectedIndex];
+                windowsuiMockupControl.UpdateControlColor(selectedProperty, selectedColor);
+                RegistryHelper.SetWindowsColor(selectedProperty, selectedColor);
             }
         }
 

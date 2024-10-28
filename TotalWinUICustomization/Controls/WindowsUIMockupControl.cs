@@ -56,28 +56,28 @@ namespace TotalWinUICustomization
         [Editor(typeof(ColorEditor), typeof(UITypeEditor))]
         public Color InactiveTitleColor
         {
-            get { return InactiveTitle_Color1; }
+            get { return _inactiveTitle_Color1; }
             set
             {
-                SetColorPropertyField(WindowsUiElements.InactiveTitle, ref InactiveTitle_Color1, value);
+                SetColorPropertyField(WindowsUiElements.InactiveTitle, ref _inactiveTitle_Color1, value);
                 titleBar_InactiveWindow.Invalidate();
             }
         }
-        private Color InactiveTitle_Color1 = Color.FromKnownColor(KnownColor.InactiveCaption);
+        private Color _inactiveTitle_Color1 = Color.FromKnownColor(KnownColor.InactiveCaption);
 
         [Browsable(true)]
         [Category(nameof(CategoryAttribute.Appearance))]
         [Editor(typeof(ColorEditor), typeof(UITypeEditor))]
         public Color InactiveTitleGradientColor
         {
-            get { return InactiveTitle_Color2; }
+            get { return _inactiveTitle_Color2; }
             set
             {
-                SetColorPropertyField(WindowsUiElements.InactiveTitleGradient, ref InactiveTitle_Color2, value);
+                SetColorPropertyField(WindowsUiElements.InactiveTitleGradient, ref _inactiveTitle_Color2, value);
                 titleBar_InactiveWindow.Invalidate();
             }
         }
-        private Color InactiveTitle_Color2 = Color.FromKnownColor(KnownColor.GradientInactiveCaption);
+        private Color _inactiveTitle_Color2 = Color.FromKnownColor(KnownColor.GradientInactiveCaption);
 
         [Browsable(true)]
         [Category(nameof(CategoryAttribute.Appearance))]
@@ -98,28 +98,28 @@ namespace TotalWinUICustomization
         [Editor(typeof(ColorEditor), typeof(UITypeEditor))]
         public Color ActiveTitleColor
         {
-            get { return ActiveTitle_Color1; }
+            get { return _activeTitle_Color1; }
             set
             {
-                SetColorPropertyField(WindowsUiElements.ActiveTitle, ref ActiveTitle_Color1, value);
+                SetColorPropertyField(WindowsUiElements.ActiveTitle, ref _activeTitle_Color1, value);
                 titleBar_ActiveWindow.Invalidate();
             }
         }
-        private Color ActiveTitle_Color1 = Color.FromKnownColor(KnownColor.ActiveCaption);
+        private Color _activeTitle_Color1 = Color.FromKnownColor(KnownColor.ActiveCaption);
 
         [Browsable(true)]
         [Category(nameof(CategoryAttribute.Appearance))]
         [Editor(typeof(ColorEditor), typeof(UITypeEditor))]
         public Color ActiveTitleGradientColor
         {
-            get { return ActiveTitle_Color2; }
+            get { return _activeTitle_Color2; }
             set
             {
-                SetColorPropertyField(WindowsUiElements.ActiveTitleGradient, ref ActiveTitle_Color2, value);
+                SetColorPropertyField(WindowsUiElements.ActiveTitleGradient, ref _activeTitle_Color2, value);
                 titleBar_ActiveWindow.Invalidate();
             }
         }
-        private Color ActiveTitle_Color2 = Color.FromKnownColor(KnownColor.GradientActiveCaption);
+        private Color _activeTitle_Color2 = Color.FromKnownColor(KnownColor.GradientActiveCaption);
 
         [Browsable(true)]
         [Category(nameof(CategoryAttribute.Appearance))]
@@ -145,9 +145,6 @@ namespace TotalWinUICustomization
             {
                 PropertyInfo propertyInfo = typeof(Label).GetProperty(nameof(textbox_ActiveWindow.BackColor));
                 SetColorPropertyField2(WindowsUiElements.Window, textbox_ActiveWindow, propertyInfo, value);
-
-                PropertyInfo propertyInfo2 = typeof(Label).GetProperty(nameof(font_ActiveWindow.BackColor));
-                SetColorPropertyField2(WindowsUiElements.Window, font_ActiveWindow, propertyInfo2, value);
             }
         }
 
@@ -294,10 +291,10 @@ namespace TotalWinUICustomization
         [Editor(typeof(ColorEditor), typeof(UITypeEditor))]
         public Color HilightColor
         {
-            get { return selectedText.ForeColor; }
+            get { return selectedText.BackColor; }
             set
             {
-                PropertyInfo propertyInfo = typeof(Label).GetProperty(nameof(selectedText.ForeColor));
+                PropertyInfo propertyInfo = typeof(Label).GetProperty(nameof(selectedText.BackColor));
                 SetColorPropertyField2(WindowsUiElements.Highlight, selectedText, propertyInfo, value);
             }
         }
@@ -308,11 +305,14 @@ namespace TotalWinUICustomization
         [Editor(typeof(ColorEditor), typeof(UITypeEditor))]
         public Color HilightTextColor
         {
-            get { return selectedText.BackColor; }
+            get { return selectedText.ForeColor; }
             set
             {
-                PropertyInfo propertyInfo = typeof(Label).GetProperty(nameof(selectedText.BackColor));
-                SetColorPropertyField2(WindowsUiElements.HighlightText, selectedText, propertyInfo, value);
+                PropertyInfo propertyInfo1 = typeof(Label).GetProperty(nameof(selectedText.ForeColor));
+                SetColorPropertyField2(WindowsUiElements.HighlightText, selectedText, propertyInfo1, value);
+
+                PropertyInfo propertyInfo2 = typeof(Label).GetProperty(nameof(font_menuSelected.ForeColor));
+                SetColorPropertyField2(WindowsUiElements.HighlightText, font_menuSelected, propertyInfo2, value);
             }
         }
 
@@ -342,35 +342,53 @@ namespace TotalWinUICustomization
             }
         }
 
-        /*
+        [Browsable(true)]
+        [Category(nameof(CategoryAttribute.Appearance))]
+        [Editor(typeof(ColorEditor), typeof(UITypeEditor))]
         public Color ActiveBorderColor
         {
-            get { return Color.Gray; }
+            get { return _activeBorderColor; }
+            set
+            {
+                SetColorPropertyField(WindowsUiElements.ActiveBorder, ref _activeBorderColor, value);
+            }
         }
+        private Color _activeBorderColor = Color.Gray;
 
+        [Browsable(true)]
+        [Category(nameof(CategoryAttribute.Appearance))]
+        [Editor(typeof(ColorEditor), typeof(UITypeEditor))]
         public Color InactiveBorderColor
         {
-            get { return Color.Silver; }
+            get { return _inactiveBorderColor; }
+            set
+            {
+                SetColorPropertyField(WindowsUiElements.InactiveBorder, ref _inactiveBorderColor, value);
+            }
         }
+        private Color _inactiveBorderColor = Color.Silver;
 
+        [Browsable(true)]
+        [Category(nameof(CategoryAttribute.Appearance))]
+        [Editor(typeof(ColorEditor), typeof(UITypeEditor))]
         public Color WindowFrameColor
         {
-            get { return Color.Black; }
+            get { return _windowFrameColor; }
+            set
+            {
+                SetColorPropertyField(WindowsUiElements.WindowFrame, ref _windowFrameColor, value);
+            }
         }
-        */
-        /*
-ActiveBorder=128 128 128
-InactiveBorder=192 192 192
-WindowFrame=255 255 255
+        private Color _windowFrameColor = Color.Black;
 
+
+
+        /*
 ButtonShadow=128 128 128
 ButtonDkShadow=0 0 0
 ButtonLight=192 192 192
 ButtonHilight=192 192 192
 ButtonAlternateFace=192 192 192
-
-InfoText=0 0 0
-InfoWindow=255 255 255
 
 MenuBar=255 255 255
 AppWorkspace=128 128 128
@@ -418,6 +436,9 @@ AppWorkspace=128 128 128
                     ButtonTextColor = color;
                     break;
 
+                case WindowsUiElements.Menu:
+                    MenuColor = color;
+                    break;
                 case WindowsUiElements.MenuText:
                     MenuTextColor = color;
                     break;
@@ -476,19 +497,39 @@ AppWorkspace=128 128 128
             }
         }
 
+
+        #region Paint Overrides
+
         private void titleBar_InactiveWindow_Paint(object sender, PaintEventArgs e)
         {
-            LinearGradientBrush gradientBrush = new LinearGradientBrush(titleBar_InactiveWindow.ClientRectangle, InactiveTitle_Color1, InactiveTitle_Color2, 1f);
+            LinearGradientBrush gradientBrush = new LinearGradientBrush(titleBar_InactiveWindow.ClientRectangle, _inactiveTitle_Color1, _inactiveTitle_Color2, 1f);
             e.Graphics.FillRectangle(gradientBrush, titleBar_InactiveWindow.ClientRectangle);
         }
 
         private void titleBar_ActiveWindow_Paint(object sender, PaintEventArgs e)
         {
-            LinearGradientBrush gradientBrush = new LinearGradientBrush(titleBar_ActiveWindow.ClientRectangle, ActiveTitle_Color1, ActiveTitle_Color2, 1f);
+            LinearGradientBrush gradientBrush = new LinearGradientBrush(titleBar_ActiveWindow.ClientRectangle, _activeTitle_Color1, _activeTitle_Color2, 1f);
             e.Graphics.FillRectangle(gradientBrush, titleBar_ActiveWindow.ClientRectangle);
         }
 
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
 
+            Rectangle bounds = this.ClientRectangle;
+            Graphics g = e.Graphics;
+
+            // LinearGradientBrush gradientBrushInactive = new LinearGradientBrush(titleBar_InactiveWindow.ClientRectangle, InactiveTitle_Color1, InactiveTitle_Color2, 1f);
+            //e.Graphics.FillRectangle(gradientBrushInactive, titleBar_InactiveWindow.ClientRectangle);
+
+            //LinearGradientBrush gradientBrushActive = new LinearGradientBrush(titleBar_ActiveWindow.ClientRectangle, ActiveTitle_Color1, ActiveTitle_Color2, 1f);
+            //e.Graphics.FillRectangle(gradientBrushActive, titleBar_ActiveWindow.ClientRectangle);
+
+
+            // ControlPaint.DrawBorder(g, bounds, this.ForeColor, ButtonBorderStyle.Solid);
+        }
+
+        #endregion
 
 
 
@@ -528,7 +569,7 @@ AppWorkspace=128 128 128
 
         private void button_MessageBox_Click(object sender, EventArgs e)
         {
-
+            RaiseColorUiElementClickedEvent(WindowsUiElements.ButtonFace);
         }
 
 
@@ -583,6 +624,41 @@ AppWorkspace=128 128 128
         {
             RaiseColorUiElementClickedEvent(WindowsUiElements.WindowText);
         }
+        private void controlBox_MessageBox_Click(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(WindowsUiElements.ButtonFace);
+        }
+
+
+
+        private void font_hyperlinkText_Click(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(WindowsUiElements.HotTrackingColor);
+        }
+
+        private void InfoWindowAndText_Click(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(WindowsUiElements.InfoWindow);
+        }
+
+
+
+        private void menu_Click(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(WindowsUiElements.Menu);
+        }
+
+        private void selectedText_Click(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(WindowsUiElements.Highlight);
+        }
+
+        private void ScrollBar_Clicked(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(WindowsUiElements.Scrollbar);
+        }
+
+
 
         /// <summary>Helper methods. Raises the ColorUiElementClickedEvent Event</summary>
         protected void RaiseColorUiElementClickedEvent(WindowsUiElements elementClicked)

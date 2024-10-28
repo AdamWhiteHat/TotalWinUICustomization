@@ -39,7 +39,7 @@ namespace TotalWinUICustomization
             {
                 if (key != null)
                 {
-                    key.SetValue(Helpers.EnumToKeyDictionary[uiElement], ColorHelper.ColorToString(color));
+                    key.SetValue(Helpers.EnumToRegistryKey[uiElement], ColorHelper.ColorToString(color));
                 }
             }
         }
@@ -51,7 +51,7 @@ namespace TotalWinUICustomization
             {
                 if (key != null)
                 {
-                    color = (string)key.GetValue(Helpers.EnumToKeyDictionary[uiElement]);
+                    color = (string)key.GetValue(Helpers.EnumToRegistryKey[uiElement]);
                 }
             }
 

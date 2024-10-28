@@ -32,8 +32,8 @@ namespace TotalWinUICustomization.Types
         Highlight,
         HighlightText,
 
-        InfoText,
         InfoWindow,
+        InfoText,
 
         Scrollbar,
         HotTrackingColor,
@@ -49,13 +49,20 @@ namespace TotalWinUICustomization.Types
         ButtonLight,
         ButtonShadow,
 
-        // MenuBar, // ??
-        // AppWorkspace // ??
+        MenuBar,
+        AppWorkspace
+    }
+
+    public enum ElementType
+    {
+        Control,
+        Font,
+        Both
     }
 
     public static class Helpers
     {
-        public static Dictionary<WindowsUiElements, string> EnumToKeyDictionary = new Dictionary<WindowsUiElements, string>()
+        public static Dictionary<WindowsUiElements, string> EnumToRegistryKey = new Dictionary<WindowsUiElements, string>()
         {
             { WindowsUiElements.InactiveTitle, "InactiveTitle" },
             { WindowsUiElements.InactiveTitleGradient, "GradientInactiveTitle" },
@@ -86,9 +93,79 @@ namespace TotalWinUICustomization.Types
             { WindowsUiElements.InfoWindow, "InfoWindow" },
             { WindowsUiElements.Scrollbar, "Scrollbar" },
             { WindowsUiElements.HotTrackingColor, "HotTrackingColor" },
+            { WindowsUiElements.MenuBar, "MenuBar" },
+            { WindowsUiElements.AppWorkspace, "AppWorkspace" }
+        };
 
-            // { WindowsUiElements.MenuBar, "MenuBar" },
-            // { WindowsUiElements.AppWorkspace, "AppWorkspace" }
+        public static Dictionary<WindowsUiElements, bool> EnumToIsFontDictionary = new Dictionary<WindowsUiElements, bool>()
+        {
+            { WindowsUiElements.InactiveTitle, false },
+
+            { WindowsUiElements.InactiveTitleText, true },
+            { WindowsUiElements.InactiveTitleGradient, false },
+            { WindowsUiElements.InactiveBorder, false },
+            { WindowsUiElements.ActiveTitle,false },
+            { WindowsUiElements.ActiveTitleText,true },
+            { WindowsUiElements.ActiveTitleGradient,false },
+            { WindowsUiElements.ActiveBorder,false },
+            { WindowsUiElements.Window,false },
+            { WindowsUiElements.WindowText,true },
+            { WindowsUiElements.WindowFrame,false },
+            { WindowsUiElements.ButtonFace,false },
+            { WindowsUiElements.ButtonText,true },
+            { WindowsUiElements.ButtonAlternateFace,false },
+            { WindowsUiElements.ButtonDkShadow,false },
+            { WindowsUiElements.ButtonHighlight,false },
+            { WindowsUiElements.ButtonLight,false },
+            { WindowsUiElements.ButtonShadow,false },
+            { WindowsUiElements.Menu,false },
+            { WindowsUiElements.MenuText,true },
+            { WindowsUiElements.MenuHighlight,false },
+            { WindowsUiElements.GreyText,true },
+            { WindowsUiElements.DesktopBackground,false },
+            { WindowsUiElements.Highlight,false },
+            { WindowsUiElements.HighlightText,true },
+            { WindowsUiElements.InfoWindow,false },
+            { WindowsUiElements.InfoText,true },
+            { WindowsUiElements.Scrollbar,false },
+            { WindowsUiElements.HotTrackingColor,true },
+            { WindowsUiElements.MenuBar,false },
+            { WindowsUiElements.AppWorkspace,false }
+        };
+
+        public static Dictionary<WindowsUiElements, WindowsUiElements?> EnumToCompanionEnum = new Dictionary<WindowsUiElements, WindowsUiElements?>()
+        {
+            { WindowsUiElements.InactiveTitle, WindowsUiElements.InactiveTitleText },
+            { WindowsUiElements.InactiveTitleText, WindowsUiElements.InactiveTitle },
+            { WindowsUiElements.InactiveTitleGradient, null },
+            { WindowsUiElements.InactiveBorder, null },
+            { WindowsUiElements.ActiveTitle, WindowsUiElements.ActiveTitleText },
+            { WindowsUiElements.ActiveTitleText, WindowsUiElements.ActiveTitle },
+            { WindowsUiElements.ActiveTitleGradient,null },
+            { WindowsUiElements.ActiveBorder,null },
+            { WindowsUiElements.Window, WindowsUiElements.WindowText },
+            { WindowsUiElements.WindowText, WindowsUiElements.Window },
+            { WindowsUiElements.WindowFrame,null },
+            { WindowsUiElements.ButtonFace, WindowsUiElements.ButtonText },
+            { WindowsUiElements.ButtonText,WindowsUiElements.ButtonFace },
+            { WindowsUiElements.ButtonAlternateFace,null },
+            { WindowsUiElements.ButtonDkShadow,null },
+            { WindowsUiElements.ButtonHighlight,null },
+            { WindowsUiElements.ButtonLight,null },
+            { WindowsUiElements.ButtonShadow,null },
+            { WindowsUiElements.Menu, WindowsUiElements.MenuText },
+            { WindowsUiElements.MenuText,WindowsUiElements.Menu },
+            { WindowsUiElements.MenuHighlight, WindowsUiElements.HighlightText },
+            { WindowsUiElements.GreyText,null },
+            { WindowsUiElements.DesktopBackground,null },
+            { WindowsUiElements.Highlight, WindowsUiElements.HighlightText },
+            { WindowsUiElements.HighlightText, WindowsUiElements.Highlight },
+            { WindowsUiElements.InfoWindow, WindowsUiElements.InfoText },
+            { WindowsUiElements.InfoText, WindowsUiElements.InfoWindow },
+            { WindowsUiElements.Scrollbar,null },
+            { WindowsUiElements.HotTrackingColor,null },
+            { WindowsUiElements.MenuBar,null },
+            { WindowsUiElements.AppWorkspace,null }
         };
     }
 }
