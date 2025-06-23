@@ -34,21 +34,6 @@ namespace TotalWinUICustomization
         /// </summary>
         public event ColorUiElementClickedEventHandler ColorUiElementClicked;
 
-        #region Constructor
-
-        public WindowsUIMockupControl()
-        {
-            InitializeComponent();
-            this.Load += WindowsUIMockupControl_Load;
-        }
-
-        private void WindowsUIMockupControl_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        #endregion
-
         #region Color Properties
 
         [Browsable(true)]
@@ -396,7 +381,333 @@ AppWorkspace=128 128 128
 
         #endregion
 
+        #region FontProperties
 
+        public Font CaptionFont
+        {
+            get { return _captionFont; }
+            set
+            {
+                _captionFont = value;
+                font_ActiveWindowTitleBar.Font = value;
+                font_InactiveWindowTitleBar.Font = value;
+                font_MessageBoxTitleBar.Font = value;
+            }
+        }
+        private Font _captionFont;
+
+        public Font SmCaptionFont
+        {
+            get { return _smCaptionFont; }
+            set
+            {
+                _smCaptionFont = value;
+            }
+        }
+        private Font _smCaptionFont;
+
+        public Font MessageFont
+        {
+            get { return _messageFont; }
+            set
+            {
+                _messageFont = value;
+                font_ActiveWindow.Font = value;
+                selectedText.Font = value;
+                button_MessageBox.Font = value;
+                font_MessageBox.Font = value;
+                hyperlinkText.Font = value;
+            }
+        }
+        private Font _messageFont;
+
+        public Font MenuFont
+        {
+            get { return _menuFont; }
+            set
+            {
+                _menuFont = value;
+                font_menuNormal.Font = value;
+                font_menuDisabled.Font = value;
+                font_menuSelected.Font = value;
+            }
+        }
+        private Font _menuFont;
+
+        public Font StatusFont
+        {
+            get { return _statusFont; }
+            set
+            {
+                _statusFont = value;
+                InfoWindowAndText.Font = value;
+            }
+        }
+        private Font _statusFont;
+
+        public Font IconFont
+        {
+            get { return _iconFont; }
+            set
+            {
+                _iconFont = value;
+                IconText.Font = value;
+            }
+        }
+        private Font _iconFont;
+
+        #endregion
+
+        #region Constructor
+
+        public WindowsUIMockupControl()
+        {
+            InitializeComponent();
+            this.Load += WindowsUIMockupControl_Load;
+
+            BorderHelper.AddBorder(window_MessageBox, Border3DStyle.SunkenOuter);
+            BorderHelper.AddBorder(panelActiveWindow, Border3DStyle.SunkenOuter);
+
+            //BorderHelper.AddBorder(button_MessageBox, Border3DStyle.Raised);
+            //BorderHelper.AddBorder(buttonX_MessageBox, Border3DStyle.Raised);
+
+            //BorderHelper.AddBorder(buttonMinimize_ActiveWindow, Border3DStyle.Raised);
+            //BorderHelper.AddBorder(buttonMaximize_ActiveWindow, Border3DStyle.Raised);
+            //BorderHelper.AddBorder(buttonX_ActiveWindow, Border3DStyle.Raised);
+            //
+            //BorderHelper.AddBorder(buttonMinimize_InactiveWindow, Border3DStyle.Raised);
+            //BorderHelper.AddBorder(buttonMaximize_InactiveWindow, Border3DStyle.Raised);
+            //BorderHelper.AddBorder(buttonX_InactiveWindow, Border3DStyle.Raised);
+        }
+
+        private void WindowsUIMockupControl_Load(object sender, EventArgs e)
+        {
+            if (DesignMode)
+            {
+                inactiveBorderClickInterceptor1.BringToFront();
+                inactiveBorderClickInterceptor2.BringToFront();
+                inactiveBorderClickInterceptor3.BringToFront();
+
+                activeBorderClickInterceptor5.BringToFront();
+                activeBorderClickInterceptor6.BringToFront();
+                activeBorderClickInterceptor7.BringToFront();
+                activeBorderClickInterceptor8.BringToFront();
+                activeBorderClickInterceptor9.BringToFront();
+                activeBorderClickInterceptor0.BringToFront();
+
+                activeBorderClickInterceptor1.BringToFront();
+                activeBorderClickInterceptor2.BringToFront();
+                activeBorderClickInterceptor3.BringToFront();
+                activeBorderClickInterceptor4.BringToFront();
+            }
+        }
+
+        #endregion
+
+        #region Paint Overrides
+
+        private void titleBar_InactiveWindow_Paint(object sender, PaintEventArgs e)
+        {
+            LinearGradientBrush gradientBrush = new LinearGradientBrush(titleBar_InactiveWindow.ClientRectangle, _inactiveTitle_Color1, _inactiveTitle_Color2, 1f);
+            e.Graphics.FillRectangle(gradientBrush, titleBar_InactiveWindow.ClientRectangle);
+        }
+
+        private void titleBar_ActiveWindow_Paint(object sender, PaintEventArgs e)
+        {
+            LinearGradientBrush gradientBrush = new LinearGradientBrush(titleBar_ActiveWindow.ClientRectangle, _activeTitle_Color1, _activeTitle_Color2, 1f);
+            e.Graphics.FillRectangle(gradientBrush, titleBar_ActiveWindow.ClientRectangle);
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+
+            //Rectangle bounds = this.ClientRectangle;
+            //Graphics g = e.Graphics;
+
+            // LinearGradientBrush gradientBrushInactive = new LinearGradientBrush(titleBar_InactiveWindow.ClientRectangle, InactiveTitle_Color1, InactiveTitle_Color2, 1f);
+            //e.Graphics.FillRectangle(gradientBrushInactive, titleBar_InactiveWindow.ClientRectangle);
+
+            //LinearGradientBrush gradientBrushActive = new LinearGradientBrush(titleBar_ActiveWindow.ClientRectangle, ActiveTitle_Color1, ActiveTitle_Color2, 1f);
+            //e.Graphics.FillRectangle(gradientBrushActive, titleBar_ActiveWindow.ClientRectangle);
+
+
+            // ControlPaint.DrawBorder(g, bounds, this.ForeColor, ButtonBorderStyle.Solid);
+        }
+
+        #endregion
+
+        #region Internal Control Click Events
+
+        private void titleBar_ActiveWindow_Click(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(WindowsUiElements.ActiveTitle);
+        }
+
+        private void titleBar_InactiveWindow_Click(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(WindowsUiElements.InactiveTitle);
+        }
+
+        private void titleBar_MessageBox_Click(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(WindowsUiElements.ActiveTitle);
+        }
+
+        private void textbox_ActiveWindow_Click(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(WindowsUiElements.Window);
+        }
+
+
+
+        private void window_MessageBox_Click(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(WindowsUiElements.ButtonFace);
+        }
+
+        private void window_Desktop_Click(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(WindowsUiElements.DesktopBackground);
+        }
+
+        private void button_MessageBox_Click(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(WindowsUiElements.ButtonFace);
+        }
+
+
+        private void font_InactiveWindowTitleBar_Click(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(WindowsUiElements.InactiveTitleText);
+        }
+
+        private void font_ActiveWindowTitleBar_Click(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(WindowsUiElements.ActiveTitleText);
+        }
+
+        private void font_ActiveWindow_Click(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(WindowsUiElements.WindowText);
+        }
+
+        private void font_MessageBoxTitleBar_Click(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(WindowsUiElements.ActiveTitleText);
+        }
+
+        private void font_MessageBox_Click(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(WindowsUiElements.ButtonText);
+        }
+
+        private void font_menuNormal_Click(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(WindowsUiElements.MenuText);
+        }
+
+        private void font_menuDisabled_Click(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(WindowsUiElements.GreyText);
+        }
+
+        private void font_menuSelected_Click(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(WindowsUiElements.MenuHighlight);
+        }
+
+
+
+        private void controlBox_InactiveWindow_Click(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(WindowsUiElements.WindowText);
+        }
+
+        private void controlBox_ActiveWindow_Click(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(WindowsUiElements.WindowText);
+        }
+        private void controlBox_MessageBox_Click(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(WindowsUiElements.DesktopBackground);
+        }
+
+
+        private void font_hyperlinkText_Click(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(WindowsUiElements.HotTrackingColor);
+        }
+
+        private void InfoWindowAndText_Click(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(WindowsUiElements.InfoWindow);
+        }
+
+
+        private void menu_Click(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(WindowsUiElements.Menu);
+        }
+
+        private void selectedText_Click(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(WindowsUiElements.Highlight);
+        }
+
+        private void ScrollBar_Clicked(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(WindowsUiElements.Scrollbar);
+        }
+
+        private void iconClickInterceptor_Click(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(WindowsUiElements.DesktopBackground);
+        }
+
+        private void activeBorderClickInterceptor_Click(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(WindowsUiElements.ActiveBorder);
+        }
+
+        private void inactiveBorderClickInterceptor_Click(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(WindowsUiElements.InactiveBorder);
+        }
+
+        #endregion
+
+        /// <summary>Helper methods. Raises the ColorUiElementClickedEvent Event</summary>
+        protected void RaiseColorUiElementClickedEvent(WindowsUiElements elementClicked)
+        {
+            ColorUiElementClicked?.Invoke(this, new ColorUiElementClickedEventArgs(elementClicked));
+        }
+
+        public void UpdateControlFont(WindowsUiElements uiElement, Font font)
+        {
+            switch (uiElement)
+            {
+                case WindowsUiElements.ActiveTitleText:
+                case WindowsUiElements.InactiveTitleText:
+                    CaptionFont = font;
+                    break;
+
+                case WindowsUiElements.WindowText:
+                case WindowsUiElements.ButtonText:
+                    MessageFont = font;
+                    break;
+
+                case WindowsUiElements.MenuText:
+                case WindowsUiElements.GreyText:
+                case WindowsUiElements.HighlightText:
+                    MenuFont = font;
+                    break;
+
+                case WindowsUiElements.InfoText:
+                    StatusFont = font;
+                    break;
+            }
+        }
 
         public void UpdateControlColor(WindowsUiElements uiElement, Color color)
         {
@@ -496,177 +807,6 @@ AppWorkspace=128 128 128
                 //  RegistryHelper.SetWindowsColor(uiElement, value);
             }
         }
-
-
-        #region Paint Overrides
-
-        private void titleBar_InactiveWindow_Paint(object sender, PaintEventArgs e)
-        {
-            LinearGradientBrush gradientBrush = new LinearGradientBrush(titleBar_InactiveWindow.ClientRectangle, _inactiveTitle_Color1, _inactiveTitle_Color2, 1f);
-            e.Graphics.FillRectangle(gradientBrush, titleBar_InactiveWindow.ClientRectangle);
-        }
-
-        private void titleBar_ActiveWindow_Paint(object sender, PaintEventArgs e)
-        {
-            LinearGradientBrush gradientBrush = new LinearGradientBrush(titleBar_ActiveWindow.ClientRectangle, _activeTitle_Color1, _activeTitle_Color2, 1f);
-            e.Graphics.FillRectangle(gradientBrush, titleBar_ActiveWindow.ClientRectangle);
-        }
-
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            base.OnPaint(e);
-
-            Rectangle bounds = this.ClientRectangle;
-            Graphics g = e.Graphics;
-
-            // LinearGradientBrush gradientBrushInactive = new LinearGradientBrush(titleBar_InactiveWindow.ClientRectangle, InactiveTitle_Color1, InactiveTitle_Color2, 1f);
-            //e.Graphics.FillRectangle(gradientBrushInactive, titleBar_InactiveWindow.ClientRectangle);
-
-            //LinearGradientBrush gradientBrushActive = new LinearGradientBrush(titleBar_ActiveWindow.ClientRectangle, ActiveTitle_Color1, ActiveTitle_Color2, 1f);
-            //e.Graphics.FillRectangle(gradientBrushActive, titleBar_ActiveWindow.ClientRectangle);
-
-
-            // ControlPaint.DrawBorder(g, bounds, this.ForeColor, ButtonBorderStyle.Solid);
-        }
-
-        #endregion
-
-
-
-        #region Internal Control Click Events
-
-        private void titleBar_ActiveWindow_Click(object sender, EventArgs e)
-        {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.ActiveTitle);
-        }
-
-        private void titleBar_InactiveWindow_Click(object sender, EventArgs e)
-        {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.InactiveTitle);
-        }
-
-        private void titleBar_MessageBox_Click(object sender, EventArgs e)
-        {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.ActiveTitle);
-        }
-
-        private void textbox_ActiveWindow_Click(object sender, EventArgs e)
-        {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.Window);
-        }
-
-
-
-        private void window_MessageBox_Click(object sender, EventArgs e)
-        {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.ButtonFace);
-        }
-
-        private void window_Desktop_Click(object sender, EventArgs e)
-        {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.DesktopBackground);
-        }
-
-        private void button_MessageBox_Click(object sender, EventArgs e)
-        {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.ButtonFace);
-        }
-
-
-        private void font_InactiveWindowTitleBar_Click(object sender, EventArgs e)
-        {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.InactiveTitleText);
-        }
-
-        private void font_ActiveWindowTitleBar_Click(object sender, EventArgs e)
-        {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.ActiveTitleText);
-        }
-
-        private void font_ActiveWindow_Click(object sender, EventArgs e)
-        {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.WindowText);
-        }
-
-        private void font_MessageBoxTitleBar_Click(object sender, EventArgs e)
-        {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.ActiveTitleText);
-        }
-
-        private void font_MessageBox_Click(object sender, EventArgs e)
-        {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.ButtonText);
-        }
-
-        private void font_menuNormal_Click(object sender, EventArgs e)
-        {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.MenuText);
-        }
-
-        private void font_menuDisabled_Click(object sender, EventArgs e)
-        {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.GreyText);
-        }
-
-        private void font_menuSelected_Click(object sender, EventArgs e)
-        {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.MenuHighlight);
-        }
-
-
-
-        private void controlBox_InactiveWindow_Click(object sender, EventArgs e)
-        {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.WindowText);
-        }
-
-        private void controlBox_ActiveWindow_Click(object sender, EventArgs e)
-        {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.WindowText);
-        }
-        private void controlBox_MessageBox_Click(object sender, EventArgs e)
-        {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.ButtonFace);
-        }
-
-
-
-        private void font_hyperlinkText_Click(object sender, EventArgs e)
-        {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.HotTrackingColor);
-        }
-
-        private void InfoWindowAndText_Click(object sender, EventArgs e)
-        {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.InfoWindow);
-        }
-
-
-
-        private void menu_Click(object sender, EventArgs e)
-        {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.Menu);
-        }
-
-        private void selectedText_Click(object sender, EventArgs e)
-        {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.Highlight);
-        }
-
-        private void ScrollBar_Clicked(object sender, EventArgs e)
-        {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.Scrollbar);
-        }
-
-
-
-        /// <summary>Helper methods. Raises the ColorUiElementClickedEvent Event</summary>
-        protected void RaiseColorUiElementClickedEvent(WindowsUiElements elementClicked)
-        {
-            ColorUiElementClicked?.Invoke(this, new ColorUiElementClickedEventArgs(elementClicked));
-        }
-
-        #endregion
 
     }
 }

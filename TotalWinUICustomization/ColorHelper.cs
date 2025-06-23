@@ -18,5 +18,10 @@ namespace TotalWinUICustomization
             string[] parts = str.Split(' ');
             return Color.FromArgb(int.Parse(parts[0]), int.Parse(parts[1]), int.Parse(parts[2]));
         }
+
+        public static Color InvertColor(Color color)
+        {
+            return Color.FromArgb(byte.MaxValue - color.R, byte.MaxValue - color.G, byte.MaxValue - color.B);
+        }
     }
 }

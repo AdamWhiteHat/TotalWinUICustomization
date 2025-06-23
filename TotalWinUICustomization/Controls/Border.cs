@@ -1,53 +1,159 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Drawing.Design;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.ComponentModel;
+using System.Drawing.Design;
+using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Windows.Forms.Design;
 using System.Windows.Forms.Design.Behavior;
+using System.Windows.Forms.VisualStyles;
 
 namespace TotalWinUICustomization.Controls
 {
+    public enum BorderControlType
+    {
+        None,
+        Border3D,
+        SolidBorder,
+        LockedFrame,
+        FocusRectangle,
+        SelectionFrame,
+        DisabledBorder
+    }
+
     public class Border : Control
     {
-
         [Browsable(true)]
-        [DefaultValue(1)]
         [Category(nameof(CategoryAttribute.Appearance))]
-        public int BorderWidth { get; set; } = 1;
-
-        protected override Padding DefaultMargin => new Padding(0);
-        protected override Padding DefaultPadding => new Padding(0);
-
-        private bool isMouseDown = false;
-        private bool isDragging = false;
+        [DefaultValue(BorderControlType.Border3D)]
+        public BorderControlType BorderStyle
+        {
+            get { return _borderStyle; }
+            set
+            {
+                if (_borderStyle != value)
+                {
+                    _borderStyle = value;
+                    OnStyleChanged(EventArgs.Empty);
+                    Invalidate();
+                }
+            }
+        }
+        private BorderControlType _borderStyle;
 
         public Border()
         {
             this.SetStyle(ControlStyles.UserPaint, true);
             this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             this.SetStyle(ControlStyles.Opaque, true);
-            this.BackColor = Color.Transparent;
+            this.SetStyle(ControlStyles.Selectable, false);
+            this.BackColor = Color.Magenta;
+
+            this.Margin = DefaultMargin;
+            this.Padding = DefaultPadding;
+            this.TabStop = false;
+            this.CausesValidation = false;
         }
+
+        public override bool Focused => false;
+        protected override bool CanRaiseEvents => false;
+        protected override bool ShowFocusCues => false;
+        protected override bool ShowKeyboardCues => false;
+        protected override Padding DefaultMargin => new Padding(0);
+        protected override Padding DefaultPadding => new Padding(0);
+
+        private const int WM_NCHITTEST = 0x0084;
+        private const int HTTRANSPARENT = (-1);
 
         protected override CreateParams CreateParams
         {
             get
             {
                 CreateParams cp = base.CreateParams;
-                cp.ExStyle = cp.ExStyle | 0x20;
+                cp.ExStyle |= (int)WindowStyles.WS_EX_TRANSPARENT;
+                if (!DesignMode)
+                {
+                    cp.ExStyle |= (int)WindowStyles.WS_EX_NOACTIVATE;
+                }
                 return cp;
             }
         }
+
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == WM_NCHITTEST)
+            {
+                if (!DesignMode)
+                {
+                    m.Result = (IntPtr)HTTRANSPARENT;
+                }
+            }
+            else
+            {
+                base.WndProc(ref m);
+            }
+        }
+
+        protected override void InitLayout()
+        {
+            if (this.Parent != null)
+            {
+                this.ForeColor = ColorHelper.InvertColor(this.Parent.ForeColor);
+            }
+            base.InitLayout();
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            Rectangle bounds = this.ClientRectangle;
+            Graphics g = e.Graphics;
+
+            // g.Clear(backColor);
+
+            switch (this.BorderStyle)
+            {
+                case BorderControlType.Border3D:
+                    ControlPaint.DrawBorder3D(g, bounds);
+                    break;
+                case BorderControlType.SolidBorder:
+                    ControlPaint.DrawBorder(g, bounds, this.ForeColor, ButtonBorderStyle.Solid);
+                    break;
+                case BorderControlType.LockedFrame:
+                    ControlPaint.DrawLockedFrame(g, bounds, true);
+                    break;
+                case BorderControlType.FocusRectangle:
+                    ControlPaint.DrawFocusRectangle(g, bounds);
+                    break;
+                case BorderControlType.SelectionFrame:
+                    ControlPaint.DrawSelectionFrame(g, true, bounds, BorderHelper.Grow(bounds, 1), this.BackColor);
+                    break;
+                case BorderControlType.DisabledBorder:
+                    ControlPaint.DrawVisualStyleBorder(g, bounds);
+                    break;
+                case BorderControlType.None:
+                default:
+                    break;
+            }
+
+            /*
+            if (DesignMode)
+            {
+                ControlPaint.DrawBorder(g, bounds, Color.Fuchsia, ButtonBorderStyle.Solid);
+            }
+            */
+
+            base.OnPaint(e);
+        }
+
         protected override void OnBackColorChanged(EventArgs e)
         {
             if (this.Parent != null)
             {
                 Parent.Invalidate(this.Bounds, true);
             }
+            this.Invalidate();
             base.OnBackColorChanged(e);
         }
 
@@ -75,57 +181,13 @@ namespace TotalWinUICustomization.Controls
             base.OnMove(e);
         }
 
-        protected override void OnPaint(PaintEventArgs e)
+        protected override void OnSizeChanged(EventArgs e)
         {
-            Rectangle bounds = this.ClientRectangle;
-            Graphics g = e.Graphics;
-            ControlPaint.DrawBorder(g, bounds, this.ForeColor, ButtonBorderStyle.Solid);
-            
-            // g.Clear(backColor);
-            // ControlPaint.DrawReversibleFrame(bounds, this.ForeColor, FrameStyle.Thick);// ButtonBorderStyle.Solid);
-            // ControlPaint.DrawFocusRectangle(g, bounds, this.ForeColor, this.BackColor);
-            // ControlPaint.DrawBorder3D(g, bounds, Border3DStyle.SunkenOuter, Border3DSide.All);
-            // ControlPaint.DrawBorder(g, bounds,
-            //     this.ForeColor, BorderWidth, ButtonBorderStyle.Solid,
-            //     this.ForeColor, BorderWidth, ButtonBorderStyle.Solid,
-            //     this.ForeColor, BorderWidth, ButtonBorderStyle.Solid,
-            //     this.ForeColor, BorderWidth, ButtonBorderStyle.Solid);
-            // using (Pen light = new Pen(this.ForeColor))            {            }
-
-            base.OnPaint(e);
-        }
-
-
-        protected void Paint3dBorder(Graphics g)
-        {
-            Color backColor = this.BackColor;
-            Rectangle bounds = this.ClientRectangle;
-
-            using (Pen light = new Pen(ControlPaint.Light(backColor, 1.0f)))
+            if (DesignMode)
             {
-                using (Pen dark = new Pen(ControlPaint.Dark(backColor, 0f)))
-                {
-
-
-                    // left
-                    g.DrawLine(light, bounds.Left + 1, bounds.Top + 1, bounds.Left + 1, bounds.Height - 1);
-                    g.DrawLine(dark, bounds.Left, bounds.Top + 1, bounds.Left, bounds.Height - 2);
-
-                    // bottom
-                    g.DrawLine(light, bounds.Left, bounds.Height - 1, bounds.Width - 1, bounds.Height - 1);
-                    g.DrawLine(dark, bounds.Left, bounds.Height - 2, bounds.Width - 1, bounds.Height - 2);
-
-                    // top
-                    g.DrawLine(light, bounds.Left + 1, bounds.Top + 1, bounds.Width - 1, bounds.Top + 1);
-                    g.DrawLine(dark, bounds.Left, bounds.Top, bounds.Width - 2, bounds.Top);
-
-                    // right
-                    g.DrawLine(light, bounds.Width - 1, bounds.Top, bounds.Width - 1, bounds.Height - 1);
-                    g.DrawLine(dark, bounds.Width - 2, bounds.Top, bounds.Width - 2, bounds.Height - 2);
-                }
+                Invalidate();
             }
+            base.OnSizeChanged(e);
         }
-
-
     }
 }

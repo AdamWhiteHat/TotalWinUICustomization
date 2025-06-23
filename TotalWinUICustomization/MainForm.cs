@@ -1,3 +1,5 @@
+using System.Drawing.Text;
+using System.Security.Cryptography.X509Certificates;
 using TotalWinUICustomization.Controls;
 using TotalWinUICustomization.Types;
 
@@ -5,19 +7,38 @@ namespace TotalWinUICustomization
 {
     public partial class MainForm : Form
     {
-        private WindowsUIMockupControl windowsuiMockupControl;
+        public WindowsUiElements? CurrentUiColorElementSelected
+        {
+            get { return _currentUiColorElementSelected; }
+            set
+            {
+                _currentUiColorElementSelected = value;
+                PanelColorPropertyControls.Enabled = !(_currentUiColorElementSelected == null);
+            }
+        }
+        private WindowsUiElements? _currentUiColorElementSelected;
+
+        public WindowsUiElements? CurrentUiFontElementSelected
+        {
+            get { return _currentUiFontElementSelected; }
+            set
+            {
+                _currentUiFontElementSelected = value;
+                PanelFontPropertyControls.Enabled = !(_currentUiFontElementSelected == null);
+            }
+        }
+        private WindowsUiElements? _currentUiFontElementSelected;
+
+        private List<FontFamily> _fontFamilies = null;
 
         public MainForm()
         {
             this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             InitializeComponent();
-            windowsuiMockupControl = new WindowsUIMockupControl();
-            windowsuiMockupControl.Location = new Point(2, 2);
-            windowsuiMockupControl.Name = "WindowsUiMockupControl";
-            windowsuiMockupControl.ColorUiElementClicked += WindowsuiMockupControl_ColorUiElementClicked;
-            Controls.Add(windowsuiMockupControl);
 
             this.AllowTransparency = true;
+            CurrentUiColorElementSelected = null;
+            CurrentUiFontElementSelected = null;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -25,19 +46,29 @@ namespace TotalWinUICustomization
             foreach (var item in Enum.GetValues(typeof(WindowsUiElements)).OfType<WindowsUiElements>())
             {
                 bool isFont = Helpers.EnumToIsFontDictionary[item];
-
-                if (isFont)
+                if (!isFont)
                 {
-                    comboBoxFontSelection.Items.Add(item);
+                    comboBoxColorPropertySelection.Items.Add(item);
                 }
                 else
                 {
-                    comboBoxPropertySelection.Items.Add(item);
+                    Font font = RegistryHelper.GetWindowsFont(item);
+                    windowsuiMockupControl.UpdateControlFont(item, font);
                 }
 
                 Color itemColor = RegistryHelper.GetWindowsColor(item);
                 windowsuiMockupControl.UpdateControlColor(item, itemColor);
             }
+
+            if (_fontFamilies == null)
+            {
+                _fontFamilies = FontFamily.Families.ToList();
+            }
+            foreach (FontFamily family in _fontFamilies)
+            {
+                comboBoxFontPropertySelection.Items.Add(family.Name);
+            }
+            //comboBoxFontPropertySelection.SelectedItem = "SegoeUI";
         }
 
         private void WindowsuiMockupControl_ColorUiElementClicked(object sender, ColorUiElementClickedEventArgs e)
@@ -47,77 +78,127 @@ namespace TotalWinUICustomization
 
             if (isFont)
             {
-                comboBoxFontSelection.SelectedItem = e.ElementClicked;
-                if (secondary != null)
+                CurrentUiFontElementSelected = e.ElementClicked;
+                CurrentUiColorElementSelected = secondary.HasValue ? secondary.Value : null;
+            }
+            else
+            {
+                CurrentUiFontElementSelected = secondary.HasValue ? secondary.Value : null;
+                CurrentUiColorElementSelected = e.ElementClicked;
+            }
+
+            comboBoxColorPropertySelection.SelectedIndex = -1;
+            comboBoxFontPropertySelection.SelectedIndex = -1;
+
+            UpdateComboboxes();
+        }
+
+        private void UpdateComboboxes()
+        {
+            if (CurrentUiColorElementSelected.HasValue)
+            {
+                if (comboBoxColorPropertySelection.SelectedIndex == -1 || (WindowsUiElements)comboBoxColorPropertySelection.SelectedItem != CurrentUiColorElementSelected.Value)
                 {
-                    comboBoxPropertySelection.SelectedItem = secondary.Value;
+                    comboBoxColorPropertySelection.SelectedItem = CurrentUiColorElementSelected.Value;
+                }
+                if (!PanelColorPropertyControls.Enabled)
+                {
+                    PanelColorPropertyControls.Enabled = true;
+                }
+                Color currentElementColor = RegistryHelper.GetWindowsColor(CurrentUiColorElementSelected.Value);
+                panelPropertyColorSwatch1.BackColor = currentElementColor;
+            }
+            else
+            {
+                if (comboBoxColorPropertySelection.SelectedIndex != -1)
+                {
+                    comboBoxColorPropertySelection.SelectedIndex = -1;
+                }
+                if (PanelColorPropertyControls.Enabled)
+                {
+                    PanelColorPropertyControls.Enabled = false;
+                }
+            }
+
+            if (CurrentUiFontElementSelected.HasValue)
+            {
+                if (comboBoxFontPropertySelection.SelectedIndex == -1)
+                {
+                    Font font = RegistryHelper.GetWindowsFont(CurrentUiFontElementSelected.Value);
+                    int index = _fontFamilies.ToList().IndexOf(font.FontFamily);
+                    if (index != -1)
+                    {
+                        comboBoxFontPropertySelection.SelectedIndex = index;
+                    }
+
+                    float fontSize = font.SizeInPoints;
+                    sizeUpDown_Font.Text = fontSize.ToString();
+                }
+                if (!PanelFontPropertyControls.Enabled)
+                {
+                    PanelFontPropertyControls.Enabled = true;
+                }
+                Color currentFontColor = RegistryHelper.GetWindowsColor(CurrentUiFontElementSelected.Value);
+                panelFontColorSwatch.BackColor = currentFontColor;
+            }
+            else
+            {
+                if (comboBoxFontPropertySelection.SelectedIndex != -1)
+                {
+                    comboBoxFontPropertySelection.SelectedIndex = -1;
+                }
+                if (PanelFontPropertyControls.Enabled)
+                {
+                    PanelFontPropertyControls.Enabled = false;
+                }
+            }
+        }
+
+        private void comboBoxColorPropertySelection_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            if (comboBoxColorPropertySelection.SelectedIndex != -1)
+            {
+                WindowsUiElements selectedProperty = (WindowsUiElements)comboBoxColorPropertySelection.Items[comboBoxColorPropertySelection.SelectedIndex];
+                if (CurrentUiColorElementSelected != selectedProperty)
+                {
+                    CurrentUiColorElementSelected = selectedProperty;
+                }
+
+                WindowsUiElements? secondary = Helpers.EnumToCompanionEnum[selectedProperty];
+                if (secondary.HasValue)
+                {
+                    CurrentUiFontElementSelected = secondary.Value;
                 }
                 else
                 {
-                    comboBoxPropertySelection.SelectedIndex = -1;
+                    CurrentUiFontElementSelected = null;
                 }
+
+                UpdateComboboxes();
             }
             else
             {
-                comboBoxPropertySelection.SelectedItem = e.ElementClicked;
-                if (secondary != null)
-                {
-                    comboBoxFontSelection.SelectedItem = secondary.Value;
-                }
-                else
-                {
-                    comboBoxFontSelection.SelectedIndex = -1;
-                }
+                CurrentUiColorElementSelected = null;
+                CurrentUiFontElementSelected = null;
             }
         }
 
-        private void ComboBoxPropertySelection_SelectedIndexChanged(object sender, EventArgs e)
+        private void buttonPropertyColor1_Click(object sender, EventArgs e)
         {
-            if (comboBoxPropertySelection.SelectedIndex == -1)
-            {
-                PanelPropertyControls.Enabled = false;
-            }
-            else
-            {
-                if (!PanelPropertyControls.Enabled)
-                {
-                    PanelPropertyControls.Enabled = true;
-                }
-                WindowsUiElements selectedProperty = (WindowsUiElements)comboBoxPropertySelection.Items[comboBoxPropertySelection.SelectedIndex];
-                Color selectedColor = RegistryHelper.GetWindowsColor(selectedProperty);
-                panelPropertyColorSwatch.BackColor = selectedColor;
-            }
-        }
-
-        private void comboBoxFontSelection_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (comboBoxFontSelection.SelectedIndex == -1)
-            {
-                panelFontControls.Enabled = false;
-            }
-            else
-            {
-                if (!panelFontControls.Enabled)
-                {
-                    panelFontControls.Enabled = true;
-                }
-                WindowsUiElements selectedProperty = (WindowsUiElements)comboBoxFontSelection.Items[comboBoxFontSelection.SelectedIndex];
-                Color selectedColor = RegistryHelper.GetWindowsColor(selectedProperty);
-                panelFontColorSwatch.BackColor = selectedColor;
-            }
-        }
-
-        private void buttonPropertyColor_Click(object sender, EventArgs e)
-        {
-            colorPickerDialog.Color = panelPropertyColorSwatch.BackColor;
+            colorPickerDialog.Color = panelPropertyColorSwatch1.BackColor;
             if (colorPickerDialog.ShowDialog() == DialogResult.OK)
             {
                 Color selectedColor = colorPickerDialog.Color;
-                panelPropertyColorSwatch.BackColor = selectedColor;
-                WindowsUiElements selectedProperty = (WindowsUiElements)comboBoxPropertySelection.Items[comboBoxPropertySelection.SelectedIndex];
+                panelPropertyColorSwatch1.BackColor = selectedColor;
+                WindowsUiElements selectedProperty = (WindowsUiElements)comboBoxColorPropertySelection.Items[comboBoxColorPropertySelection.SelectedIndex];
                 windowsuiMockupControl.UpdateControlColor(selectedProperty, selectedColor);
                 RegistryHelper.SetWindowsColor(selectedProperty, selectedColor);
             }
+        }
+
+        private void buttonPropertyColor2_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void buttonFontColor_Click(object sender, EventArgs e)
@@ -128,11 +209,62 @@ namespace TotalWinUICustomization
                 Color selectedColor = colorPickerDialog.Color;
                 panelFontColorSwatch.BackColor = selectedColor;
 
-                WindowsUiElements selectedProperty = (WindowsUiElements)comboBoxFontSelection.Items[comboBoxFontSelection.SelectedIndex];
-                windowsuiMockupControl.UpdateControlColor(selectedProperty, selectedColor);
-                RegistryHelper.SetWindowsColor(selectedProperty, selectedColor);
+                if (CurrentUiFontElementSelected.HasValue)
+                {
+                    WindowsUiElements selectedProperty = CurrentUiFontElementSelected.Value;
+
+                    windowsuiMockupControl.UpdateControlColor(selectedProperty, selectedColor);
+                    RegistryHelper.SetWindowsColor(selectedProperty, selectedColor);
+                }
             }
         }
 
+        private void comboBoxFontPropertySelection_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            if (CurrentUiFontElementSelected.HasValue)
+            {
+                Font selectedFont = GetSelectedComboBoxFont();
+                if (selectedFont != null)
+                {
+                    windowsuiMockupControl.UpdateControlFont(CurrentUiFontElementSelected.Value, selectedFont);
+                    RegistryHelper.SetWindowsFont(CurrentUiFontElementSelected.Value, selectedFont);
+                }
+            }
+        }
+
+        public Font GetSelectedComboBoxFont()
+        {
+            if (comboBoxFontPropertySelection != null && comboBoxFontPropertySelection.SelectedIndex != -1)
+            {
+                var selectedValue = comboBoxFontPropertySelection.Items[comboBoxFontPropertySelection.SelectedIndex].ToString();
+                var match = _fontFamilies.Where(f => string.Equals(f.Name, selectedValue, StringComparison.InvariantCultureIgnoreCase));
+                if (match.Any())
+                {
+                    FontFamily selectedFontFamily = match.Single();
+                    float fontSize = float.Parse(sizeUpDown_Font.Text);
+
+                    return new Font(selectedFontFamily, fontSize, GraphicsUnit.Point);
+                }
+            }
+            return null;
+        }
+
+        private void sizeUpDown_Font_SelectedItemChanged(object sender, EventArgs e)
+        {
+            if (CurrentUiFontElementSelected.HasValue)
+            {
+                Font font = RegistryHelper.GetWindowsFont(CurrentUiFontElementSelected.Value);
+
+                float fontSize = float.Parse(sizeUpDown_Font.Text);
+
+                if (fontSize > 0)
+                {
+                    Font newFont = new Font(font.FontFamily, fontSize, GraphicsUnit.Point);
+                    windowsuiMockupControl.UpdateControlFont(CurrentUiFontElementSelected.Value, newFont);
+                    RegistryHelper.SetWindowsFont(CurrentUiFontElementSelected.Value, newFont);
+                }
+
+            }
+        }
     }
 }
