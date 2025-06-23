@@ -53,11 +53,14 @@ namespace TotalWinUICustomization.Types
         AppWorkspace
     }
 
-    public enum ElementType
+    public enum SystemFontGroup
     {
-        Control,
-        Font,
-        Both
+        CaptionFont,
+        SmCaptionFont,
+        MenuFont,
+        MessageFont,
+        IconFont,
+        StatusFont
     }
 
     public static class Helpers
@@ -163,6 +166,15 @@ namespace TotalWinUICustomization.Types
                 };
             }
         }
+        /*
+         { WindowsUiElements.InactiveTitleText, true },
+         { WindowsUiElements.ActiveTitleText,true },
+         { WindowsUiElements.WindowText,true },
+         { WindowsUiElements.ButtonText,true },
+         { WindowsUiElements.MenuText,true },
+         { WindowsUiElements.HighlightText,true },
+         { WindowsUiElements.InfoText,true },
+        */
 
         public static Dictionary<WindowsUiElements, WindowsUiElements?> EnumToCompanionEnum
         {
@@ -203,6 +215,14 @@ namespace TotalWinUICustomization.Types
                     { WindowsUiElements.AppWorkspace,null }
                 };
             }
+        }
+    }
+
+    public static class UiTypesExtensionMethods
+    {
+        public static string GetRegistryKey(this SystemFontGroup source)
+        {
+            return Enum.GetName(typeof(SystemFontGroup), source);
         }
     }
 }

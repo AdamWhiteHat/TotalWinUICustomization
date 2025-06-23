@@ -21,6 +21,9 @@ namespace TotalWinUICustomization.Controls
         {
             SendMessage(HWND_BROADCAST, WM_SETTINGCHANGE, 0, INI_INTL);
         }
+
+        [DllImport("Gdiplus", SetLastError = true, ExactSpelling = true, CharSet = System.Runtime.InteropServices.CharSet.Unicode)] // 3 = Unicode
+        public static extern int GdipCreateFontFamilyFromName(string name, HandleRef fontCollection, out IntPtr FontFamily);
     }
 
     [Flags]

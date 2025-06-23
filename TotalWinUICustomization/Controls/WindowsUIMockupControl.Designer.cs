@@ -133,7 +133,7 @@ namespace TotalWinUICustomization
             button_MessageBox.TabIndex = 12;
             button_MessageBox.Text = "OK";
             button_MessageBox.TextAlign = ContentAlignment.MiddleCenter;
-            button_MessageBox.Click += button_MessageBox_Click;
+            button_MessageBox.Click += window_MessageBox_Click;
             // 
             // InfoWindowAndText
             // 
@@ -173,7 +173,7 @@ namespace TotalWinUICustomization
             font_MessageBox.Size = new Size(104, 20);
             font_MessageBox.TabIndex = 1;
             font_MessageBox.Text = "Message Text";
-            font_MessageBox.Click += font_MessageBox_Click;
+            font_MessageBox.Click += window_MessageBox_Click;
             // 
             // titleBar_MessageBox
             // 
@@ -187,7 +187,7 @@ namespace TotalWinUICustomization
             titleBar_MessageBox.Name = "titleBar_MessageBox";
             titleBar_MessageBox.Size = new Size(386, 33);
             titleBar_MessageBox.TabIndex = 7;
-            titleBar_MessageBox.Click += titleBar_MessageBox_Click;
+            titleBar_MessageBox.Click += ActiveTitleBar_Click;
             // 
             // font_MessageBoxTitleBar
             // 
@@ -200,7 +200,7 @@ namespace TotalWinUICustomization
             font_MessageBoxTitleBar.Size = new Size(101, 20);
             font_MessageBoxTitleBar.TabIndex = 2;
             font_MessageBoxTitleBar.Text = "Message Box";
-            font_MessageBoxTitleBar.Click += font_MessageBoxTitleBar_Click;
+            font_MessageBoxTitleBar.Click += ActiveTitleBar_Click;
             // 
             // buttonX_MessageBox
             // 
@@ -354,7 +354,7 @@ namespace TotalWinUICustomization
             titleBar_ActiveWindow.Name = "titleBar_ActiveWindow";
             titleBar_ActiveWindow.Size = new Size(509, 33);
             titleBar_ActiveWindow.TabIndex = 8;
-            titleBar_ActiveWindow.Click += titleBar_ActiveWindow_Click;
+            titleBar_ActiveWindow.Click += ActiveTitleBar_Click;
             // 
             // buttonMinimize_ActiveWindow
             // 
@@ -397,7 +397,7 @@ namespace TotalWinUICustomization
             font_ActiveWindowTitleBar.Size = new Size(115, 20);
             font_ActiveWindowTitleBar.TabIndex = 2;
             font_ActiveWindowTitleBar.Text = "Active Window";
-            font_ActiveWindowTitleBar.Click += font_ActiveWindowTitleBar_Click;
+            font_ActiveWindowTitleBar.Click += ActiveTitleBar_Click;
             // 
             // buttonX_ActiveWindow
             // 
@@ -437,7 +437,7 @@ namespace TotalWinUICustomization
             titleBar_InactiveWindow.Name = "titleBar_InactiveWindow";
             titleBar_InactiveWindow.Size = new Size(474, 33);
             titleBar_InactiveWindow.TabIndex = 12;
-            titleBar_InactiveWindow.Click += titleBar_InactiveWindow_Click;
+            titleBar_InactiveWindow.Click += InactiveTitleBar_Click;
             // 
             // buttonMinimize_InactiveWindow
             // 
@@ -494,7 +494,7 @@ namespace TotalWinUICustomization
             font_InactiveWindowTitleBar.Size = new Size(126, 20);
             font_InactiveWindowTitleBar.TabIndex = 2;
             font_InactiveWindowTitleBar.Text = "Inactive Window";
-            font_InactiveWindowTitleBar.Click += font_InactiveWindowTitleBar_Click;
+            font_InactiveWindowTitleBar.Click += InactiveTitleBar_Click;
             // 
             // border1
             // 

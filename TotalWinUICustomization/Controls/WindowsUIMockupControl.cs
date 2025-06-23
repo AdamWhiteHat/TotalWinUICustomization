@@ -41,14 +41,13 @@ namespace TotalWinUICustomization
         [Editor(typeof(ColorEditor), typeof(UITypeEditor))]
         public Color InactiveTitleColor
         {
-            get { return _inactiveTitle_Color1; }
+            get { return titleBar_InactiveWindow.BackColor; }
             set
             {
-                SetColorPropertyField(WindowsUiElements.InactiveTitle, ref _inactiveTitle_Color1, value);
-                titleBar_InactiveWindow.Invalidate();
+                PropertyInfo propertyInfo = typeof(Panel).GetProperty(nameof(BackColor));
+                SetColorPropertyField2(WindowsUiElements.InactiveTitle, titleBar_InactiveWindow, propertyInfo, value);
             }
         }
-        private Color _inactiveTitle_Color1 = Color.FromKnownColor(KnownColor.InactiveCaption);
 
         [Browsable(true)]
         [Category(nameof(CategoryAttribute.Appearance))]
@@ -58,8 +57,7 @@ namespace TotalWinUICustomization
             get { return _inactiveTitle_Color2; }
             set
             {
-                SetColorPropertyField(WindowsUiElements.InactiveTitleGradient, ref _inactiveTitle_Color2, value);
-                titleBar_InactiveWindow.Invalidate();
+                SetColorPropertyField(WindowsUiElements.InactiveTitle, ref _inactiveTitle_Color2, value);
             }
         }
         private Color _inactiveTitle_Color2 = Color.FromKnownColor(KnownColor.GradientInactiveCaption);
@@ -72,8 +70,9 @@ namespace TotalWinUICustomization
             get { return font_InactiveWindowTitleBar.ForeColor; }
             set
             {
-                PropertyInfo propertyInfo = typeof(Label).GetProperty(nameof(font_InactiveWindowTitleBar.ForeColor));
+                PropertyInfo propertyInfo = typeof(Label).GetProperty(nameof(ForeColor));
                 SetColorPropertyField2(WindowsUiElements.InactiveTitleText, font_InactiveWindowTitleBar, propertyInfo, value);
+                font_InactiveWindowTitleBar.Invalidate();
             }
         }
 
@@ -83,14 +82,14 @@ namespace TotalWinUICustomization
         [Editor(typeof(ColorEditor), typeof(UITypeEditor))]
         public Color ActiveTitleColor
         {
-            get { return _activeTitle_Color1; }
+            get { return titleBar_ActiveWindow.BackColor; }
             set
             {
-                SetColorPropertyField(WindowsUiElements.ActiveTitle, ref _activeTitle_Color1, value);
+                PropertyInfo propertyInfo = typeof(Panel).GetProperty(nameof(BackColor));
+                SetColorPropertyField2(WindowsUiElements.InactiveTitle, titleBar_ActiveWindow, propertyInfo, value);
                 titleBar_ActiveWindow.Invalidate();
             }
         }
-        private Color _activeTitle_Color1 = Color.FromKnownColor(KnownColor.ActiveCaption);
 
         [Browsable(true)]
         [Category(nameof(CategoryAttribute.Appearance))]
@@ -101,7 +100,6 @@ namespace TotalWinUICustomization
             set
             {
                 SetColorPropertyField(WindowsUiElements.ActiveTitleGradient, ref _activeTitle_Color2, value);
-                titleBar_ActiveWindow.Invalidate();
             }
         }
         private Color _activeTitle_Color2 = Color.FromKnownColor(KnownColor.GradientActiveCaption);
@@ -114,7 +112,7 @@ namespace TotalWinUICustomization
             get { return font_ActiveWindowTitleBar.ForeColor; }
             set
             {
-                PropertyInfo propertyInfo = typeof(Label).GetProperty(nameof(font_ActiveWindowTitleBar.ForeColor));
+                PropertyInfo propertyInfo = typeof(Label).GetProperty(nameof(ForeColor));
                 SetColorPropertyField2(WindowsUiElements.ActiveTitleText, font_ActiveWindowTitleBar, propertyInfo, value);
             }
         }
@@ -128,7 +126,7 @@ namespace TotalWinUICustomization
             get { return textbox_ActiveWindow.BackColor; }
             set
             {
-                PropertyInfo propertyInfo = typeof(Label).GetProperty(nameof(textbox_ActiveWindow.BackColor));
+                PropertyInfo propertyInfo = typeof(Label).GetProperty(nameof(BackColor));
                 SetColorPropertyField2(WindowsUiElements.Window, textbox_ActiveWindow, propertyInfo, value);
             }
         }
@@ -141,7 +139,7 @@ namespace TotalWinUICustomization
             get { return font_ActiveWindow.ForeColor; }
             set
             {
-                PropertyInfo propertyInfo = typeof(Label).GetProperty(nameof(font_ActiveWindow.ForeColor));
+                PropertyInfo propertyInfo = typeof(Label).GetProperty(nameof(ForeColor));
                 SetColorPropertyField2(WindowsUiElements.WindowText, font_ActiveWindow, propertyInfo, value);
             }
         }
@@ -155,10 +153,10 @@ namespace TotalWinUICustomization
             get { return button_MessageBox.BackColor; }
             set
             {
-                PropertyInfo propertyInfo = typeof(Label).GetProperty(nameof(button_MessageBox.BackColor));
+                PropertyInfo propertyInfo = typeof(Label).GetProperty(nameof(BackColor));
                 SetColorPropertyField2(WindowsUiElements.ButtonFace, button_MessageBox, propertyInfo, value);
 
-                PropertyInfo propertyInfo2 = typeof(Label).GetProperty(nameof(window_MessageBox.BackColor));
+                PropertyInfo propertyInfo2 = typeof(Label).GetProperty(nameof(BackColor));
                 SetColorPropertyField2(WindowsUiElements.ButtonFace, window_MessageBox, propertyInfo2, value);
             }
         }
@@ -171,10 +169,10 @@ namespace TotalWinUICustomization
             get { return font_MessageBox.ForeColor; }
             set
             {
-                PropertyInfo propertyInfo = typeof(Label).GetProperty(nameof(font_MessageBox.ForeColor));
+                PropertyInfo propertyInfo = typeof(Label).GetProperty(nameof(ForeColor));
                 SetColorPropertyField2(WindowsUiElements.ButtonText, font_MessageBox, propertyInfo, value);
 
-                PropertyInfo propertyInfo2 = typeof(Label).GetProperty(nameof(button_MessageBox.ForeColor));
+                PropertyInfo propertyInfo2 = typeof(Label).GetProperty(nameof(ForeColor));
                 SetColorPropertyField2(WindowsUiElements.ButtonText, button_MessageBox, propertyInfo2, value);
             }
         }
@@ -188,7 +186,7 @@ namespace TotalWinUICustomization
             get { return menu.BackColor; }
             set
             {
-                PropertyInfo propertyInfo = typeof(Label).GetProperty(nameof(menu.BackColor));
+                PropertyInfo propertyInfo = typeof(Label).GetProperty(nameof(BackColor));
                 SetColorPropertyField2(WindowsUiElements.Menu, menu, propertyInfo, value);
             }
         }
@@ -201,7 +199,7 @@ namespace TotalWinUICustomization
             get { return font_menuNormal.ForeColor; }
             set
             {
-                PropertyInfo propertyInfo = typeof(Label).GetProperty(nameof(font_menuNormal.ForeColor));
+                PropertyInfo propertyInfo = typeof(Label).GetProperty(nameof(ForeColor));
                 SetColorPropertyField2(WindowsUiElements.MenuText, font_menuNormal, propertyInfo, value);
             }
         }
@@ -214,7 +212,7 @@ namespace TotalWinUICustomization
             get { return font_menuDisabled.ForeColor; }
             set
             {
-                PropertyInfo propertyInfo = typeof(Label).GetProperty(nameof(font_menuDisabled.ForeColor));
+                PropertyInfo propertyInfo = typeof(Label).GetProperty(nameof(ForeColor));
                 SetColorPropertyField2(WindowsUiElements.GreyText, font_menuDisabled, propertyInfo, value);
             }
         }
@@ -227,7 +225,7 @@ namespace TotalWinUICustomization
             get { return font_menuSelected.BackColor; }
             set
             {
-                PropertyInfo propertyInfo = typeof(Label).GetProperty(nameof(font_menuSelected.BackColor));
+                PropertyInfo propertyInfo = typeof(Label).GetProperty(nameof(BackColor));
                 SetColorPropertyField2(WindowsUiElements.MenuHighlight, font_menuSelected, propertyInfo, value);
             }
         }
@@ -240,7 +238,7 @@ namespace TotalWinUICustomization
             get { return desktopWindow.BackColor; }
             set
             {
-                PropertyInfo propertyInfo = typeof(Label).GetProperty(nameof(desktopWindow.BackColor));
+                PropertyInfo propertyInfo = typeof(Label).GetProperty(nameof(BackColor));
                 SetColorPropertyField2(WindowsUiElements.DesktopBackground, desktopWindow, propertyInfo, value);
             }
         }
@@ -253,7 +251,7 @@ namespace TotalWinUICustomization
             get { return InfoWindowAndText.ForeColor; }
             set
             {
-                PropertyInfo propertyInfo = typeof(Label).GetProperty(nameof(InfoWindowAndText.ForeColor));
+                PropertyInfo propertyInfo = typeof(Label).GetProperty(nameof(ForeColor));
                 SetColorPropertyField2(WindowsUiElements.InfoText, InfoWindowAndText, propertyInfo, value);
             }
         }
@@ -266,7 +264,7 @@ namespace TotalWinUICustomization
             get { return InfoWindowAndText.BackColor; }
             set
             {
-                PropertyInfo propertyInfo = typeof(Label).GetProperty(nameof(InfoWindowAndText.BackColor));
+                PropertyInfo propertyInfo = typeof(Label).GetProperty(nameof(BackColor));
                 SetColorPropertyField2(WindowsUiElements.InfoWindow, InfoWindowAndText, propertyInfo, value);
             }
         }
@@ -279,7 +277,7 @@ namespace TotalWinUICustomization
             get { return selectedText.BackColor; }
             set
             {
-                PropertyInfo propertyInfo = typeof(Label).GetProperty(nameof(selectedText.BackColor));
+                PropertyInfo propertyInfo = typeof(Label).GetProperty(nameof(BackColor));
                 SetColorPropertyField2(WindowsUiElements.Highlight, selectedText, propertyInfo, value);
             }
         }
@@ -293,10 +291,10 @@ namespace TotalWinUICustomization
             get { return selectedText.ForeColor; }
             set
             {
-                PropertyInfo propertyInfo1 = typeof(Label).GetProperty(nameof(selectedText.ForeColor));
+                PropertyInfo propertyInfo1 = typeof(Label).GetProperty(nameof(ForeColor));
                 SetColorPropertyField2(WindowsUiElements.HighlightText, selectedText, propertyInfo1, value);
 
-                PropertyInfo propertyInfo2 = typeof(Label).GetProperty(nameof(font_menuSelected.ForeColor));
+                PropertyInfo propertyInfo2 = typeof(Label).GetProperty(nameof(ForeColor));
                 SetColorPropertyField2(WindowsUiElements.HighlightText, font_menuSelected, propertyInfo2, value);
             }
         }
@@ -322,7 +320,7 @@ namespace TotalWinUICustomization
             get { return ScrollBarActiveWindow.BackColor; }
             set
             {
-                PropertyInfo propertyInfo = typeof(VScrollBar).GetProperty(nameof(ScrollBarActiveWindow.BackColor));
+                PropertyInfo propertyInfo = typeof(VScrollBar).GetProperty(nameof(BackColor));
                 SetColorPropertyField2(WindowsUiElements.Scrollbar, ScrollBarActiveWindow, propertyInfo, value);
             }
         }
@@ -391,7 +389,6 @@ AppWorkspace=128 128 128
                 _captionFont = value;
                 font_ActiveWindowTitleBar.Font = value;
                 font_InactiveWindowTitleBar.Font = value;
-                font_MessageBoxTitleBar.Font = value;
             }
         }
         private Font _captionFont;
@@ -402,6 +399,7 @@ AppWorkspace=128 128 128
             set
             {
                 _smCaptionFont = value;
+                font_MessageBoxTitleBar.Font = value;
             }
         }
         private Font _smCaptionFont;
@@ -413,9 +411,10 @@ AppWorkspace=128 128 128
             {
                 _messageFont = value;
                 font_ActiveWindow.Font = value;
-                selectedText.Font = value;
+
                 button_MessageBox.Font = value;
                 font_MessageBox.Font = value;
+
                 hyperlinkText.Font = value;
             }
         }
@@ -506,6 +505,7 @@ AppWorkspace=128 128 128
 
         #region Paint Overrides
 
+        /*
         private void titleBar_InactiveWindow_Paint(object sender, PaintEventArgs e)
         {
             LinearGradientBrush gradientBrush = new LinearGradientBrush(titleBar_InactiveWindow.ClientRectangle, _inactiveTitle_Color1, _inactiveTitle_Color2, 1f);
@@ -517,6 +517,7 @@ AppWorkspace=128 128 128
             LinearGradientBrush gradientBrush = new LinearGradientBrush(titleBar_ActiveWindow.ClientRectangle, _activeTitle_Color1, _activeTitle_Color2, 1f);
             e.Graphics.FillRectangle(gradientBrush, titleBar_ActiveWindow.ClientRectangle);
         }
+        */
 
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -539,172 +540,142 @@ AppWorkspace=128 128 128
 
         #region Internal Control Click Events
 
-        private void titleBar_ActiveWindow_Click(object sender, EventArgs e)
+        private void ActiveTitleBar_Click(object sender, EventArgs e)
         {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.ActiveTitle);
+            RaiseColorUiElementClickedEvent(UIElementAssociation.ActiveTitle);
+        }
+        private void controlBox_MessageBox_Click(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(UIElementAssociation.ActiveTitle);
+        }
+        private void controlBox_ActiveWindow_Click(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(UIElementAssociation.ActiveTitle);
         }
 
-        private void titleBar_InactiveWindow_Click(object sender, EventArgs e)
+        private void InactiveTitleBar_Click(object sender, EventArgs e)
         {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.InactiveTitle);
+            RaiseColorUiElementClickedEvent(UIElementAssociation.InactiveTitle);
         }
-
-        private void titleBar_MessageBox_Click(object sender, EventArgs e)
+        private void controlBox_InactiveWindow_Click(object sender, EventArgs e)
         {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.ActiveTitle);
+            RaiseColorUiElementClickedEvent(UIElementAssociation.InactiveTitle);
         }
 
         private void textbox_ActiveWindow_Click(object sender, EventArgs e)
         {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.Window);
+            RaiseColorUiElementClickedEvent(UIElementAssociation.Window);
         }
-
+        private void font_ActiveWindow_Click(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(UIElementAssociation.Window);
+        }
 
 
         private void window_MessageBox_Click(object sender, EventArgs e)
         {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.ButtonFace);
+            RaiseColorUiElementClickedEvent(UIElementAssociation.ButtonFace);
+        }
+
+        private void activeBorderClickInterceptor_Click(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(UIElementAssociation.ActiveBorder);
+        }
+
+        private void inactiveBorderClickInterceptor_Click(object sender, EventArgs e)
+        {
+            RaiseColorUiElementClickedEvent(UIElementAssociation.InactiveBorder);
         }
 
         private void window_Desktop_Click(object sender, EventArgs e)
         {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.DesktopBackground);
-        }
-
-        private void button_MessageBox_Click(object sender, EventArgs e)
-        {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.ButtonFace);
+            RaiseColorUiElementClickedEvent(UIElementAssociation.DesktopBackground);
         }
 
 
-        private void font_InactiveWindowTitleBar_Click(object sender, EventArgs e)
-        {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.InactiveTitleText);
-        }
-
-        private void font_ActiveWindowTitleBar_Click(object sender, EventArgs e)
-        {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.ActiveTitleText);
-        }
-
-        private void font_ActiveWindow_Click(object sender, EventArgs e)
-        {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.WindowText);
-        }
-
-        private void font_MessageBoxTitleBar_Click(object sender, EventArgs e)
-        {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.ActiveTitleText);
-        }
-
-        private void font_MessageBox_Click(object sender, EventArgs e)
-        {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.ButtonText);
-        }
 
         private void font_menuNormal_Click(object sender, EventArgs e)
         {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.MenuText);
+            RaiseColorUiElementClickedEvent(UIElementAssociation.Menu);
         }
 
         private void font_menuDisabled_Click(object sender, EventArgs e)
         {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.GreyText);
+            RaiseColorUiElementClickedEvent(UIElementAssociation.GreyText);
         }
 
         private void font_menuSelected_Click(object sender, EventArgs e)
         {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.MenuHighlight);
-        }
-
-
-
-        private void controlBox_InactiveWindow_Click(object sender, EventArgs e)
-        {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.WindowText);
-        }
-
-        private void controlBox_ActiveWindow_Click(object sender, EventArgs e)
-        {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.WindowText);
-        }
-        private void controlBox_MessageBox_Click(object sender, EventArgs e)
-        {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.DesktopBackground);
+            RaiseColorUiElementClickedEvent(UIElementAssociation.MenuHighlight);
         }
 
 
         private void font_hyperlinkText_Click(object sender, EventArgs e)
         {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.HotTrackingColor);
+            RaiseColorUiElementClickedEvent(UIElementAssociation.HotTrackingColor);
         }
 
         private void InfoWindowAndText_Click(object sender, EventArgs e)
         {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.InfoWindow);
+            RaiseColorUiElementClickedEvent(UIElementAssociation.InfoWindow);
         }
 
 
         private void menu_Click(object sender, EventArgs e)
         {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.Menu);
+            RaiseColorUiElementClickedEvent(UIElementAssociation.Menu);
         }
 
         private void selectedText_Click(object sender, EventArgs e)
         {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.Highlight);
+            RaiseColorUiElementClickedEvent(UIElementAssociation.Highlight);
         }
 
         private void ScrollBar_Clicked(object sender, EventArgs e)
         {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.Scrollbar);
+            RaiseColorUiElementClickedEvent(UIElementAssociation.Scrollbar);
         }
 
         private void iconClickInterceptor_Click(object sender, EventArgs e)
         {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.DesktopBackground);
+            RaiseColorUiElementClickedEvent(UIElementAssociation.IconFont);
         }
 
-        private void activeBorderClickInterceptor_Click(object sender, EventArgs e)
-        {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.ActiveBorder);
-        }
-
-        private void inactiveBorderClickInterceptor_Click(object sender, EventArgs e)
-        {
-            RaiseColorUiElementClickedEvent(WindowsUiElements.InactiveBorder);
-        }
 
         #endregion
 
         /// <summary>Helper methods. Raises the ColorUiElementClickedEvent Event</summary>
-        protected void RaiseColorUiElementClickedEvent(WindowsUiElements elementClicked)
+        protected void RaiseColorUiElementClickedEvent(UIElementAssociation elementClicked)
         {
             ColorUiElementClicked?.Invoke(this, new ColorUiElementClickedEventArgs(elementClicked));
         }
 
-        public void UpdateControlFont(WindowsUiElements uiElement, Font font)
+        public void UpdateControlFont(SystemFontGroup fontGroup, Font font)
         {
-            switch (uiElement)
+            switch (fontGroup)
             {
-                case WindowsUiElements.ActiveTitleText:
-                case WindowsUiElements.InactiveTitleText:
+                case SystemFontGroup.CaptionFont:
                     CaptionFont = font;
                     break;
 
-                case WindowsUiElements.WindowText:
-                case WindowsUiElements.ButtonText:
+                case SystemFontGroup.SmCaptionFont:
+                    SmCaptionFont = font;
+                    break;
+
+                case SystemFontGroup.MessageFont:
                     MessageFont = font;
                     break;
 
-                case WindowsUiElements.MenuText:
-                case WindowsUiElements.GreyText:
-                case WindowsUiElements.HighlightText:
+                case SystemFontGroup.MenuFont:
                     MenuFont = font;
                     break;
 
-                case WindowsUiElements.InfoText:
+                case SystemFontGroup.StatusFont:
                     StatusFont = font;
+                    break;
+
+                case SystemFontGroup.IconFont:
+                    IconFont = font;
                     break;
             }
         }
@@ -792,7 +763,6 @@ AppWorkspace=128 128 128
             if (!field.Equals(value))
             {
                 field = value;
-                //RegistryHelper.SetWindowsColor(uiElement, value);
             }
         }
 
@@ -804,7 +774,6 @@ AppWorkspace=128 128 128
             {
                 MethodInfo setMethod = field.GetSetMethod(); // PropertyInfo.GetSetMethod
                 setMethod.Invoke(target, new object[] { value });
-                //  RegistryHelper.SetWindowsColor(uiElement, value);
             }
         }
 

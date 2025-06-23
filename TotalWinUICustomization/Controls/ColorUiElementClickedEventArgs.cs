@@ -9,9 +9,9 @@ namespace TotalWinUICustomization.Controls
 {
     public class ColorUiElementClickedEventArgs : EventArgs
     {
-        public WindowsUiElements ElementClicked { get; private set; }
+        public UIElementAssociation ElementClicked { get; private set; }
 
-        public ColorUiElementClickedEventArgs(WindowsUiElements elementClicked)
+        public ColorUiElementClickedEventArgs(UIElementAssociation elementClicked)
             : base()
         {
             ElementClicked = elementClicked;
