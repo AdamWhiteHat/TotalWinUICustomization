@@ -51,8 +51,7 @@ namespace TotalWinUICustomization
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WindowsUIMockupControl));
             window_MessageBox = new Panel();
-            button_MessageBox = new ButtonLikeLabel();
-            InfoWindowAndText = new Label();
+            toolTip_InfoWindow = new Label();
             hyperlinkText = new LinkLabel();
             font_MessageBox = new Label();
             titleBar_MessageBox = new Panel();
@@ -98,6 +97,7 @@ namespace TotalWinUICustomization
             activeBorderClickInterceptor4 = new ClickInterceptorBox();
             activeBorderClickInterceptor2 = new ClickInterceptorBox();
             activeBorderClickInterceptor1 = new ClickInterceptorBox();
+            button_MessageBox = new Label();
             window_MessageBox.SuspendLayout();
             titleBar_MessageBox.SuspendLayout();
             panelActiveWindow.SuspendLayout();
@@ -114,7 +114,7 @@ namespace TotalWinUICustomization
             // 
             window_MessageBox.BackColor = SystemColors.Control;
             window_MessageBox.Controls.Add(button_MessageBox);
-            window_MessageBox.Controls.Add(InfoWindowAndText);
+            window_MessageBox.Controls.Add(toolTip_InfoWindow);
             window_MessageBox.Controls.Add(hyperlinkText);
             window_MessageBox.Controls.Add(font_MessageBox);
             window_MessageBox.Controls.Add(titleBar_MessageBox);
@@ -125,30 +125,20 @@ namespace TotalWinUICustomization
             window_MessageBox.TabIndex = 11;
             window_MessageBox.Click += window_MessageBox_Click;
             // 
-            // button_MessageBox
+            // toolTip_InfoWindow
             // 
-            button_MessageBox.Location = new Point(148, 77);
-            button_MessageBox.Name = "button_MessageBox";
-            button_MessageBox.Size = new Size(94, 29);
-            button_MessageBox.TabIndex = 12;
-            button_MessageBox.Text = "OK";
-            button_MessageBox.TextAlign = ContentAlignment.MiddleCenter;
-            button_MessageBox.Click += window_MessageBox_Click;
-            // 
-            // InfoWindowAndText
-            // 
-            InfoWindowAndText.AutoSize = true;
-            InfoWindowAndText.BackColor = SystemColors.Info;
-            InfoWindowAndText.BorderStyle = BorderStyle.FixedSingle;
-            InfoWindowAndText.ForeColor = SystemColors.InfoText;
-            InfoWindowAndText.Location = new Point(71, 81);
-            InfoWindowAndText.Margin = new Padding(0);
-            InfoWindowAndText.Name = "InfoWindowAndText";
-            InfoWindowAndText.Padding = new Padding(0, 1, 0, 1);
-            InfoWindowAndText.Size = new Size(58, 24);
-            InfoWindowAndText.TabIndex = 11;
-            InfoWindowAndText.Text = "Tooltip";
-            InfoWindowAndText.Click += InfoWindowAndText_Click;
+            toolTip_InfoWindow.AutoSize = true;
+            toolTip_InfoWindow.BackColor = SystemColors.Info;
+            toolTip_InfoWindow.BorderStyle = BorderStyle.FixedSingle;
+            toolTip_InfoWindow.ForeColor = SystemColors.InfoText;
+            toolTip_InfoWindow.Location = new Point(71, 81);
+            toolTip_InfoWindow.Margin = new Padding(0);
+            toolTip_InfoWindow.Name = "toolTip_InfoWindow";
+            toolTip_InfoWindow.Padding = new Padding(0, 1, 0, 1);
+            toolTip_InfoWindow.Size = new Size(58, 24);
+            toolTip_InfoWindow.TabIndex = 11;
+            toolTip_InfoWindow.Text = "Tooltip";
+            toolTip_InfoWindow.Click += InfoWindowAndText_Click;
             // 
             // hyperlinkText
             // 
@@ -206,7 +196,6 @@ namespace TotalWinUICustomization
             // 
             buttonX_MessageBox.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             buttonX_MessageBox.BackColor = SystemColors.Control;
-            buttonX_MessageBox.BorderStyle = BorderStyle.FixedSingle;
             buttonX_MessageBox.FlatStyle = FlatStyle.Flat;
             buttonX_MessageBox.Location = new Point(354, 2);
             buttonX_MessageBox.Name = "buttonX_MessageBox";
@@ -360,7 +349,6 @@ namespace TotalWinUICustomization
             // 
             buttonMinimize_ActiveWindow.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             buttonMinimize_ActiveWindow.BackColor = SystemColors.Control;
-            buttonMinimize_ActiveWindow.BorderStyle = BorderStyle.FixedSingle;
             buttonMinimize_ActiveWindow.FlatStyle = FlatStyle.Flat;
             buttonMinimize_ActiveWindow.Font = new Font("Webdings", 9F, FontStyle.Regular, GraphicsUnit.Point, 2);
             buttonMinimize_ActiveWindow.Location = new Point(415, 2);
@@ -375,7 +363,6 @@ namespace TotalWinUICustomization
             // 
             buttonMaximize_ActiveWindow.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             buttonMaximize_ActiveWindow.BackColor = SystemColors.Control;
-            buttonMaximize_ActiveWindow.BorderStyle = BorderStyle.FixedSingle;
             buttonMaximize_ActiveWindow.FlatStyle = FlatStyle.Flat;
             buttonMaximize_ActiveWindow.Font = new Font("Webdings", 9F, FontStyle.Regular, GraphicsUnit.Point, 2);
             buttonMaximize_ActiveWindow.Location = new Point(446, 2);
@@ -403,7 +390,6 @@ namespace TotalWinUICustomization
             // 
             buttonX_ActiveWindow.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             buttonX_ActiveWindow.BackColor = SystemColors.Control;
-            buttonX_ActiveWindow.BorderStyle = BorderStyle.FixedSingle;
             buttonX_ActiveWindow.FlatStyle = FlatStyle.Flat;
             buttonX_ActiveWindow.Location = new Point(477, 2);
             buttonX_ActiveWindow.Name = "buttonX_ActiveWindow";
@@ -443,7 +429,6 @@ namespace TotalWinUICustomization
             // 
             buttonMinimize_InactiveWindow.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             buttonMinimize_InactiveWindow.BackColor = SystemColors.Control;
-            buttonMinimize_InactiveWindow.BorderStyle = BorderStyle.FixedSingle;
             buttonMinimize_InactiveWindow.FlatStyle = FlatStyle.Flat;
             buttonMinimize_InactiveWindow.Font = new Font("Webdings", 9F, FontStyle.Regular, GraphicsUnit.Point, 2);
             buttonMinimize_InactiveWindow.Location = new Point(380, 2);
@@ -458,7 +443,6 @@ namespace TotalWinUICustomization
             // 
             buttonMaximize_InactiveWindow.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             buttonMaximize_InactiveWindow.BackColor = SystemColors.Control;
-            buttonMaximize_InactiveWindow.BorderStyle = BorderStyle.FixedSingle;
             buttonMaximize_InactiveWindow.FlatStyle = FlatStyle.Flat;
             buttonMaximize_InactiveWindow.Font = new Font("Webdings", 9F, FontStyle.Regular, GraphicsUnit.Point, 2);
             buttonMaximize_InactiveWindow.Location = new Point(411, 2);
@@ -473,7 +457,6 @@ namespace TotalWinUICustomization
             // 
             buttonX_InactiveWindow.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             buttonX_InactiveWindow.BackColor = SystemColors.Control;
-            buttonX_InactiveWindow.BorderStyle = BorderStyle.FixedSingle;
             buttonX_InactiveWindow.FlatStyle = FlatStyle.Flat;
             buttonX_InactiveWindow.Location = new Point(442, 2);
             buttonX_InactiveWindow.Name = "buttonX_InactiveWindow";
@@ -697,6 +680,16 @@ namespace TotalWinUICustomization
             activeBorderClickInterceptor1.TabStop = false;
             activeBorderClickInterceptor1.Click += activeBorderClickInterceptor_Click;
             // 
+            // button_MessageBox
+            // 
+            button_MessageBox.Location = new Point(148, 76);
+            button_MessageBox.Name = "button_MessageBox";
+            button_MessageBox.Size = new Size(94, 29);
+            button_MessageBox.TabIndex = 13;
+            button_MessageBox.Text = "OK";
+            button_MessageBox.TextAlign = ContentAlignment.MiddleCenter;
+            button_MessageBox.Click += window_MessageBox_Click;
+            // 
             // WindowsUIMockupControl
             // 
             AutoScaleMode = AutoScaleMode.None;
@@ -721,7 +714,7 @@ namespace TotalWinUICustomization
             Controls.Add(desktopWindow);
             Margin = new Padding(0);
             MaximumSize = new Size(570, 370);
-            MinimumSize = new Size(570, 340);
+            MinimumSize = new Size(570, 370);
             Name = "WindowsUIMockupControl";
             Size = new Size(570, 370);
             window_MessageBox.ResumeLayout(false);
@@ -771,7 +764,6 @@ namespace TotalWinUICustomization
         private Panel menu;
         private LinkLabel hyperlinkText;
         private Label selectedText;
-        private Label InfoWindowAndText;
         private DisabledStyleLabel font_menuDisabled;
         private ClickInterceptorBox scrollbarClickInterceptor;
         private PictureBox pictureBox1;
@@ -792,6 +784,7 @@ namespace TotalWinUICustomization
         private ClickInterceptorBox activeBorderClickInterceptor9;
         private ClickInterceptorBox activeBorderClickInterceptor8;
         private ClickInterceptorBox activeBorderClickInterceptor0;
-        private ButtonLikeLabel button_MessageBox;
+        private Label toolTip_InfoWindow;
+        private Label button_MessageBox;
     }
 }

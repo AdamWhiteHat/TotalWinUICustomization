@@ -34,9 +34,9 @@ namespace TotalWinUICustomization
         private static string Key_Themes = @"Software\Microsoft\Windows\CurrentVersion\Themes";
         private static string Value_CurrentTheme = "CurrentTheme"; // @"C:\Users\CodeNinja\AppData\Local\Microsoft\Windows\Themes\Custom.theme"
 
-        public static void SetWindowsFont(SystemFontGroup fontGroup, Font font)
+        public static void SetWindowsFont(WindowsUiElements fontGroup, Font font)
         {
-            string fontKey = fontGroup.GetRegistryKey();
+            string fontKey = Enum.GetName(typeof(WindowsUiElements), fontGroup);
             using (RegistryKey key = Registry.CurrentUser.OpenSubKey(Key_WindowMetrics, true))
             {
                 if (key != null)
@@ -46,37 +46,9 @@ namespace TotalWinUICustomization
             }
         }
 
-        /*
-        public static Font GetWindowsFont(WindowsUiElements uiElement)
+        public static Font GetWindowsFont(WindowsUiElements fontGroup)
         {
-            string fontKey = "";
-            if (Helpers.FontEnumToRegistryKey.ContainsKey(uiElement))
-            {
-                fontKey = Helpers.FontEnumToRegistryKey[uiElement];
-                using (RegistryKey key = Registry.CurrentUser.OpenSubKey(Key_WindowMetrics, true))
-                {
-                    if (key != null)
-                    {
-                        byte[] bytes = (byte[])key.GetValue(fontKey);
-
-                        Font result = LogicalFonts.FromBytes(bytes);
-                        return result;
-                    }
-                }
-            }
-
-            string failedValue = fontKey;
-            if (string.IsNullOrWhiteSpace(failedValue))
-            {
-                failedValue = Enum.GetName(typeof(WindowsUiElements), uiElement);
-            }
-            throw new Exception($"{nameof(GetWindowsFont)} failed to get registry key value for {failedValue}.");
-        }
-        */
-
-        public static Font GetWindowsFont(SystemFontGroup fontGroup)
-        {
-            string fontKey = fontGroup.GetRegistryKey();
+            string fontKey = Enum.GetName(typeof(WindowsUiElements), fontGroup);
             using (RegistryKey key = Registry.CurrentUser.OpenSubKey(Key_WindowMetrics, true))
             {
                 if (key != null)
@@ -87,7 +59,7 @@ namespace TotalWinUICustomization
                     return result;
                 }
             }
-            throw new Exception($"{nameof(GetWindowsFont)} failed to get registry key value for {Enum.GetName(typeof(SystemFontGroup), fontGroup)}.");
+            throw new Exception($"{nameof(GetWindowsFont)} failed to get registry key value for {Enum.GetName(typeof(WindowsUiElements), fontGroup)}.");
         }
 
         public static void SetWindowsColor(WindowsUiElements uiElement, Color color)

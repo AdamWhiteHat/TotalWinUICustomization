@@ -43,4 +43,31 @@ namespace TotalWinUICustomization
             return null;
         }
     }
+
+    public static class ControlExtensionMethods
+    {
+        public static void ClearSelection(this ComboBox comboBox)
+        {
+            if (comboBox.SelectedIndex != -1)
+            {
+                comboBox.SelectedIndex = -1;
+            }
+        }
+
+        public static void Enable(this Panel panel)
+        {
+            if (!panel.Enabled)
+            {
+                panel.Enabled = true;
+            }
+        }
+
+        public static void Disable(this Panel panel)
+        {
+            if (panel.Enabled)
+            {
+                panel.Enabled = false;
+            }
+        }
+    }
 }

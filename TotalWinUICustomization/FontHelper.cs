@@ -10,6 +10,19 @@ namespace TotalWinUICustomization
 {
     public static class FontHelper
     {
+        public static List<FontFamily> FontFamilies
+        {
+            get
+            {
+                if (_fontFamilies == null)
+                {
+                    _fontFamilies = FontFamily.Families.Where(fnt => IsTrueType(fnt.Name)).ToList();
+                }
+                return _fontFamilies;
+            }
+        }
+        private static List<FontFamily> _fontFamilies = null;
+
         public static bool IsTrueType(string name)
         {
             IntPtr fontfamily = IntPtr.Zero;

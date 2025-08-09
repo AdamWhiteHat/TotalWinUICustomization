@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,39 +51,33 @@ namespace TotalWinUICustomization.Types
         ButtonShadow,
 
         MenuBar,
-        AppWorkspace
-    }
+        AppWorkspace,
 
-    public enum SystemFontGroup
-    {
+        [Category("Font")]
         CaptionFont,
+        [Category("Font")]
         SmCaptionFont,
+        [Category("Font")]
         MenuFont,
+        [Category("Font")]
         MessageFont,
+        [Category("Font")]
         IconFont,
+        [Category("Font")]
         StatusFont
     }
 
     public static class Helpers
     {
-        public static Dictionary<WindowsUiElements, string> FontEnumToRegistryKey
+        public static WindowsUiElements[] SystemFonts = new WindowsUiElements[]
         {
-            get
-            {
-                return new Dictionary<WindowsUiElements, string>()
-                {
-                        { WindowsUiElements.InactiveTitleText, "CaptionFont"}, // SmCaptionFont
-                        { WindowsUiElements.ActiveTitleText  , "CaptionFont"}, // "SmCaptionFont"
-                        { WindowsUiElements.WindowText       , "MessageFont"},
-                        { WindowsUiElements.ButtonText       , "MessageFont"},
-                        { WindowsUiElements.MenuText         , "MenuFont"}, // 
-                        { WindowsUiElements.GreyText         , "MenuFont"}, // 
-                        { WindowsUiElements.HighlightText    , "MenuFont"}, // IconFont
-                        { WindowsUiElements.InfoText         , "StatusFont" }, // StatusFont
-                        { WindowsUiElements.DesktopBackground, "IconFont"}  // 
-                };
-            }
-        }
+             WindowsUiElements.CaptionFont,
+             WindowsUiElements.SmCaptionFont,
+             WindowsUiElements.MenuFont,
+             WindowsUiElements.MessageFont,
+             WindowsUiElements.IconFont,
+             WindowsUiElements.StatusFont
+        };
 
         public static Dictionary<WindowsUiElements, string> ColorsEnumToRegistryKey
         {
@@ -120,109 +115,16 @@ namespace TotalWinUICustomization.Types
                     { WindowsUiElements.Scrollbar, "Scrollbar" },
                     { WindowsUiElements.HotTrackingColor, "HotTrackingColor" },
                     { WindowsUiElements.MenuBar, "MenuBar" },
-                    { WindowsUiElements.AppWorkspace, "AppWorkspace" }
+
+                    { WindowsUiElements.AppWorkspace, "AppWorkspace" },
+                    { WindowsUiElements.CaptionFont,   "CaptionFont," },
+                    { WindowsUiElements.SmCaptionFont, "SmCaptionFont," },
+                    { WindowsUiElements.MenuFont,      "MenuFont," },
+                    { WindowsUiElements.MessageFont,   "MessageFont," },
+                    { WindowsUiElements.IconFont,      "IconFont," },
+                    { WindowsUiElements.StatusFont,    "StatusFont" },
                 };
             }
-        }
-
-        public static Dictionary<WindowsUiElements, bool> EnumToIsFontDictionary
-        {
-            get
-            {
-                return new Dictionary<WindowsUiElements, bool>()
-                {
-                    { WindowsUiElements.InactiveTitle, false },
-
-                    { WindowsUiElements.InactiveTitleText, true },
-                    { WindowsUiElements.InactiveTitleGradient, false },
-                    { WindowsUiElements.InactiveBorder, false },
-                    { WindowsUiElements.ActiveTitle,false },
-                    { WindowsUiElements.ActiveTitleText,true },
-                    { WindowsUiElements.ActiveTitleGradient,false },
-                    { WindowsUiElements.ActiveBorder,false },
-                    { WindowsUiElements.Window,false },
-                    { WindowsUiElements.WindowText,true },
-                    { WindowsUiElements.WindowFrame,false },
-                    { WindowsUiElements.ButtonFace,false },
-                    { WindowsUiElements.ButtonText,true },
-                    { WindowsUiElements.ButtonAlternateFace,false },
-                    { WindowsUiElements.ButtonDkShadow,false },
-                    { WindowsUiElements.ButtonHighlight,false },
-                    { WindowsUiElements.ButtonLight,false },
-                    { WindowsUiElements.ButtonShadow,false },
-                    { WindowsUiElements.Menu,false },
-                    { WindowsUiElements.MenuText,true },
-                    { WindowsUiElements.MenuHighlight,false },
-                    { WindowsUiElements.GreyText, false },
-                    { WindowsUiElements.DesktopBackground,false },
-                    { WindowsUiElements.Highlight,false },
-                    { WindowsUiElements.HighlightText,true },
-                    { WindowsUiElements.InfoWindow,false },
-                    { WindowsUiElements.InfoText,true },
-                    { WindowsUiElements.Scrollbar,false },
-                    { WindowsUiElements.HotTrackingColor,false },
-                    { WindowsUiElements.MenuBar,false },
-                    { WindowsUiElements.AppWorkspace,false }
-                };
-            }
-        }
-        /*
-         { WindowsUiElements.InactiveTitleText, true },
-         { WindowsUiElements.ActiveTitleText,true },
-         { WindowsUiElements.WindowText,true },
-         { WindowsUiElements.ButtonText,true },
-         { WindowsUiElements.MenuText,true },
-         { WindowsUiElements.HighlightText,true },
-         { WindowsUiElements.InfoText,true },
-        */
-
-        public static Dictionary<WindowsUiElements, WindowsUiElements?> EnumToCompanionEnum
-        {
-            get
-            {
-                return new Dictionary<WindowsUiElements, WindowsUiElements?>()
-                {
-                    { WindowsUiElements.InactiveTitle, WindowsUiElements.InactiveTitleText },
-                    { WindowsUiElements.InactiveTitleText, WindowsUiElements.InactiveTitle },
-                    { WindowsUiElements.InactiveTitleGradient, null },
-                    { WindowsUiElements.InactiveBorder, null },
-                    { WindowsUiElements.ActiveTitle, WindowsUiElements.ActiveTitleText },
-                    { WindowsUiElements.ActiveTitleText, WindowsUiElements.ActiveTitle },
-                    { WindowsUiElements.ActiveTitleGradient,null },
-                    { WindowsUiElements.ActiveBorder,null },
-                    { WindowsUiElements.Window, WindowsUiElements.WindowText },
-                    { WindowsUiElements.WindowText, WindowsUiElements.Window },
-                    { WindowsUiElements.WindowFrame,null },
-                    { WindowsUiElements.ButtonFace, WindowsUiElements.ButtonText },
-                    { WindowsUiElements.ButtonText,WindowsUiElements.ButtonFace },
-                    { WindowsUiElements.ButtonAlternateFace,null },
-                    { WindowsUiElements.ButtonDkShadow,null },
-                    { WindowsUiElements.ButtonHighlight,null },
-                    { WindowsUiElements.ButtonLight,null },
-                    { WindowsUiElements.ButtonShadow,null },
-                    { WindowsUiElements.Menu, WindowsUiElements.MenuText },
-                    { WindowsUiElements.MenuText,WindowsUiElements.Menu },
-                    { WindowsUiElements.MenuHighlight, WindowsUiElements.HighlightText },
-                    { WindowsUiElements.GreyText, WindowsUiElements.GreyText },
-                    { WindowsUiElements.DesktopBackground,WindowsUiElements.DesktopBackground },
-                    { WindowsUiElements.Highlight, WindowsUiElements.HighlightText },
-                    { WindowsUiElements.HighlightText, WindowsUiElements.Highlight },
-                    { WindowsUiElements.InfoWindow, WindowsUiElements.InfoText },
-                    { WindowsUiElements.InfoText, WindowsUiElements.InfoWindow },
-                    { WindowsUiElements.Scrollbar,null },
-                    { WindowsUiElements.HotTrackingColor,null },
-                    { WindowsUiElements.MenuBar,null },
-                    { WindowsUiElements.AppWorkspace,null }
-                };
-            }
-        }
-    }
-
-    public static class UiTypesExtensionMethods
-    {
-        public static string GetRegistryKey(this SystemFontGroup source)
-        {
-            return Enum.GetName(typeof(SystemFontGroup), source);
         }
     }
 }
