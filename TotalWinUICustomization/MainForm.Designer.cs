@@ -102,7 +102,7 @@ namespace TotalWinUICustomization
             panelColorPropertyLeft.Location = new Point(0, 0);
             panelColorPropertyLeft.Margin = new Padding(0);
             panelColorPropertyLeft.Name = "panelColorPropertyLeft";
-            panelColorPropertyLeft.Size = new Size(606, 70);
+            panelColorPropertyLeft.Size = new Size(386, 70);
             panelColorPropertyLeft.TabIndex = 19;
             // 
             // label1
@@ -123,7 +123,7 @@ namespace TotalWinUICustomization
             comboBoxColorPropertySelection.Location = new Point(13, 24);
             comboBoxColorPropertySelection.Margin = new Padding(2, 3, 2, 3);
             comboBoxColorPropertySelection.Name = "comboBoxColorPropertySelection";
-            comboBoxColorPropertySelection.Size = new Size(579, 28);
+            comboBoxColorPropertySelection.Size = new Size(359, 28);
             comboBoxColorPropertySelection.TabIndex = 0;
             comboBoxColorPropertySelection.SelectionChangeCommitted += comboBoxColorPropertySelection_SelectionChangeCommitted;
             // 
