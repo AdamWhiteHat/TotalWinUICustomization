@@ -45,14 +45,15 @@ namespace TotalWinUICustomization
             buttonColorProperty2 = new Button();
             panelColorPropertySwatch2 = new Panel();
             PanelFontPropertyControls = new Panel();
+            font_ClickInterceptorBox = new TotalWinUICustomization.Controls.ClickInterceptorBox();
             panelFontPropertyLeft = new Panel();
             label2 = new Label();
             comboBoxFontPropertySelection = new ComboBox();
             panelFontPropertyRight = new FlowLayoutPanel();
             panelFontPropertySize = new Panel();
+            comboFontSize = new ComboBox();
             checkBoxFontBold = new CheckBox();
             label4 = new Label();
-            sizeUpDown_Font = new DomainUpDown();
             panelFontPropertyColor = new Panel();
             label5 = new Label();
             buttonFontColor = new Button();
@@ -61,7 +62,6 @@ namespace TotalWinUICustomization
             fontPickerDialog = new FontDialog();
             windowsuiMockupControl = new WindowsUIMockupControl();
             flowLayoutPanel1 = new FlowLayoutPanel();
-            comboFontSize = new ComboBox();
             panelBottomControls.SuspendLayout();
             PanelColorPropertyControls.SuspendLayout();
             panelColorPropertyLeft.SuspendLayout();
@@ -249,6 +249,7 @@ namespace TotalWinUICustomization
             // PanelFontPropertyControls
             // 
             PanelFontPropertyControls.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            PanelFontPropertyControls.Controls.Add(font_ClickInterceptorBox);
             PanelFontPropertyControls.Controls.Add(panelFontPropertyLeft);
             PanelFontPropertyControls.Controls.Add(panelFontPropertyRight);
             PanelFontPropertyControls.Location = new Point(1, 72);
@@ -256,6 +257,16 @@ namespace TotalWinUICustomization
             PanelFontPropertyControls.Name = "PanelFontPropertyControls";
             PanelFontPropertyControls.Size = new Size(605, 65);
             PanelFontPropertyControls.TabIndex = 16;
+            // 
+            // font_ClickInterceptorBox
+            // 
+            font_ClickInterceptorBox.CausesValidation = false;
+            font_ClickInterceptorBox.Location = new Point(0, 0);
+            font_ClickInterceptorBox.Name = "font_ClickInterceptorBox";
+            font_ClickInterceptorBox.Size = new Size(599, 61);
+            font_ClickInterceptorBox.TabIndex = 7;
+            font_ClickInterceptorBox.TabStop = false;
+            font_ClickInterceptorBox.Click += font_ClickInterceptorBox_Click;
             // 
             // panelFontPropertyLeft
             // 
@@ -310,12 +321,23 @@ namespace TotalWinUICustomization
             panelFontPropertySize.Controls.Add(comboFontSize);
             panelFontPropertySize.Controls.Add(checkBoxFontBold);
             panelFontPropertySize.Controls.Add(label4);
-            panelFontPropertySize.Controls.Add(sizeUpDown_Font);
             panelFontPropertySize.Location = new Point(0, 0);
             panelFontPropertySize.Margin = new Padding(0);
             panelFontPropertySize.Name = "panelFontPropertySize";
             panelFontPropertySize.Size = new Size(123, 65);
             panelFontPropertySize.TabIndex = 8;
+            // 
+            // comboFontSize
+            // 
+            comboFontSize.FormattingEnabled = true;
+            comboFontSize.Items.AddRange(new object[] { "72", "48", "36", "28", "26", "24", "22", "20", "18", "16", "14", "12", "11", "10", "9", "8" });
+            comboFontSize.Location = new Point(14, 24);
+            comboFontSize.Name = "comboFontSize";
+            comboFontSize.Size = new Size(61, 28);
+            comboFontSize.TabIndex = 11;
+            comboFontSize.Text = "9";
+            comboFontSize.SelectedIndexChanged += comboFontSize_SelectedItemChanged;
+            comboFontSize.TextChanged += comboFontSize_TextChanged;
             // 
             // checkBoxFontBold
             // 
@@ -346,33 +368,6 @@ namespace TotalWinUICustomization
             label4.Size = new Size(39, 20);
             label4.TabIndex = 9;
             label4.Text = "Size:";
-            // 
-            // sizeUpDown_Font
-            // 
-            sizeUpDown_Font.Items.Add("72");
-            sizeUpDown_Font.Items.Add("48");
-            sizeUpDown_Font.Items.Add("36");
-            sizeUpDown_Font.Items.Add("28");
-            sizeUpDown_Font.Items.Add("26");
-            sizeUpDown_Font.Items.Add("24");
-            sizeUpDown_Font.Items.Add("22");
-            sizeUpDown_Font.Items.Add("20");
-            sizeUpDown_Font.Items.Add("18");
-            sizeUpDown_Font.Items.Add("16");
-            sizeUpDown_Font.Items.Add("14");
-            sizeUpDown_Font.Items.Add("12");
-            sizeUpDown_Font.Items.Add("11");
-            sizeUpDown_Font.Items.Add("10");
-            sizeUpDown_Font.Items.Add("9");
-            sizeUpDown_Font.Items.Add("8");
-            sizeUpDown_Font.Location = new Point(45, 4);
-            sizeUpDown_Font.Margin = new Padding(2, 3, 2, 3);
-            sizeUpDown_Font.Name = "sizeUpDown_Font";
-            sizeUpDown_Font.Size = new Size(66, 27);
-            sizeUpDown_Font.TabIndex = 1;
-            sizeUpDown_Font.Text = "12.88";
-            sizeUpDown_Font.SelectedItemChanged += sizeUpDown_Font_SelectedItemChanged;
-            sizeUpDown_Font.TextChanged += sizeUpDown_Font_TextChanged;
             // 
             // panelFontPropertyColor
             // 
@@ -428,7 +423,10 @@ namespace TotalWinUICustomization
             // 
             // fontPickerDialog
             // 
-            fontPickerDialog.Color = Color.FromArgb(182, 246, 240);
+            fontPickerDialog.FontMustExist = true;
+            fontPickerDialog.MaxSize = 200;
+            fontPickerDialog.MinSize = 4;
+            fontPickerDialog.ShowColor = true;
             // 
             // windowsuiMockupControl
             // 
@@ -488,16 +486,6 @@ namespace TotalWinUICustomization
             flowLayoutPanel1.Size = new Size(606, 507);
             flowLayoutPanel1.TabIndex = 4;
             // 
-            // comboFontSize
-            // 
-            comboFontSize.FormattingEnabled = true;
-            comboFontSize.Items.AddRange(new object[] { "72", "48", "36", "28", "26", "24", "22", "20", "18", "16", "14", "12", "11", "10", "9", "8" });
-            comboFontSize.Location = new Point(14, 24);
-            comboFontSize.Name = "comboFontSize";
-            comboFontSize.Size = new Size(61, 28);
-            comboFontSize.TabIndex = 11;
-            comboFontSize.Text = "9";
-            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -545,7 +533,6 @@ namespace TotalWinUICustomization
         #endregion
         private Panel panelBottomControls;
         private ComboBox comboBoxColorPropertySelection;
-        private DomainUpDown sizeUpDown_Font;
         private ColorDialog colorPickerDialog;
         private ComboBox comboBoxFontPropertySelection;
         private Label label2;
@@ -577,5 +564,6 @@ namespace TotalWinUICustomization
         private Panel panelFontPropertyLeft;
         private CheckBox checkBoxFontBold;
         private ComboBox comboFontSize;
+        private Controls.ClickInterceptorBox font_ClickInterceptorBox;
     }
 }

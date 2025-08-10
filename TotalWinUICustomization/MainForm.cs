@@ -14,6 +14,9 @@ namespace TotalWinUICustomization
             this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             InitializeComponent();
 
+            fontPickerDialog.AllowVectorFonts = false;
+            fontPickerDialog.AllowVerticalFonts = false;
+
             this.AllowTransparency = true;
 
             panelColorPropertyLeft.Disable();
@@ -29,7 +32,7 @@ namespace TotalWinUICustomization
             panelFontColorSwatch.EnabledChanged += ColorSwatch_EnabledChanged;
             comboBoxColorPropertySelection.EnabledChanged += ComboBox_EnabledChanged;
             comboBoxFontPropertySelection.EnabledChanged += ComboBox_EnabledChanged;
-            sizeUpDown_Font.EnabledChanged += SizeUpDown_Font_EnabledChanged;
+            comboFontSize.EnabledChanged += comboFontSize_EnabledChanged;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -85,9 +88,9 @@ namespace TotalWinUICustomization
             }
         }
 
-        private void SizeUpDown_Font_EnabledChanged(object sender, EventArgs e)
+        private void comboFontSize_EnabledChanged(object sender, EventArgs e)
         {
-            DomainUpDown source = sender as DomainUpDown;
+            ComboBox source = sender as ComboBox;
             if (source != null)
             {
                 if (!source.Enabled)
@@ -120,9 +123,16 @@ namespace TotalWinUICustomization
                 if (match.Any())
                 {
                     FontFamily selectedFontFamily = match.Single();
-                    float fontSize = float.Parse(sizeUpDown_Font.Text);
+                    float? fontSize = GetFontSize();
 
-                    return new Font(selectedFontFamily, fontSize, GraphicsUnit.Point);
+                    if (fontSize.HasValue)
+                    {
+                        return new Font(selectedFontFamily, fontSize.Value, GraphicsUnit.Point);
+                    }
+                    else
+                    {
+                        return new Font(selectedFontFamily, selectedFontFamily.GetEmHeight(FontStyle.Regular));
+                    }
                 }
             }
             return null;
@@ -130,7 +140,7 @@ namespace TotalWinUICustomization
 
         public float? GetFontSize()
         {
-            if (float.TryParse(sizeUpDown_Font.Text, out float fontSize))
+            if (float.TryParse(comboFontSize.Text, out float fontSize))
             {
                 return (float)Math.Round(fontSize, 1);
             }
@@ -221,17 +231,17 @@ namespace TotalWinUICustomization
 
                 float fontSize = (float)Math.Round(font.SizeInPoints,1);
 
-                List<float> sizes = sizeUpDown_Font.Items.Cast<string>().Select(s => float.Parse(s)).ToList();
+                List<float> sizes = comboFontSize.Items.Cast<string>().Select(s => float.Parse(s)).ToList();
                 if (!sizes.Contains(fontSize))
                 {
                     sizes.Add(fontSize);
                     sizes = sizes.OrderByDescending(s => s).ToList();
-                    sizeUpDown_Font.Items.Clear();
-                    sizeUpDown_Font.Items.AddRange(sizes.Select(f => f.ToString()).ToList());
+                    comboFontSize.Items.Clear();
+                    comboFontSize.Items.AddRange(sizes.Select(f => f.ToString()).ToArray());
                 }
 
-                int fontSizeIndex = sizeUpDown_Font.Items.IndexOf(fontSize.ToString());
-                sizeUpDown_Font.SelectedIndex = fontSizeIndex;
+                int fontSizeIndex = comboFontSize.Items.IndexOf(fontSize.ToString());
+                comboFontSize.SelectedIndex = fontSizeIndex;
                 //sizeUpDown_Font.Text = sizeUpDown_Font.SelectedItem.ToString();
 
                 checkBoxFontBold.Checked = font.Bold;
@@ -324,7 +334,7 @@ namespace TotalWinUICustomization
             // Currently not in use, but things like the second color for a gradient title bar color would use this.
         }
 
-        private void sizeUpDown_Font_SelectedItemChanged(object sender, EventArgs e)
+        private void comboFontSize_SelectedItemChanged(object sender, EventArgs e)
         {
             if (CurrentUiElementSelected != null)
             {
@@ -394,15 +404,56 @@ namespace TotalWinUICustomization
             }
         }
 
-        private void sizeUpDown_Font_TextChanged(object sender, EventArgs e)
+        private void comboFontSize_TextChanged(object sender, EventArgs e)
         {
             float? size = GetFontSize();
             if (size.HasValue)
             {
                 string newSize = size.ToString();
-                if (sizeUpDown_Font.Text != newSize)
+                if (comboFontSize.Text != newSize)
                 {
-                    sizeUpDown_Font.Text = newSize;
+                    comboFontSize.Text = newSize;
+                }
+            }
+        }
+
+        private void font_ClickInterceptorBox_Click(object sender, EventArgs e)
+        {
+            if (CurrentUiElementSelected == null)
+            {
+                return;
+            }
+
+            if (!CurrentUiElementSelected.HasAssociatedFont)
+            {
+                return;
+            }
+
+            Font oldFont = RegistryHelper.GetWindowsFont(CurrentUiElementSelected.AssociatedFont.Value);
+            fontPickerDialog.Font = oldFont;
+
+            bool fontHasColor = false;
+            if(CurrentUiElementSelected.AssociatedFontColor.HasValue)
+            {
+                Color oldFontColor = RegistryHelper.GetWindowsColor(CurrentUiElementSelected.AssociatedFontColor.Value);
+                fontPickerDialog.Color = oldFontColor;
+                fontHasColor = true;
+            }
+
+            if (fontPickerDialog.ShowDialog() == DialogResult.OK)
+            {
+                Font newFont = fontPickerDialog.Font;
+
+                windowsuiMockupControl.UpdateControlFont(CurrentUiElementSelected.AssociatedFont.Value, newFont);
+                RegistryHelper.SetWindowsFont(CurrentUiElementSelected.AssociatedFont.Value, newFont);
+
+                if (fontHasColor)
+                {
+                    Color newColor = fontPickerDialog.Color;
+
+                    windowsuiMockupControl.UpdateControlColor(CurrentUiElementSelected.AssociatedFontColor.Value, newColor);
+                    RegistryHelper.SetWindowsColor(CurrentUiElementSelected.AssociatedFontColor.Value, newColor);
+
                 }
             }
         }
