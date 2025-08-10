@@ -1,4 +1,7 @@
-﻿using System.Windows.Input;
+﻿using System.Drawing;
+using System.Windows.Forms;
+using System.Windows.Input;
+using OverlayControlsLibrary;
 
 namespace TotalWinUICustomization
 {
@@ -45,7 +48,7 @@ namespace TotalWinUICustomization
             buttonColorProperty2 = new Button();
             panelColorPropertySwatch2 = new Panel();
             PanelFontPropertyControls = new Panel();
-            font_ClickInterceptorBox = new TotalWinUICustomization.Controls.ClickInterceptorBox();
+            font_ClickInterceptorBox = new ClickInterceptorBox();
             panelFontPropertyLeft = new Panel();
             label2 = new Label();
             comboBoxFontPropertySelection = new ComboBox();
@@ -96,8 +99,8 @@ namespace TotalWinUICustomization
             PanelColorPropertyControls.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             PanelColorPropertyControls.Controls.Add(panelColorPropertyLeft);
             PanelColorPropertyControls.Controls.Add(panelColorPropertyRight);
-            PanelColorPropertyControls.Location = new Point(1, 3);
-            PanelColorPropertyControls.Margin = new Padding(2, 3, 2, 3);
+            PanelColorPropertyControls.Location = new Point(0, 2);
+            PanelColorPropertyControls.Margin = new Padding(2);
             PanelColorPropertyControls.Name = "PanelColorPropertyControls";
             PanelColorPropertyControls.Size = new Size(605, 65);
             PanelColorPropertyControls.TabIndex = 19;
@@ -248,22 +251,24 @@ namespace TotalWinUICustomization
             // 
             // PanelFontPropertyControls
             // 
-            PanelFontPropertyControls.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            PanelFontPropertyControls.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             PanelFontPropertyControls.Controls.Add(font_ClickInterceptorBox);
             PanelFontPropertyControls.Controls.Add(panelFontPropertyLeft);
             PanelFontPropertyControls.Controls.Add(panelFontPropertyRight);
-            PanelFontPropertyControls.Location = new Point(1, 72);
-            PanelFontPropertyControls.Margin = new Padding(2, 3, 2, 3);
+            PanelFontPropertyControls.Location = new Point(0, 71);
+            PanelFontPropertyControls.Margin = new Padding(2);
             PanelFontPropertyControls.Name = "PanelFontPropertyControls";
-            PanelFontPropertyControls.Size = new Size(605, 65);
+            PanelFontPropertyControls.Size = new Size(605, 69);
             PanelFontPropertyControls.TabIndex = 16;
             // 
             // font_ClickInterceptorBox
             // 
             font_ClickInterceptorBox.CausesValidation = false;
+            font_ClickInterceptorBox.Dock = DockStyle.Fill;
             font_ClickInterceptorBox.Location = new Point(0, 0);
+            font_ClickInterceptorBox.Margin = new Padding(2);
             font_ClickInterceptorBox.Name = "font_ClickInterceptorBox";
-            font_ClickInterceptorBox.Size = new Size(599, 61);
+            font_ClickInterceptorBox.Size = new Size(605, 69);
             font_ClickInterceptorBox.TabIndex = 7;
             font_ClickInterceptorBox.TabStop = false;
             font_ClickInterceptorBox.Click += font_ClickInterceptorBox_Click;
@@ -276,7 +281,7 @@ namespace TotalWinUICustomization
             panelFontPropertyLeft.Location = new Point(0, 0);
             panelFontPropertyLeft.Margin = new Padding(0);
             panelFontPropertyLeft.Name = "panelFontPropertyLeft";
-            panelFontPropertyLeft.Size = new Size(385, 65);
+            panelFontPropertyLeft.Size = new Size(385, 70);
             panelFontPropertyLeft.TabIndex = 20;
             // 
             // label2
@@ -313,7 +318,7 @@ namespace TotalWinUICustomization
             panelFontPropertyRight.Location = new Point(385, 0);
             panelFontPropertyRight.Margin = new Padding(0);
             panelFontPropertyRight.Name = "panelFontPropertyRight";
-            panelFontPropertyRight.Size = new Size(218, 65);
+            panelFontPropertyRight.Size = new Size(218, 70);
             panelFontPropertyRight.TabIndex = 7;
             // 
             // panelFontPropertySize
@@ -324,7 +329,7 @@ namespace TotalWinUICustomization
             panelFontPropertySize.Location = new Point(0, 0);
             panelFontPropertySize.Margin = new Padding(0);
             panelFontPropertySize.Name = "panelFontPropertySize";
-            panelFontPropertySize.Size = new Size(123, 65);
+            panelFontPropertySize.Size = new Size(123, 70);
             panelFontPropertySize.TabIndex = 8;
             // 
             // comboFontSize
@@ -376,7 +381,7 @@ namespace TotalWinUICustomization
             panelFontPropertyColor.Location = new Point(123, 0);
             panelFontPropertyColor.Margin = new Padding(0);
             panelFontPropertyColor.Name = "panelFontPropertyColor";
-            panelFontPropertyColor.Size = new Size(95, 65);
+            panelFontPropertyColor.Size = new Size(95, 70);
             panelFontPropertyColor.TabIndex = 16;
             // 
             // label5
@@ -456,7 +461,7 @@ namespace TotalWinUICustomization
             windowsuiMockupControl.Location = new Point(0, 0);
             windowsuiMockupControl.Margin = new Padding(0);
             windowsuiMockupControl.MaximumSize = new Size(651, 370);
-            windowsuiMockupControl.MenuColor = SystemColors.Menu;
+            windowsuiMockupControl.MenuBarColor = SystemColors.Menu;
             windowsuiMockupControl.MenuFont = null;
             windowsuiMockupControl.MenuHighlightColor = SystemColors.MenuHighlight;
             windowsuiMockupControl.MenuTextColor = SystemColors.MenuText;
@@ -492,7 +497,7 @@ namespace TotalWinUICustomization
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            ClientSize = new Size(609, 520);
+            ClientSize = new Size(609, 539);
             Controls.Add(flowLayoutPanel1);
             FormBorderStyle = FormBorderStyle.Fixed3D;
             Margin = new Padding(2, 3, 2, 3);
@@ -564,6 +569,6 @@ namespace TotalWinUICustomization
         private Panel panelFontPropertyLeft;
         private CheckBox checkBoxFontBold;
         private ComboBox comboFontSize;
-        private Controls.ClickInterceptorBox font_ClickInterceptorBox;
+        private ClickInterceptorBox font_ClickInterceptorBox;
     }
 }

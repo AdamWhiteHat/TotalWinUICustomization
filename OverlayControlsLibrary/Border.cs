@@ -9,8 +9,10 @@ using System.ComponentModel.Design;
 using System.Windows.Forms.Design;
 using System.Windows.Forms.Design.Behavior;
 using System.Windows.Forms.VisualStyles;
+using System.Drawing;
+using CommonClassesLibrary;
 
-namespace TotalWinUICustomization.Controls
+namespace OverlayControlsLibrary
 {
     public enum BorderControlType
     {

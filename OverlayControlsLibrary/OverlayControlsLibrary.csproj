@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<Nullable>annotations</Nullable>
+		<UseWindowsForms>true</UseWindowsForms>
+		<ImplicitUsings>disable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\CommonClassesLibrary\CommonClassesLibrary.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="Border.cs">
+			<SubType>Component</SubType>
+		</Compile>
+		<Compile Update="ButtonLikeLabel.cs">
+			<SubType>Component</SubType>
+		</Compile>
+		<Compile Update="ClickInterceptorBox.cs">
+			<SubType>Component</SubType>
+		</Compile>
+		<Compile Update="DisabledStyleLabel.cs">
+			<SubType>Component</SubType>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Update="Border.resx">
+			<SubType>Designer</SubType>
+		</EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Properties\" />
+	</ItemGroup>
+
+</Project>

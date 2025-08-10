@@ -18,6 +18,7 @@ using System.Windows.Forms.Design.Behavior;
 using TotalWinUICustomization.Types;
 using System.Drawing.Design;
 using TotalWinUICustomization.Controls;
+using CommonClassesLibrary;
 
 namespace TotalWinUICustomization
 {
@@ -218,15 +219,15 @@ namespace TotalWinUICustomization
         [Browsable(true)]
         [Category(nameof(CategoryAttribute.Appearance))]
         [Editor(typeof(ColorEditor), typeof(UITypeEditor))]
-        public Color MenuColor
+        public Color MenuBarColor
         {
-            get { return menu.BackColor; }
+            get { return menuBar.BackColor; }
             set
             {
-                if (!menu.BackColor.Equals(value))
+                if (!menuBar.BackColor.Equals(value))
                 {
-                    menu.BackColor = value;
-                    menu.Invalidate();
+                    menuBar.BackColor = value;
+                    menuBar.Invalidate();
                 }
             }
         }
@@ -465,6 +466,11 @@ namespace TotalWinUICustomization
                     font_InactiveWindowTitleBar.Font = value;
                     font_InactiveWindowTitleBar.Invalidate();
                 }
+                if (!font_MessageBoxTitleBar.Font.Equals(value))
+                {
+                    font_MessageBoxTitleBar.Font = value;
+                    font_MessageBoxTitleBar.Invalidate();
+                }
             }
         }
         private Font _captionFont;
@@ -507,6 +513,11 @@ namespace TotalWinUICustomization
                 {
                     hyperlinkText.Font = value;
                     hyperlinkText.Invalidate();
+                }
+                if (!selectedText.Font.Equals(value))
+                {
+                    selectedText.Font = value;
+                    selectedText.Invalidate();
                 }
             }
         }
@@ -680,7 +691,7 @@ namespace TotalWinUICustomization
         }
 
 
-        private void menu_Click(object sender, EventArgs e)
+        private void menuBar_Click(object sender, EventArgs e)
         {
             RaiseColorUiElementClickedEvent(UIElementAssociation.MenuBar);
         }
@@ -778,7 +789,10 @@ namespace TotalWinUICustomization
                     break;
 
                 case WindowsUiElements.Menu:
-                    MenuColor = color;
+
+                    break;
+                case WindowsUiElements.MenuBar:
+                    MenuBarColor = color;
                     break;
                 case WindowsUiElements.MenuText:
                     MenuTextColor = color;
@@ -814,17 +828,6 @@ namespace TotalWinUICustomization
                 case WindowsUiElements.Scrollbar:
                     ScrollbarColor = color;
                     break;
-            }
-        }
-
-        protected static void SetColorPropertyField2(WindowsUiElements uiElement, object target, PropertyInfo field, Color value)
-        {
-            Color fieldValue = (Color)field.GetValue(target);
-
-            if (!fieldValue.Equals(value))
-            {
-                MethodInfo setMethod = field.GetSetMethod(); // PropertyInfo.GetSetMethod
-                setMethod.Invoke(target, new object[] { value });
             }
         }
 

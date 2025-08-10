@@ -8,8 +8,10 @@ using System.Collections.Generic;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms.Design;
 using System.Windows.Forms.Layout;
+using System.Windows.Forms.VisualStyles;
+using System.Drawing;
 
-namespace TotalWinUICustomization.Controls
+namespace OverlayControlsLibrary
 {
     public class ClickInterceptorBox : Control
     {
@@ -34,14 +36,17 @@ namespace TotalWinUICustomization.Controls
             this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             this.SetStyle(ControlStyles.Opaque, true);
             this.SetStyle(ControlStyles.Selectable, false);
+            this.SetStyle(ControlStyles.CacheText, true);
 
+            this.Enter += ClickInterceptorBox_Enter;
+            
             this.BackColor = Color.Magenta;
 
             this.Margin = DefaultMargin;
             this.Padding = DefaultPadding;
             this.TabStop = false;
             this.CausesValidation = false;
-            this.BringToFront();
+            this.BringToFront();          
         }
 
         protected override bool ShowFocusCues => false;
@@ -57,22 +62,21 @@ namespace TotalWinUICustomization.Controls
                 cp.ExStyle |= (int)WindowStyles.WS_EX_TRANSPARENT;
                 //cp.Style |= (int)WindowStyles.WS_CHILD;
                 //cp.ExStyle |= (int)WindowStyles.WS_EX_NOACTIVATE;
-                cp.ExStyle |= (int)WindowStyles.WS_EX_TOPMOST;
+                cp.ExStyle |= (int)WindowStyles.WS_EX_TOPMOST;                                
                 return cp;
             }
         }
 
         protected override void InitLayout()
         {
-            if (this.Parent != null)
-            {
-                this.BringToFront();
-            }
+            this.BringToFront();
             base.InitLayout();
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            this.BringToFront();
+
             Rectangle bounds = this.ClientRectangle;
             Graphics g = e.Graphics;
 
@@ -89,11 +93,21 @@ namespace TotalWinUICustomization.Controls
                 ControlPaint.DrawBorder(g, bounds, overlayColor, ButtonBorderStyle.Solid);
             }
 
+            this.BringToFront();
             base.OnPaint(e);
+        }
+
+        private void ClickInterceptorBox_Enter(object sender, EventArgs e)
+        {
+            if (DesignMode)
+            {
+                this.BringToFront();
+            }
         }
 
         protected override void OnBackColorChanged(EventArgs e)
         {
+            this.BringToFront();
             if (this.Parent != null)
             {
                 Parent.Invalidate(this.Bounds, true);
@@ -104,12 +118,14 @@ namespace TotalWinUICustomization.Controls
 
         protected override void OnParentBackColorChanged(EventArgs e)
         {
+            this.BringToFront();
             this.Invalidate();
             base.OnParentBackColorChanged(e);
         }
 
         protected override void OnParentForeColorChanged(EventArgs e)
         {
+            this.BringToFront();
             Invalidate();
             base.OnParentForeColorChanged(e);
         }
@@ -118,6 +134,7 @@ namespace TotalWinUICustomization.Controls
         {
             if (DesignMode)
             {
+                this.BringToFront();
                 Invalidate();
             }
             base.OnLocationChanged(e);
@@ -127,6 +144,7 @@ namespace TotalWinUICustomization.Controls
         {
             if (DesignMode)
             {
+                this.BringToFront();
                 Invalidate();
             }
             base.OnMove(e);
@@ -136,9 +154,21 @@ namespace TotalWinUICustomization.Controls
         {
             if (DesignMode)
             {
+                this.BringToFront();
                 Invalidate();
             }
             base.OnSizeChanged(e);
         }
+
+        protected override void OnGotFocus(EventArgs e)
+        {
+            if (DesignMode)
+            {
+                this.BringToFront();
+            }
+            base.OnGotFocus(e);
+        }
+
+        
     }
 }

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
-namespace TotalWinUICustomization.Controls
+namespace OverlayControlsLibrary
 {
     public class ButtonLikeLabel : Label
     {

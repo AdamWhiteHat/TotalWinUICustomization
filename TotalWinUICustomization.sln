@@ -5,6 +5,10 @@ VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TotalWinUICustomization", "TotalWinUICustomization\TotalWinUICustomization.csproj", "{B80F57C2-BFEB-4D51-A713-8D148163C14E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OverlayControlsLibrary", "OverlayControlsLibrary\OverlayControlsLibrary.csproj", "{88DF61C1-7FC6-462A-A770-31714D1DB083}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonClassesLibrary", "CommonClassesLibrary\CommonClassesLibrary.csproj", "{5BB55D20-1CA4-4DE0-8DDF-B57C72DE76E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{B80F57C2-BFEB-4D51-A713-8D148163C14E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B80F57C2-BFEB-4D51-A713-8D148163C14E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B80F57C2-BFEB-4D51-A713-8D148163C14E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88DF61C1-7FC6-462A-A770-31714D1DB083}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88DF61C1-7FC6-462A-A770-31714D1DB083}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88DF61C1-7FC6-462A-A770-31714D1DB083}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88DF61C1-7FC6-462A-A770-31714D1DB083}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BB55D20-1CA4-4DE0-8DDF-B57C72DE76E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BB55D20-1CA4-4DE0-8DDF-B57C72DE76E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BB55D20-1CA4-4DE0-8DDF-B57C72DE76E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BB55D20-1CA4-4DE0-8DDF-B57C72DE76E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -24,6 +24,7 @@ namespace TotalWinUICustomization.Types
         ButtonText,
 
         Menu,
+        MenuBar,
         MenuText,
         GreyText,
         MenuHighlight,
@@ -50,7 +51,6 @@ namespace TotalWinUICustomization.Types
         ButtonLight,
         ButtonShadow,
 
-        MenuBar,
         AppWorkspace,
 
         [Category("Font")]

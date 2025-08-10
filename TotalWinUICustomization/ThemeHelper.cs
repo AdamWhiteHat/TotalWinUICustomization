@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommonClassesLibrary;
 
 namespace TotalWinUICustomization
 {
@@ -64,7 +65,7 @@ ButtonText={ColorHelper.ColorToString(control.ButtonTextColor)}
 Window={ColorHelper.ColorToString(control.WindowColor)}
 WindowText{ColorHelper.ColorToString(control.WindowTextColor)}
 Background={ColorHelper.ColorToString(control.DesktopBackgroundColor)}
-Menu{ColorHelper.ColorToString(control.MenuColor)}
+Menu{ColorHelper.ColorToString(control.MenuBarColor)}
 MenuText{ColorHelper.ColorToString(control.MenuTextColor)}
 MenuHilight{ColorHelper.ColorToString(control.MenuHighlightColor)}
 Hilight={ColorHelper.ColorToString(control.HilightColor)}

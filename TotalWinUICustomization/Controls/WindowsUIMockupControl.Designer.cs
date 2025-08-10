@@ -1,5 +1,8 @@
-﻿using System.Windows.Forms.Layout;
+﻿using System.Windows.Forms;
+using System.Windows.Forms.Layout;
 using TotalWinUICustomization.Controls;
+using OverlayControlsLibrary;
+using System.Drawing;
 
 namespace TotalWinUICustomization
 {
@@ -51,6 +54,7 @@ namespace TotalWinUICustomization
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WindowsUIMockupControl));
             window_MessageBox = new Panel();
+            button_MessageBox = new Label();
             toolTip_InfoWindow = new Label();
             hyperlinkText = new LinkLabel();
             font_MessageBox = new Label();
@@ -58,7 +62,7 @@ namespace TotalWinUICustomization
             font_MessageBoxTitleBar = new Label();
             buttonX_MessageBox = new Label();
             panelActiveWindow = new Panel();
-            menu = new Panel();
+            menuBar = new Panel();
             font_menuNormal = new Label();
             font_menuDisabled = new DisabledStyleLabel();
             font_menuSelected = new Label();
@@ -97,11 +101,10 @@ namespace TotalWinUICustomization
             activeBorderClickInterceptor4 = new ClickInterceptorBox();
             activeBorderClickInterceptor2 = new ClickInterceptorBox();
             activeBorderClickInterceptor1 = new ClickInterceptorBox();
-            button_MessageBox = new Label();
             window_MessageBox.SuspendLayout();
             titleBar_MessageBox.SuspendLayout();
             panelActiveWindow.SuspendLayout();
-            menu.SuspendLayout();
+            menuBar.SuspendLayout();
             textbox_ActiveWindow.SuspendLayout();
             titleBar_ActiveWindow.SuspendLayout();
             panelInactiveWindow.SuspendLayout();
@@ -124,6 +127,16 @@ namespace TotalWinUICustomization
             window_MessageBox.Size = new Size(390, 117);
             window_MessageBox.TabIndex = 11;
             window_MessageBox.Click += window_MessageBox_Click;
+            // 
+            // button_MessageBox
+            // 
+            button_MessageBox.Location = new Point(148, 76);
+            button_MessageBox.Name = "button_MessageBox";
+            button_MessageBox.Size = new Size(94, 29);
+            button_MessageBox.TabIndex = 13;
+            button_MessageBox.Text = "OK";
+            button_MessageBox.TextAlign = ContentAlignment.MiddleCenter;
+            button_MessageBox.Click += window_MessageBox_Click;
             // 
             // toolTip_InfoWindow
             // 
@@ -208,7 +221,7 @@ namespace TotalWinUICustomization
             // panelActiveWindow
             // 
             panelActiveWindow.BackColor = SystemColors.Control;
-            panelActiveWindow.Controls.Add(menu);
+            panelActiveWindow.Controls.Add(menuBar);
             panelActiveWindow.Controls.Add(textbox_ActiveWindow);
             panelActiveWindow.Controls.Add(titleBar_ActiveWindow);
             panelActiveWindow.Location = new Point(29, 61);
@@ -217,19 +230,19 @@ namespace TotalWinUICustomization
             panelActiveWindow.Size = new Size(512, 200);
             panelActiveWindow.TabIndex = 10;
             // 
-            // menu
+            // menuBar
             // 
-            menu.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            menu.BackColor = SystemColors.Menu;
-            menu.Controls.Add(font_menuNormal);
-            menu.Controls.Add(font_menuDisabled);
-            menu.Controls.Add(font_menuSelected);
-            menu.Location = new Point(0, 34);
-            menu.Margin = new Padding(0);
-            menu.Name = "menu";
-            menu.Size = new Size(509, 30);
-            menu.TabIndex = 11;
-            menu.Click += menu_Click;
+            menuBar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            menuBar.BackColor = SystemColors.Menu;
+            menuBar.Controls.Add(font_menuNormal);
+            menuBar.Controls.Add(font_menuDisabled);
+            menuBar.Controls.Add(font_menuSelected);
+            menuBar.Location = new Point(0, 34);
+            menuBar.Margin = new Padding(0);
+            menuBar.Name = "menuBar";
+            menuBar.Size = new Size(509, 30);
+            menuBar.TabIndex = 11;
+            menuBar.Click += menuBar_Click;
             // 
             // font_menuNormal
             // 
@@ -680,16 +693,6 @@ namespace TotalWinUICustomization
             activeBorderClickInterceptor1.TabStop = false;
             activeBorderClickInterceptor1.Click += activeBorderClickInterceptor_Click;
             // 
-            // button_MessageBox
-            // 
-            button_MessageBox.Location = new Point(148, 76);
-            button_MessageBox.Name = "button_MessageBox";
-            button_MessageBox.Size = new Size(94, 29);
-            button_MessageBox.TabIndex = 13;
-            button_MessageBox.Text = "OK";
-            button_MessageBox.TextAlign = ContentAlignment.MiddleCenter;
-            button_MessageBox.Click += window_MessageBox_Click;
-            // 
             // WindowsUIMockupControl
             // 
             AutoScaleMode = AutoScaleMode.None;
@@ -722,8 +725,8 @@ namespace TotalWinUICustomization
             titleBar_MessageBox.ResumeLayout(false);
             titleBar_MessageBox.PerformLayout();
             panelActiveWindow.ResumeLayout(false);
-            menu.ResumeLayout(false);
-            menu.PerformLayout();
+            menuBar.ResumeLayout(false);
+            menuBar.PerformLayout();
             textbox_ActiveWindow.ResumeLayout(false);
             textbox_ActiveWindow.PerformLayout();
             titleBar_ActiveWindow.ResumeLayout(false);
@@ -761,7 +764,7 @@ namespace TotalWinUICustomization
         private Label font_ActiveWindow;
         private Panel textbox_ActiveWindow;
         private VScrollBar ScrollBarActiveWindow;
-        private Panel menu;
+        private Panel menuBar;
         private LinkLabel hyperlinkText;
         private Label selectedText;
         private DisabledStyleLabel font_menuDisabled;
