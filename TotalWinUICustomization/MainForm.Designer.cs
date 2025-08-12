@@ -33,11 +33,12 @@ namespace TotalWinUICustomization
         /// </summary>
         private void InitializeComponent()
         {
-            PanelColorPropertyControls = new Panel();
             panelColorPropertyLeft = new Panel();
             label1 = new Label();
             comboBoxColorPropertySelection = new ComboBox();
-            panelColorPropertyRight = new FlowLayoutPanel();
+            font_ClickInterceptorBox = new ClickInterceptorBox();
+            flowLayoutPanelColor = new FlowLayoutPanel();
+            panelColorPropertyRight = new Panel();
             panelColorProperty1 = new Panel();
             label6 = new Label();
             buttonColorProperty1 = new Button();
@@ -46,16 +47,15 @@ namespace TotalWinUICustomization
             label3 = new Label();
             buttonColorProperty2 = new Button();
             panelColorPropertySwatch2 = new Panel();
-            PanelFontPropertyControls = new Panel();
-            font_ClickInterceptorBox = new ClickInterceptorBox();
-            panelFontPropertyLeft = new Panel();
-            label2 = new Label();
-            comboBoxFontPropertySelection = new ComboBox();
-            panelFontPropertyRight = new FlowLayoutPanel();
-            panelFontPropertySize = new Panel();
+            panelFontPropertyRight = new Panel();
+            checkBoxFontItalic = new CheckBox();
             comboFontSize = new ComboBox();
             checkBoxFontBold = new CheckBox();
             label4 = new Label();
+            panelFontPropertyLeft = new Panel();
+            label2 = new Label();
+            comboBoxFontPropertySelection = new ComboBox();
+            panelFontProperty = new Panel();
             panelFontPropertyColor = new Panel();
             label5 = new Label();
             buttonFontColor = new Button();
@@ -65,33 +65,21 @@ namespace TotalWinUICustomization
             windowsuiMockupControl = new WindowsUIMockupControl();
             flowLayoutPanelMain = new FlowLayoutPanel();
             flowLayoutPanelBottom = new FlowLayoutPanel();
-            PanelColorPropertyControls.SuspendLayout();
             panelColorPropertyLeft.SuspendLayout();
+            flowLayoutPanelColor.SuspendLayout();
             panelColorPropertyRight.SuspendLayout();
             panelColorProperty1.SuspendLayout();
             buttonColorProperty1.SuspendLayout();
             panelColorProperty2.SuspendLayout();
             buttonColorProperty2.SuspendLayout();
-            PanelFontPropertyControls.SuspendLayout();
-            panelFontPropertyLeft.SuspendLayout();
             panelFontPropertyRight.SuspendLayout();
-            panelFontPropertySize.SuspendLayout();
+            panelFontPropertyLeft.SuspendLayout();
+            panelFontProperty.SuspendLayout();
             panelFontPropertyColor.SuspendLayout();
             buttonFontColor.SuspendLayout();
             flowLayoutPanelMain.SuspendLayout();
             flowLayoutPanelBottom.SuspendLayout();
             SuspendLayout();
-            // 
-            // PanelColorPropertyControls
-            // 
-            PanelColorPropertyControls.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            PanelColorPropertyControls.Controls.Add(panelColorPropertyLeft);
-            PanelColorPropertyControls.Controls.Add(panelColorPropertyRight);
-            PanelColorPropertyControls.Location = new Point(0, 0);
-            PanelColorPropertyControls.Margin = new Padding(0);
-            PanelColorPropertyControls.Name = "PanelColorPropertyControls";
-            PanelColorPropertyControls.Size = new Size(606, 70);
-            PanelColorPropertyControls.TabIndex = 19;
             // 
             // panelColorPropertyLeft
             // 
@@ -102,7 +90,7 @@ namespace TotalWinUICustomization
             panelColorPropertyLeft.Location = new Point(0, 0);
             panelColorPropertyLeft.Margin = new Padding(0);
             panelColorPropertyLeft.Name = "panelColorPropertyLeft";
-            panelColorPropertyLeft.Size = new Size(386, 70);
+            panelColorPropertyLeft.Size = new Size(384, 70);
             panelColorPropertyLeft.TabIndex = 19;
             // 
             // label1
@@ -123,21 +111,41 @@ namespace TotalWinUICustomization
             comboBoxColorPropertySelection.Location = new Point(13, 24);
             comboBoxColorPropertySelection.Margin = new Padding(2, 3, 2, 3);
             comboBoxColorPropertySelection.Name = "comboBoxColorPropertySelection";
-            comboBoxColorPropertySelection.Size = new Size(359, 28);
+            comboBoxColorPropertySelection.Size = new Size(357, 28);
             comboBoxColorPropertySelection.TabIndex = 0;
             comboBoxColorPropertySelection.SelectionChangeCommitted += comboBoxColorPropertySelection_SelectionChangeCommitted;
             // 
+            // font_ClickInterceptorBox
+            // 
+            font_ClickInterceptorBox.CausesValidation = false;
+            font_ClickInterceptorBox.Dock = DockStyle.Fill;
+            font_ClickInterceptorBox.Location = new Point(0, 0);
+            font_ClickInterceptorBox.Name = "font_ClickInterceptorBox";
+            font_ClickInterceptorBox.Size = new Size(606, 70);
+            font_ClickInterceptorBox.TabIndex = 7;
+            font_ClickInterceptorBox.TabStop = false;
+            font_ClickInterceptorBox.Click += font_ClickInterceptorBox_Click;
+            // 
+            // flowLayoutPanelColor
+            // 
+            flowLayoutPanelColor.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            flowLayoutPanelColor.Controls.Add(panelColorPropertyLeft);
+            flowLayoutPanelColor.Controls.Add(panelColorPropertyRight);
+            flowLayoutPanelColor.Location = new Point(0, 0);
+            flowLayoutPanelColor.Margin = new Padding(0);
+            flowLayoutPanelColor.Name = "flowLayoutPanelColor";
+            flowLayoutPanelColor.Size = new Size(606, 70);
+            flowLayoutPanelColor.TabIndex = 18;
+            // 
             // panelColorPropertyRight
             // 
-            panelColorPropertyRight.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            panelColorPropertyRight.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             panelColorPropertyRight.Controls.Add(panelColorProperty1);
             panelColorPropertyRight.Controls.Add(panelColorProperty2);
-            panelColorPropertyRight.Location = new Point(386, 0);
+            panelColorPropertyRight.Location = new Point(384, 0);
             panelColorPropertyRight.Margin = new Padding(0);
             panelColorPropertyRight.Name = "panelColorPropertyRight";
-            panelColorPropertyRight.Size = new Size(218, 70);
-            panelColorPropertyRight.TabIndex = 18;
+            panelColorPropertyRight.Size = new Size(170, 70);
+            panelColorPropertyRight.TabIndex = 20;
             // 
             // panelColorProperty1
             // 
@@ -146,12 +154,11 @@ namespace TotalWinUICustomization
             panelColorProperty1.Location = new Point(0, 0);
             panelColorProperty1.Margin = new Padding(0);
             panelColorProperty1.Name = "panelColorProperty1";
-            panelColorProperty1.Size = new Size(123, 65);
+            panelColorProperty1.Size = new Size(85, 70);
             panelColorProperty1.TabIndex = 18;
             // 
             // label6
             // 
-            label6.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label6.AutoSize = true;
             label6.Location = new Point(2, 4);
             label6.Margin = new Padding(2, 0, 2, 0);
@@ -162,15 +169,16 @@ namespace TotalWinUICustomization
             // 
             // buttonColorProperty1
             // 
-            buttonColorProperty1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             buttonColorProperty1.Controls.Add(panelColorPropertySwatch1);
             buttonColorProperty1.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            buttonColorProperty1.Location = new Point(12, 24);
-            buttonColorProperty1.Margin = new Padding(2, 3, 2, 3);
+            buttonColorProperty1.Location = new Point(4, 24);
+            buttonColorProperty1.Margin = new Padding(2);
+            buttonColorProperty1.MaximumSize = new Size(72, 36);
+            buttonColorProperty1.MinimumSize = new Size(72, 36);
             buttonColorProperty1.Name = "buttonColorProperty1";
-            buttonColorProperty1.Size = new Size(88, 35);
+            buttonColorProperty1.Size = new Size(72, 36);
             buttonColorProperty1.TabIndex = 11;
-            buttonColorProperty1.Text = "│ ▾";
+            buttonColorProperty1.Text = "│▾";
             buttonColorProperty1.TextAlign = ContentAlignment.MiddleRight;
             buttonColorProperty1.UseVisualStyleBackColor = true;
             buttonColorProperty1.Click += buttonPropertyColor1_Click;
@@ -179,12 +187,12 @@ namespace TotalWinUICustomization
             // 
             panelColorPropertySwatch1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panelColorPropertySwatch1.BorderStyle = BorderStyle.FixedSingle;
-            panelColorPropertySwatch1.Location = new Point(3, 4);
-            panelColorPropertySwatch1.Margin = new Padding(2, 3, 2, 3);
-            panelColorPropertySwatch1.MaximumSize = new Size(52, 26);
-            panelColorPropertySwatch1.MinimumSize = new Size(52, 26);
+            panelColorPropertySwatch1.Location = new Point(5, 4);
+            panelColorPropertySwatch1.Margin = new Padding(0);
+            panelColorPropertySwatch1.MaximumSize = new Size(38, 28);
+            panelColorPropertySwatch1.MinimumSize = new Size(38, 28);
             panelColorPropertySwatch1.Name = "panelColorPropertySwatch1";
-            panelColorPropertySwatch1.Size = new Size(52, 26);
+            panelColorPropertySwatch1.Size = new Size(38, 28);
             panelColorPropertySwatch1.TabIndex = 2;
             panelColorPropertySwatch1.Click += buttonPropertyColor1_Click;
             // 
@@ -192,15 +200,14 @@ namespace TotalWinUICustomization
             // 
             panelColorProperty2.Controls.Add(label3);
             panelColorProperty2.Controls.Add(buttonColorProperty2);
-            panelColorProperty2.Location = new Point(123, 0);
+            panelColorProperty2.Location = new Point(85, 0);
             panelColorProperty2.Margin = new Padding(0);
             panelColorProperty2.Name = "panelColorProperty2";
-            panelColorProperty2.Size = new Size(95, 65);
-            panelColorProperty2.TabIndex = 14;
+            panelColorProperty2.Size = new Size(85, 70);
+            panelColorProperty2.TabIndex = 19;
             // 
             // label3
             // 
-            label3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label3.AutoSize = true;
             label3.Location = new Point(2, 4);
             label3.Margin = new Padding(2, 0, 2, 0);
@@ -211,54 +218,103 @@ namespace TotalWinUICustomization
             // 
             // buttonColorProperty2
             // 
-            buttonColorProperty2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             buttonColorProperty2.Controls.Add(panelColorPropertySwatch2);
             buttonColorProperty2.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            buttonColorProperty2.Location = new Point(3, 24);
-            buttonColorProperty2.Margin = new Padding(2, 3, 2, 3);
+            buttonColorProperty2.Location = new Point(4, 24);
+            buttonColorProperty2.Margin = new Padding(2);
+            buttonColorProperty2.MaximumSize = new Size(72, 36);
+            buttonColorProperty2.MinimumSize = new Size(72, 36);
             buttonColorProperty2.Name = "buttonColorProperty2";
-            buttonColorProperty2.Size = new Size(88, 35);
+            buttonColorProperty2.Size = new Size(72, 36);
             buttonColorProperty2.TabIndex = 16;
-            buttonColorProperty2.Text = "│ ▾";
+            buttonColorProperty2.Text = "│▾";
             buttonColorProperty2.TextAlign = ContentAlignment.MiddleRight;
             buttonColorProperty2.UseVisualStyleBackColor = true;
-            buttonColorProperty2.Click += buttonPropertyColor2_Click;
             // 
             // panelColorPropertySwatch2
             // 
             panelColorPropertySwatch2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panelColorPropertySwatch2.BorderStyle = BorderStyle.FixedSingle;
-            panelColorPropertySwatch2.Location = new Point(3, 4);
-            panelColorPropertySwatch2.Margin = new Padding(2, 3, 2, 3);
-            panelColorPropertySwatch2.MaximumSize = new Size(52, 26);
-            panelColorPropertySwatch2.MinimumSize = new Size(52, 26);
+            panelColorPropertySwatch2.Location = new Point(5, 4);
+            panelColorPropertySwatch2.Margin = new Padding(0);
+            panelColorPropertySwatch2.MaximumSize = new Size(38, 28);
+            panelColorPropertySwatch2.MinimumSize = new Size(38, 28);
             panelColorPropertySwatch2.Name = "panelColorPropertySwatch2";
-            panelColorPropertySwatch2.Size = new Size(52, 26);
+            panelColorPropertySwatch2.Size = new Size(38, 28);
             panelColorPropertySwatch2.TabIndex = 2;
-            panelColorPropertySwatch2.Click += buttonPropertyColor2_Click;
             // 
-            // PanelFontPropertyControls
+            // panelFontPropertyRight
             // 
-            PanelFontPropertyControls.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            PanelFontPropertyControls.Controls.Add(font_ClickInterceptorBox);
-            PanelFontPropertyControls.Controls.Add(panelFontPropertyLeft);
-            PanelFontPropertyControls.Controls.Add(panelFontPropertyRight);
-            PanelFontPropertyControls.Location = new Point(0, 70);
-            PanelFontPropertyControls.Margin = new Padding(0);
-            PanelFontPropertyControls.Name = "PanelFontPropertyControls";
-            PanelFontPropertyControls.Size = new Size(606, 71);
-            PanelFontPropertyControls.TabIndex = 16;
+            panelFontPropertyRight.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            panelFontPropertyRight.Controls.Add(checkBoxFontItalic);
+            panelFontPropertyRight.Controls.Add(comboFontSize);
+            panelFontPropertyRight.Controls.Add(checkBoxFontBold);
+            panelFontPropertyRight.Controls.Add(label4);
+            panelFontPropertyRight.Location = new Point(384, 0);
+            panelFontPropertyRight.Margin = new Padding(0);
+            panelFontPropertyRight.Name = "panelFontPropertyRight";
+            panelFontPropertyRight.Size = new Size(137, 70);
+            panelFontPropertyRight.TabIndex = 8;
             // 
-            // font_ClickInterceptorBox
+            // checkBoxFontItalic
             // 
-            font_ClickInterceptorBox.CausesValidation = false;
-            font_ClickInterceptorBox.Dock = DockStyle.Fill;
-            font_ClickInterceptorBox.Location = new Point(0, 0);
-            font_ClickInterceptorBox.Name = "font_ClickInterceptorBox";
-            font_ClickInterceptorBox.Size = new Size(606, 71);
-            font_ClickInterceptorBox.TabIndex = 7;
-            font_ClickInterceptorBox.TabStop = false;
-            font_ClickInterceptorBox.Click += font_ClickInterceptorBox_Click;
+            checkBoxFontItalic.Appearance = Appearance.Button;
+            checkBoxFontItalic.CheckAlign = ContentAlignment.MiddleCenter;
+            checkBoxFontItalic.Checked = true;
+            checkBoxFontItalic.CheckState = CheckState.Checked;
+            checkBoxFontItalic.FlatAppearance.BorderSize = 2;
+            checkBoxFontItalic.FlatStyle = FlatStyle.System;
+            checkBoxFontItalic.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            checkBoxFontItalic.Location = new Point(105, 27);
+            checkBoxFontItalic.Margin = new Padding(0);
+            checkBoxFontItalic.Name = "checkBoxFontItalic";
+            checkBoxFontItalic.Size = new Size(30, 30);
+            checkBoxFontItalic.TabIndex = 12;
+            checkBoxFontItalic.Text = "/";
+            checkBoxFontItalic.TextAlign = ContentAlignment.MiddleCenter;
+            checkBoxFontItalic.UseVisualStyleBackColor = true;
+            checkBoxFontItalic.CheckedChanged += checkBoxFontStyle_CheckedChanged;
+            // 
+            // comboFontSize
+            // 
+            comboFontSize.FormattingEnabled = true;
+            comboFontSize.Items.AddRange(new object[] { "72", "48", "36", "28", "26", "24", "22", "20", "18", "16", "14", "12", "11", "10", "9", "8" });
+            comboFontSize.Location = new Point(6, 28);
+            comboFontSize.Name = "comboFontSize";
+            comboFontSize.Size = new Size(61, 28);
+            comboFontSize.TabIndex = 11;
+            comboFontSize.Text = "9";
+            comboFontSize.SelectedIndexChanged += comboFontSize_SelectedItemChanged;
+            comboFontSize.TextChanged += comboFontSize_TextChanged;
+            // 
+            // checkBoxFontBold
+            // 
+            checkBoxFontBold.Appearance = Appearance.Button;
+            checkBoxFontBold.CheckAlign = ContentAlignment.MiddleCenter;
+            checkBoxFontBold.Checked = true;
+            checkBoxFontBold.CheckState = CheckState.Checked;
+            checkBoxFontBold.FlatAppearance.BorderSize = 2;
+            checkBoxFontBold.FlatStyle = FlatStyle.System;
+            checkBoxFontBold.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            checkBoxFontBold.Location = new Point(76, 27);
+            checkBoxFontBold.Margin = new Padding(0);
+            checkBoxFontBold.Name = "checkBoxFontBold";
+            checkBoxFontBold.Size = new Size(30, 30);
+            checkBoxFontBold.TabIndex = 10;
+            checkBoxFontBold.Text = "B";
+            checkBoxFontBold.TextAlign = ContentAlignment.MiddleCenter;
+            checkBoxFontBold.UseVisualStyleBackColor = true;
+            checkBoxFontBold.CheckedChanged += checkBoxFontStyle_CheckedChanged;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(4, 4);
+            label4.Margin = new Padding(2, 0, 2, 0);
+            label4.Name = "label4";
+            label4.Size = new Size(39, 20);
+            label4.TabIndex = 9;
+            label4.Text = "Size:";
             // 
             // panelFontPropertyLeft
             // 
@@ -269,7 +325,7 @@ namespace TotalWinUICustomization
             panelFontPropertyLeft.Location = new Point(0, 0);
             panelFontPropertyLeft.Margin = new Padding(0);
             panelFontPropertyLeft.Name = "panelFontPropertyLeft";
-            panelFontPropertyLeft.Size = new Size(386, 70);
+            panelFontPropertyLeft.Size = new Size(384, 70);
             panelFontPropertyLeft.TabIndex = 20;
             // 
             // label2
@@ -292,123 +348,68 @@ namespace TotalWinUICustomization
             comboBoxFontPropertySelection.Location = new Point(13, 26);
             comboBoxFontPropertySelection.Margin = new Padding(2, 3, 2, 3);
             comboBoxFontPropertySelection.Name = "comboBoxFontPropertySelection";
-            comboBoxFontPropertySelection.Size = new Size(359, 28);
+            comboBoxFontPropertySelection.Size = new Size(360, 28);
             comboBoxFontPropertySelection.TabIndex = 6;
             comboBoxFontPropertySelection.SelectionChangeCommitted += comboBoxFontPropertySelection_SelectionChangeCommitted;
             // 
-            // panelFontPropertyRight
+            // flowLayoutPanelFont
             // 
-            panelFontPropertyRight.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            panelFontPropertyRight.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            panelFontPropertyRight.Controls.Add(panelFontPropertySize);
-            panelFontPropertyRight.Controls.Add(panelFontPropertyColor);
-            panelFontPropertyRight.Location = new Point(386, 0);
-            panelFontPropertyRight.Margin = new Padding(0);
-            panelFontPropertyRight.Name = "panelFontPropertyRight";
-            panelFontPropertyRight.Size = new Size(218, 70);
-            panelFontPropertyRight.TabIndex = 7;
-            // 
-            // panelFontPropertySize
-            // 
-            panelFontPropertySize.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            panelFontPropertySize.Controls.Add(comboFontSize);
-            panelFontPropertySize.Controls.Add(checkBoxFontBold);
-            panelFontPropertySize.Controls.Add(label4);
-            panelFontPropertySize.Location = new Point(0, 0);
-            panelFontPropertySize.Margin = new Padding(0);
-            panelFontPropertySize.Name = "panelFontPropertySize";
-            panelFontPropertySize.Size = new Size(123, 70);
-            panelFontPropertySize.TabIndex = 8;
-            // 
-            // comboFontSize
-            // 
-            comboFontSize.FormattingEnabled = true;
-            comboFontSize.Items.AddRange(new object[] { "72", "48", "36", "28", "26", "24", "22", "20", "18", "16", "14", "12", "11", "10", "9", "8" });
-            comboFontSize.Location = new Point(14, 24);
-            comboFontSize.Name = "comboFontSize";
-            comboFontSize.Size = new Size(61, 28);
-            comboFontSize.TabIndex = 11;
-            comboFontSize.Text = "9";
-            comboFontSize.SelectedIndexChanged += comboFontSize_SelectedItemChanged;
-            comboFontSize.TextChanged += comboFontSize_TextChanged;
-            // 
-            // checkBoxFontBold
-            // 
-            checkBoxFontBold.Appearance = Appearance.Button;
-            checkBoxFontBold.CheckAlign = ContentAlignment.MiddleCenter;
-            checkBoxFontBold.Checked = true;
-            checkBoxFontBold.CheckState = CheckState.Checked;
-            checkBoxFontBold.FlatAppearance.BorderSize = 2;
-            checkBoxFontBold.FlatStyle = FlatStyle.System;
-            checkBoxFontBold.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            checkBoxFontBold.Location = new Point(85, 25);
-            checkBoxFontBold.Margin = new Padding(0);
-            checkBoxFontBold.Name = "checkBoxFontBold";
-            checkBoxFontBold.Size = new Size(30, 30);
-            checkBoxFontBold.TabIndex = 10;
-            checkBoxFontBold.Text = "B";
-            checkBoxFontBold.TextAlign = ContentAlignment.MiddleCenter;
-            checkBoxFontBold.UseVisualStyleBackColor = true;
-            checkBoxFontBold.CheckedChanged += checkBoxFontBold_CheckedChanged;
-            // 
-            // label4
-            // 
-            label4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            label4.AutoSize = true;
-            label4.Location = new Point(2, 4);
-            label4.Margin = new Padding(2, 0, 2, 0);
-            label4.Name = "label4";
-            label4.Size = new Size(39, 20);
-            label4.TabIndex = 9;
-            label4.Text = "Size:";
+            panelFontProperty.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            panelFontProperty.Controls.Add(font_ClickInterceptorBox);
+            panelFontProperty.Controls.Add(panelFontPropertyLeft);
+            panelFontProperty.Controls.Add(panelFontPropertyRight);
+            panelFontProperty.Controls.Add(panelFontPropertyColor);
+            panelFontProperty.Location = new Point(0, 70);
+            panelFontProperty.Margin = new Padding(0);
+            panelFontProperty.Name = "flowLayoutPanelFont";
+            panelFontProperty.Size = new Size(606, 70);
+            panelFontProperty.TabIndex = 7;
             // 
             // panelFontPropertyColor
             // 
-            panelFontPropertyColor.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             panelFontPropertyColor.Controls.Add(label5);
             panelFontPropertyColor.Controls.Add(buttonFontColor);
-            panelFontPropertyColor.Location = new Point(123, 0);
+            panelFontPropertyColor.Location = new Point(521, 0);
             panelFontPropertyColor.Margin = new Padding(0);
             panelFontPropertyColor.Name = "panelFontPropertyColor";
-            panelFontPropertyColor.Size = new Size(95, 70);
-            panelFontPropertyColor.TabIndex = 16;
+            panelFontPropertyColor.Size = new Size(85, 70);
+            panelFontPropertyColor.TabIndex = 21;
             // 
             // label5
             // 
-            label5.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label5.AutoSize = true;
             label5.Location = new Point(2, 4);
             label5.Margin = new Padding(2, 0, 2, 0);
             label5.Name = "label5";
             label5.Size = new Size(48, 20);
-            label5.TabIndex = 10;
+            label5.TabIndex = 16;
             label5.Text = "Color:";
             // 
             // buttonFontColor
             // 
-            buttonFontColor.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             buttonFontColor.Controls.Add(panelFontColorSwatch);
             buttonFontColor.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            buttonFontColor.Location = new Point(2, 24);
-            buttonFontColor.Margin = new Padding(2, 3, 2, 3);
+            buttonFontColor.Location = new Point(4, 24);
+            buttonFontColor.Margin = new Padding(2);
+            buttonFontColor.MaximumSize = new Size(72, 36);
+            buttonFontColor.MinimumSize = new Size(72, 36);
             buttonFontColor.Name = "buttonFontColor";
-            buttonFontColor.Size = new Size(88, 35);
-            buttonFontColor.TabIndex = 15;
-            buttonFontColor.Text = "│ ▾";
+            buttonFontColor.Size = new Size(72, 36);
+            buttonFontColor.TabIndex = 17;
+            buttonFontColor.Text = "│▾";
             buttonFontColor.TextAlign = ContentAlignment.MiddleRight;
             buttonFontColor.UseVisualStyleBackColor = true;
-            buttonFontColor.Click += buttonFontColor_Click;
             // 
             // panelFontColorSwatch
             // 
-            panelFontColorSwatch.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panelFontColorSwatch.BorderStyle = BorderStyle.FixedSingle;
-            panelFontColorSwatch.Location = new Point(3, 4);
-            panelFontColorSwatch.Margin = new Padding(2, 3, 2, 3);
+            panelFontColorSwatch.Location = new Point(5, 4);
+            panelFontColorSwatch.Margin = new Padding(0);
+            panelFontColorSwatch.MaximumSize = new Size(38, 28);
+            panelFontColorSwatch.MinimumSize = new Size(38, 28);
             panelFontColorSwatch.Name = "panelFontColorSwatch";
-            panelFontColorSwatch.Size = new Size(52, 26);
+            panelFontColorSwatch.Size = new Size(38, 28);
             panelFontColorSwatch.TabIndex = 3;
-            panelFontColorSwatch.Click += buttonFontColor_Click;
             // 
             // colorPickerDialog
             // 
@@ -483,8 +484,8 @@ namespace TotalWinUICustomization
             // 
             flowLayoutPanelBottom.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             flowLayoutPanelBottom.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            flowLayoutPanelBottom.Controls.Add(PanelColorPropertyControls);
-            flowLayoutPanelBottom.Controls.Add(PanelFontPropertyControls);
+            flowLayoutPanelBottom.Controls.Add(flowLayoutPanelColor);
+            flowLayoutPanelBottom.Controls.Add(panelFontProperty);
             flowLayoutPanelBottom.FlowDirection = FlowDirection.TopDown;
             flowLayoutPanelBottom.Location = new Point(0, 370);
             flowLayoutPanelBottom.Margin = new Padding(0);
@@ -508,9 +509,9 @@ namespace TotalWinUICustomization
             SizeGripStyle = SizeGripStyle.Hide;
             Text = "Control Freak - Total Windows Customization";
             Load += MainForm_Load;
-            PanelColorPropertyControls.ResumeLayout(false);
             panelColorPropertyLeft.ResumeLayout(false);
             panelColorPropertyLeft.PerformLayout();
+            flowLayoutPanelColor.ResumeLayout(false);
             panelColorPropertyRight.ResumeLayout(false);
             panelColorProperty1.ResumeLayout(false);
             panelColorProperty1.PerformLayout();
@@ -518,12 +519,11 @@ namespace TotalWinUICustomization
             panelColorProperty2.ResumeLayout(false);
             panelColorProperty2.PerformLayout();
             buttonColorProperty2.ResumeLayout(false);
-            PanelFontPropertyControls.ResumeLayout(false);
+            panelFontPropertyRight.ResumeLayout(false);
+            panelFontPropertyRight.PerformLayout();
             panelFontPropertyLeft.ResumeLayout(false);
             panelFontPropertyLeft.PerformLayout();
-            panelFontPropertyRight.ResumeLayout(false);
-            panelFontPropertySize.ResumeLayout(false);
-            panelFontPropertySize.PerformLayout();
+            panelFontProperty.ResumeLayout(false);
             panelFontPropertyColor.ResumeLayout(false);
             panelFontPropertyColor.PerformLayout();
             buttonFontColor.ResumeLayout(false);
@@ -539,34 +539,32 @@ namespace TotalWinUICustomization
         private ComboBox comboBoxFontPropertySelection;
         private Label label2;
         private Label label1;
-        private Label label5;
         private Label label4;
         private FontDialog fontPickerDialog;
         private Button buttonColorProperty1;
         private Label label6;
-        private Button buttonFontColor;
         private Panel panelColorPropertySwatch1;
-        private Panel panelFontColorSwatch;
-        private Panel panel12;
-        private Panel PanelFontPropertyControls;
-        private Panel PanelColorPropertyControls;
-        private Panel panel13;
-        private Panel panelColorProperty2;
-        private Label label3;
-        private Button buttonColorProperty2;
-        private Panel panelColorPropertySwatch2;
         private WindowsUIMockupControl windowsuiMockupControl;
         private FlowLayoutPanel flowLayoutPanelMain;
-        private Panel panelFontPropertyColor;
         private Panel panelColorProperty1;
-        private FlowLayoutPanel panelColorPropertyRight;
-        private FlowLayoutPanel panelFontPropertyRight;
-        private Panel panelFontPropertySize;
+        private FlowLayoutPanel flowLayoutPanelColor;
+        private Panel panelFontProperty;
+        private Panel panelFontPropertyRight;
         private Panel panelColorPropertyLeft;
         private Panel panelFontPropertyLeft;
         private CheckBox checkBoxFontBold;
         private ComboBox comboFontSize;
         private ClickInterceptorBox font_ClickInterceptorBox;
         private FlowLayoutPanel flowLayoutPanelBottom;
+        private CheckBox checkBoxFontItalic;
+        private Panel panelColorPropertyRight;
+        private Panel panelColorProperty2;
+        private Label label3;
+        private Button buttonColorProperty2;
+        private Panel panelColorPropertySwatch2;
+        private Panel panelFontPropertyColor;
+        private Label label5;
+        private Button buttonFontColor;
+        private Panel panelFontColorSwatch;
     }
 }

@@ -29,7 +29,7 @@ namespace TotalWinUICustomization
             panelColorProperty2.Disable();
 
             panelFontPropertyLeft.Disable();
-            panelFontPropertySize.Disable();
+            panelFontPropertyRight.Disable();
             panelFontPropertyColor.Disable();
 
             panelColorPropertySwatch1.EnabledChanged += ColorSwatch_EnabledChanged;
@@ -154,11 +154,16 @@ namespace TotalWinUICustomization
 
         public FontStyle GetFontStyle()
         {
+            FontStyle result = FontStyle.Regular;
             if (checkBoxFontBold.Checked)
             {
-                return FontStyle.Bold;
+                result |= FontStyle.Bold;
             }
-            return FontStyle.Regular;
+            if (checkBoxFontItalic.Checked)
+            {
+                result |= FontStyle.Italic;
+            }
+            return result;
         }
 
         public void SetFontComboBoxFont(Font font)
@@ -196,6 +201,7 @@ namespace TotalWinUICustomization
             if (CurrentUiElementSelected.HasAssociatedFont)
             {
                 checkBoxFontBold.Checked = font.Bold;
+                checkBoxFontItalic.Checked = font.Italic;
             }
         }
 
@@ -242,6 +248,36 @@ namespace TotalWinUICustomization
 
             #endregion
 
+            #region AssociatedFont
+
+            // Update associated font
+            if (clickedElement.HasAssociatedFont)
+            {
+                panelFontPropertyLeft.Enable();
+                panelFontPropertyRight.Enable();
+
+                Font font = RegistryHelper.GetWindowsFont(clickedElement.AssociatedFont.Value);
+                SetFontComboBoxFont(font);
+
+                float fontSize = (float)Math.Round(font.SizeInPoints,1);
+                SetFontSize(fontSize);
+
+                SetFontStyle(font);
+
+                if (!clickedElement.HasControlElement && !clickedElement.HasAssociatedFontColor)
+                {
+                    panelColorPropertyLeft.Enable();
+                    comboBoxColorPropertySelection.SelectedItem = clickedElement.AssociatedFont.Value;
+                }
+            }
+            else
+            {
+                panelFontPropertyLeft.Disable();
+                panelFontPropertyRight.Disable();
+            }
+
+            #endregion
+
             #region AssociatedFontColor
 
             // Update associated font color
@@ -261,36 +297,6 @@ namespace TotalWinUICustomization
             else
             {
                 panelFontPropertyColor.Disable();
-            }
-
-            #endregion
-
-            #region AssociatedFont
-
-            // Update associated font
-            if (clickedElement.HasAssociatedFont)
-            {
-                panelFontPropertyLeft.Enable();
-                panelFontPropertySize.Enable();
-
-                Font font = RegistryHelper.GetWindowsFont(clickedElement.AssociatedFont.Value);
-                SetFontComboBoxFont(font);
-
-                float fontSize = (float)Math.Round(font.SizeInPoints,1);
-                SetFontSize(fontSize);
-
-                SetFontStyle(font);
-
-                if (!clickedElement.HasControlElement && !clickedElement.HasAssociatedFontColor)
-                {
-                    panelColorPropertyLeft.Enable();
-                    comboBoxColorPropertySelection.SelectedItem = clickedElement.AssociatedFont.Value;
-                }
-            }
-            else
-            {
-                panelFontPropertyLeft.Disable();
-                panelFontPropertySize.Disable();
             }
 
             #endregion
@@ -395,7 +401,7 @@ namespace TotalWinUICustomization
             }
         }
 
-        private void checkBoxFontBold_CheckedChanged(object sender, EventArgs e)
+        private void checkBoxFontStyle_CheckedChanged(object sender, EventArgs e)
         {
             if (CurrentUiElementSelected != null)
             {
