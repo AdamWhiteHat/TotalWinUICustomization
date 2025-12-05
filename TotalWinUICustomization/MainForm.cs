@@ -192,6 +192,7 @@ namespace TotalWinUICustomization
                 }
 
                 int fontSizeIndex = comboFontSize.Items.IndexOf(fontSize.ToString());
+                comboFontSize.SelectedIndex = -1;
                 comboFontSize.SelectedIndex = fontSizeIndex;
             }
         }
@@ -470,6 +471,8 @@ namespace TotalWinUICustomization
                 return;
             }
 
+            panelInnerFontProperty.Enabled = false;
+
             Font oldFont = RegistryHelper.GetWindowsFont(CurrentUiElementSelected.AssociatedFont.Value);
             fontPickerDialog.Font = oldFont;
 
@@ -481,7 +484,17 @@ namespace TotalWinUICustomization
                 fontHasColor = true;
             }
 
-            if (fontPickerDialog.ShowDialog() == DialogResult.OK)
+            font_ClickInterceptorBox.Visible = false;
+            panelInnerFontProperty.Visible = false;
+            thatchedPanel1.Visible = true;
+            thatchedPanel1.BringToFront();
+            DialogResult fontDialogResult = fontPickerDialog.ShowDialog();
+            thatchedPanel1.Visible = false;
+            thatchedPanel1.SendToBack();
+            panelInnerFontProperty.Visible = true;
+            font_ClickInterceptorBox.Visible = true;
+
+            if (fontDialogResult == DialogResult.OK)
             {
                 Font newFont = fontPickerDialog.Font;
 
@@ -501,6 +514,12 @@ namespace TotalWinUICustomization
                     RegistryHelper.SetWindowsColor(CurrentUiElementSelected.AssociatedFontColor.Value, newColor);
                 }
             }
+            else
+            {
+                UpdateComboboxes();
+            }
+
+            panelInnerFontProperty.Enabled = true;
         }
     }
 }
