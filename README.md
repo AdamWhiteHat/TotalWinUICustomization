@@ -1,8 +1,25 @@
-# TotalWinUICustomization
+# Total Windows UI Customization
+
+- [About](https://github.com/AdamWhiteHat/TotalWinUICustomization/tree/master#about)
+- [Screenshot](https://github.com/AdamWhiteHat/TotalWinUICustomization/tree/master#screenshot)
+- [Issues & Compatibility](https://github.com/AdamWhiteHat/TotalWinUICustomization/tree/master#issues--compatibility)
+
+
+  
+
+
+
+
+
+## About
+
+This application is designed to look and act like the Display Properties settings dialog that was available in Windows XP and available as late as Windows 7. See [Issues & Compatibility](https://github.com/AdamWhiteHat/TotalWinUICustomization/tree/master#issues--compatibility).
+
+## Screenshot
 
 ![Application screenshot](https://raw.githubusercontent.com/AdamWhiteHat/TotalWinUICustomization/refs/heads/master/Screenshot.png)
 
-This application was designed to look and act like the Display Properties settings dialog that was available in Windows XP and available as late as Windows 7.
+## Issues & Compatibility
 
 In Windows 8, while this GUI wasn't there, the registry settings behind them still were and setting their values would alter the windows look and feel.
 
@@ -10,5 +27,5 @@ Unfortunately, starting with Windows 10 1607, some of these setting began to be 
 
 In order to work around these restrictions and to extend the life of this application and its functionality, this application implements a little trick: In addition to setting the (largely ignored) registry key values, behind the scenes it creates a Windows theme file with all of the relevant, equivalent theme values set, and installs it.
 
-If you are running Windows 8 or earlier, this application should work as intended for you.
-Windows 10 and Windows 11 users, you might find this application work intermittently or with mixed results. Unfortunately, this is beyond my control.
+- **If you are running Windows 8 or earlier, this application should work as intended for you.**
+- **Windows 10 and Windows 11 users, you might find this application works intermittently or with mixed results.** Unfortunately, this is beyond my control.
