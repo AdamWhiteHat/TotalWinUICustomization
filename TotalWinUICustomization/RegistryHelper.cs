@@ -32,65 +32,86 @@ namespace TotalWinUICustomization
         private static string Value_ColorPrevalence = "ColorPrevalence";
         private static string Value_EnableWindowColorization = "EnableWindowColorization";
 
-        private static string Key_Themes = @"Software\Microsoft\Windows\CurrentVersion\Themes";
+        public static string Key_Themes = @"Software\Microsoft\Windows\CurrentVersion\Themes";
         private static string Value_CurrentTheme = "CurrentTheme"; // @"C:\Users\CodeNinja\AppData\Local\Microsoft\Windows\Themes\Custom.theme"
 
         public static void SetWindowsFont(WindowsUiElements fontGroup, Font font)
         {
             string fontKey = Enum.GetName(typeof(WindowsUiElements), fontGroup);
-            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(Key_WindowMetrics, true))
-            {
-                if (key != null)
-                {
-                    key.SetValue(fontKey, LogicalFonts.ToBytes(font));
-                }
-            }
+            SetBytesValue(Key_WindowMetrics, fontKey, LogicalFonts.ToBytes(font));
         }
 
         public static Font GetWindowsFont(WindowsUiElements fontGroup)
         {
             string fontKey = Enum.GetName(typeof(WindowsUiElements), fontGroup);
-            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(Key_WindowMetrics, true))
-            {
-                if (key != null)
-                {
-                    byte[] bytes = (byte[])key.GetValue(fontKey);
 
-                    Font result = LogicalFonts.FromBytes(bytes);
-                    return result;
-                }
+            byte[] bytes = GetBytesValue(Key_WindowMetrics, fontKey);
+            if (bytes != null)
+            {
+                Font result = LogicalFonts.FromBytes(bytes);
+                return result;
             }
             throw new Exception($"{nameof(GetWindowsFont)} failed to get registry key value for {Enum.GetName(typeof(WindowsUiElements), fontGroup)}.");
         }
 
         public static void SetWindowsColor(WindowsUiElements uiElement, Color color)
         {
-            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(Key_WindowsColors, true))
-            {
-                if (key != null)
-                {
-                    key.SetValue(Helpers.ColorsEnumToRegistryKey[uiElement], ColorHelper.ColorToString(color));
-                }
-            }
+            SetStringValue(Key_WindowsColors, Helpers.ColorsEnumToRegistryKey[uiElement], ColorHelper.ColorToString(color));
         }
 
         public static Color GetWindowsColor(WindowsUiElements uiElement)
         {
-            string color = null;
-            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(Key_WindowsColors, false))
-            {
-                if (key != null)
-                {
-                    color = (string)key.GetValue(Helpers.ColorsEnumToRegistryKey[uiElement]);
-                }
-            }
-
+            string color = GetStringValue(Key_WindowsColors,Helpers.ColorsEnumToRegistryKey[uiElement]);
             if (color != null)
             {
                 return ColorHelper.StringToColor(color);
             }
 
             throw new Exception($"{nameof(GetWindowsColor)} failed to get registry key value for {Enum.GetName(typeof(WindowsUiElements), uiElement)}.");
+        }
+
+        public static string GetCurrentTheme()
+        {
+            return GetStringValue(Key_Themes, Value_CurrentTheme);
+        }
+
+        public static void SetCurrentTheme(string themeFilePath)
+        {
+            SetStringValue(Key_Themes, Value_CurrentTheme, themeFilePath);
+        }
+
+        public static void SetBytesValue(string keyName, string valueName, byte[] bytes)
+        {
+            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(keyName, true))
+            {
+                if (key != null)
+                {
+                    key.SetValue(valueName, bytes);
+                }
+            }
+        }
+
+        public static byte[] GetBytesValue(string keyName, string valueName)
+        {
+            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(keyName, false))
+            {
+                if (key != null)
+                {
+                    return (byte[])key.GetValue(valueName);
+                }
+            }
+            throw new Exception($"{nameof(GetBytesValue)} failed to get registry key value at {keyName}\\{valueName}.");
+        }
+
+        public static void SetStringValue(string keyName, string valueName, string valueString)
+        {
+            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(keyName, true))
+            {
+                if (key != null)
+                {
+                    key.SetValue(valueName, valueString);
+                }
+            }
         }
 
         public static string GetStringValue(string keyName, string valueName)

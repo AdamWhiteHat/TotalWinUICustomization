@@ -603,6 +603,49 @@ namespace TotalWinUICustomization
 
         private void WindowsUIMockupControl_Load(object sender, EventArgs e)
         {
+            window_MessageBox.Click += window_MessageBox_Click;
+            button_MessageBox.Click += window_MessageBox_Click;
+            toolTip_InfoWindow.Click += InfoWindowAndText_Click;
+            hyperlinkText.Click += font_hyperlinkText_Click;
+            font_MessageBox.Click += window_MessageBox_Click;
+            titleBar_MessageBox.Click += ActiveTitleBar_Click;
+            font_MessageBoxTitleBar.Click += ActiveTitleBar_Click;
+            buttonX_MessageBox.Click += controlBox_MessageBox_Click;
+            menuBar.Click += menuBar_Click;
+            font_menuNormal.Click += font_menuNormal_Click;
+            font_menuDisabled.Click += font_menuDisabled_Click;
+            font_menuSelected.Click += font_menuSelected_Click;
+            textbox_ActiveWindow.Click += textbox_ActiveWindow_Click;
+            scrollbarClickInterceptor.Click += ScrollBar_Clicked;
+            font_ActiveWindow.Click += font_ActiveWindow_Click;
+            selectedText.Click += selectedText_Click;
+            ScrollBarActiveWindow.Scroll += ScrollBar_Clicked;
+            ScrollBarActiveWindow.ValueChanged += ScrollBar_Clicked;
+            titleBar_ActiveWindow.Click += ActiveTitleBar_Click;
+            buttonMinimize_ActiveWindow.Click += controlBox_ActiveWindow_Click;
+            buttonMaximize_ActiveWindow.Click += controlBox_ActiveWindow_Click;
+            font_ActiveWindowTitleBar.Click += ActiveTitleBar_Click;
+            buttonX_ActiveWindow.Click += controlBox_ActiveWindow_Click;
+            titleBar_InactiveWindow.Click += InactiveTitleBar_Click;
+            buttonMinimize_InactiveWindow.Click += controlBox_InactiveWindow_Click;
+            buttonMaximize_InactiveWindow.Click += controlBox_InactiveWindow_Click;
+            buttonX_InactiveWindow.Click += controlBox_InactiveWindow_Click;
+            font_InactiveWindowTitleBar.Click += InactiveTitleBar_Click;
+            desktopWindow.Click += window_Desktop_Click;
+            iconClickInterceptor.Click += iconClickInterceptor_Click;
+            inactiveBorderClickInterceptor1.Click += inactiveBorderClickInterceptor_Click;
+            inactiveBorderClickInterceptor3.Click += inactiveBorderClickInterceptor_Click;
+            activeBorderClickInterceptor5.Click += activeBorderClickInterceptor_Click;
+            inactiveBorderClickInterceptor2.Click += inactiveBorderClickInterceptor_Click;
+            activeBorderClickInterceptor6.Click += activeBorderClickInterceptor_Click;
+            activeBorderClickInterceptor7.Click += activeBorderClickInterceptor_Click;
+            activeBorderClickInterceptor8.Click += activeBorderClickInterceptor_Click;
+            activeBorderClickInterceptor9.Click += activeBorderClickInterceptor_Click;
+            activeBorderClickInterceptor0.Click += activeBorderClickInterceptor_Click;
+            activeBorderClickInterceptor3.Click += activeBorderClickInterceptor_Click;
+            activeBorderClickInterceptor4.Click += activeBorderClickInterceptor_Click;
+            activeBorderClickInterceptor2.Click += activeBorderClickInterceptor_Click;
+            activeBorderClickInterceptor1.Click += activeBorderClickInterceptor_Click;
         }
 
         #endregion

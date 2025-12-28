@@ -9,44 +9,58 @@ namespace TotalWinUICustomization
 {
     public class ThemeHelper
     {
+        public static void CreateAndInstallTheme(WindowsUIMockupControl control)
+        {
+            // Get theme file content
+            string themeFile = GetThemeFile(control);
+
+            // Save theme file to %LOCALAPPDATA%\Microsoft\Windows\Themes\Custom.theme
+            string localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            string themesFolder = System.IO.Path.Combine(localAppData, "Microsoft\\Windows\\Themes");
+            string themeFilePath = System.IO.Path.Combine(themesFolder, "Custom.theme");
+            System.IO.File.WriteAllText(themeFilePath, themeFile);
+
+            // Using registry helper, set current theme registry setting
+            if (System.IO.File.Exists(themeFilePath))
+            {
+                RegistryHelper.SetCurrentTheme(themeFilePath);
+            }
+        }
 
         /*
-[Control Panel\Colors]
-ActiveTitle=54 88 121
-Background=255 250 239
-ButtonFace=255 250 239
-ButtonText=32 32 32
-GrayText=103 103 103
-Hilight=144 57 9
-HilightText=255 245 227
-HotTrackingColor=28 94 117
-InactiveTitle=166 166 166
-InactiveTitleText=0 0 0
-TitleText=255 255 255
-Window=255 250 239
-WindowText=61 61 61
-Scrollbar=255 255 255
-Menu=255 255 255
-WindowFrame=0 0 0
-MenuText=0 0 0
-ActiveBorder=128 128 128
-InactiveBorder=192 192 192
-AppWorkspace=128 128 128
-ButtonShadow=128 128 128
-ButtonHilight=192 192 192
-ButtonDkShadow=0 0 0
-ButtonLight=192 192 192
-InfoText=0 0 0
-InfoWindow=255 255 255
-ButtonAlternateFace=192 192 192
-GradientActiveTitle=0 0 0
-GradientInactiveTitle=255 255 255
-MenuHilight=0 0 0
-MenuBar=255 255 255        
+        [Control Panel\Colors]
+        ActiveTitle=54 88 121
+        Background=255 250 239
+        ButtonFace=255 250 239
+        ButtonText=32 32 32
+        GrayText=103 103 103
+        Hilight=144 57 9
+        HilightText=255 245 227
+        HotTrackingColor=28 94 117
+        InactiveTitle=166 166 166
+        InactiveTitleText=0 0 0
+        TitleText=255 255 255
+        Window=255 250 239
+        WindowText=61 61 61
+        Scrollbar=255 255 255
+        Menu=255 255 255
+        WindowFrame=0 0 0
+        MenuText=0 0 0
+        ActiveBorder=128 128 128
+        InactiveBorder=192 192 192
+        AppWorkspace=128 128 128
+        ButtonShadow=128 128 128
+        ButtonHilight=192 192 192
+        ButtonDkShadow=0 0 0
+        ButtonLight=192 192 192
+        InfoText=0 0 0
+        InfoWindow=255 255 255
+        ButtonAlternateFace=192 192 192
+        GradientActiveTitle=0 0 0
+        GradientInactiveTitle=255 255 255
+        MenuHilight=0 0 0
+        MenuBar=255 255 255        
          */
-
-
-
 
         public static string GetThemeFile(WindowsUIMockupControl control)
         {
@@ -77,18 +91,18 @@ Scrollbar={ColorHelper.ColorToString(control.ScrollbarColor)}
 ActiveBorder={ColorHelper.ColorToString(control.ActiveBorderColor)}
 InactiveBorder={ColorHelper.ColorToString(control.InactiveBorderColor)}
 WindowFrame={ColorHelper.ColorToString(control.WindowFrameColor)}
+MenuBar={ColorHelper.ColorToString(control.MenuBarColor)}
 ";
 
             /*
             @$"
-            AppWorkspace{ColorHelper.ColorToString(control)}
-            MenuBar{ColorHelper.ColorToString(control)}
+AppWorkspace={ColorHelper.ColorToString(control)}
 
-            ButtonShadow{ColorHelper.ColorToString(control)}
-            ButtonDkShadow{ColorHelper.ColorToString(control)}
-            ButtonHilight{ColorHelper.ColorToString(control)}
-            ButtonLight{ColorHelper.ColorToString(control)}
-            ButtonAlternateFace{ColorHelper.ColorToString(control)}
+ButtonShadow={ColorHelper.ColorToString(control)}
+ButtonDkShadow={ColorHelper.ColorToString(control)}
+ButtonHilight={ColorHelper.ColorToString(control)}
+ButtonLight={ColorHelper.ColorToString(control)}
+ButtonAlternateFace={ColorHelper.ColorToString(control)}
             ";
             */
 
@@ -152,19 +166,29 @@ Pattern=
 Path=%SystemRoot%\resources\themes\Aero\AeroLite.msstyles
 ColorStyle=NormalColor
 Size=NormalSize
-HighContrast=4
+AutoColorization=0
+Transparency=1
+Composition=1
+VisualStyleVersion=10
+; SystemMode=Light
+; AppMode=Light
+; HighContrast=4
+; AccentColor=FF0000FF
+; AccentColorInactive=FF00FFFF
+; ColorizationAfterglow=FF00FF00
+; ColorizationColor=C4E3008C
 
 [boot]
 SCRNSAVE.EXE=
 
 [MasterThemeSelector]
 MTSM=RJSPBS
+; ThemeColorBPP=4
 
 [Sounds]
 ; IDS_SCHEME_DEFAULT
 SchemeName=@%SystemRoot%\System32\mmres.dll,-800
 
 ";
-
     }
 }

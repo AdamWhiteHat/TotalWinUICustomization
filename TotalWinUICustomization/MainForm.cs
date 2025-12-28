@@ -24,6 +24,18 @@ namespace TotalWinUICustomization
 
             this.AllowTransparency = true;
 
+            Load += MainForm_Load;
+            comboBoxColorPropertySelection.SelectionChangeCommitted += comboBoxColorPropertySelection_SelectionChangeCommitted;
+            font_ClickInterceptorBox.Click += font_ClickInterceptorBox_Click;
+            buttonColorProperty1.Click += buttonPropertyColor1_Click;
+            panelColorPropertySwatch1.Click += buttonPropertyColor1_Click;
+            checkBoxFontItalic.CheckedChanged += checkBoxFontStyle_CheckedChanged;
+            comboFontSize.SelectedIndexChanged += comboFontSize_SelectedItemChanged;
+            comboFontSize.TextChanged += comboFontSize_TextChanged;
+            checkBoxFontBold.CheckedChanged += checkBoxFontStyle_CheckedChanged;
+            comboBoxFontPropertySelection.SelectionChangeCommitted += comboBoxFontPropertySelection_SelectionChangeCommitted;
+            windowsuiMockupControl.ColorUiElementClicked += WindowsuiMockupControl_ColorUiElementClicked;
+
             panelColorPropertyLeft.Disable();
             panelColorProperty1.Disable();
             panelColorProperty2.Disable();

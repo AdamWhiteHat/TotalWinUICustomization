@@ -120,7 +120,6 @@ namespace TotalWinUICustomization
             this.comboBoxColorPropertySelection.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxColorPropertySelection.Name = "comboBoxColorPropertySelection";
             this.comboBoxColorPropertySelection.Size = new System.Drawing.Size(269, 21);
-            this.comboBoxColorPropertySelection.SelectionChangeCommitted += this.comboBoxColorPropertySelection_SelectionChangeCommitted;
             // 
             // font_ClickInterceptorBox
             // 
@@ -130,7 +129,6 @@ namespace TotalWinUICustomization
             this.font_ClickInterceptorBox.Size = new System.Drawing.Size(340, 21);
             this.font_ClickInterceptorBox.TabIndex = 7;
             this.font_ClickInterceptorBox.TabStop = false;
-            this.font_ClickInterceptorBox.Click += this.font_ClickInterceptorBox_Click;
             // 
             // flowLayoutPanelColor
             // 
@@ -187,7 +185,6 @@ namespace TotalWinUICustomization
             this.buttonColorProperty1.Text = "│▾";
             this.buttonColorProperty1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonColorProperty1.UseVisualStyleBackColor = true;
-            this.buttonColorProperty1.Click += this.buttonPropertyColor1_Click;
             // 
             // panelColorPropertySwatch1
             // 
@@ -201,7 +198,6 @@ namespace TotalWinUICustomization
             this.panelColorPropertySwatch1.MinimumSize = new System.Drawing.Size(29, 19);
             this.panelColorPropertySwatch1.Name = "panelColorPropertySwatch1";
             this.panelColorPropertySwatch1.TabIndex = 0;
-            this.panelColorPropertySwatch1.Click += this.buttonPropertyColor1_Click;
             // 
             // panelColorProperty2
             // 
@@ -291,7 +287,6 @@ namespace TotalWinUICustomization
             this.checkBoxFontItalic.Text = "/";
             this.checkBoxFontItalic.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.checkBoxFontItalic.UseVisualStyleBackColor = true;
-            this.checkBoxFontItalic.CheckedChanged += this.checkBoxFontStyle_CheckedChanged;
             // 
             // comboFontSize
             // 
@@ -319,8 +314,6 @@ namespace TotalWinUICustomization
             this.comboFontSize.Size = new System.Drawing.Size(47, 21);
             this.comboFontSize.TabIndex = 11;
             this.comboFontSize.Text = "9";
-            this.comboFontSize.SelectedIndexChanged += this.comboFontSize_SelectedItemChanged;
-            this.comboFontSize.TextChanged += this.comboFontSize_TextChanged;
             // 
             // checkBoxFontBold
             // 
@@ -339,7 +332,6 @@ namespace TotalWinUICustomization
             this.checkBoxFontBold.Text = "B";
             this.checkBoxFontBold.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.checkBoxFontBold.UseVisualStyleBackColor = true;
-            this.checkBoxFontBold.CheckedChanged += this.checkBoxFontStyle_CheckedChanged;
             // 
             // label4
             // 
@@ -387,7 +379,6 @@ namespace TotalWinUICustomization
             this.comboBoxFontPropertySelection.Name = "comboBoxFontPropertySelection";
             this.comboBoxFontPropertySelection.Size = new System.Drawing.Size(271, 21);
             this.comboBoxFontPropertySelection.TabIndex = 6;
-            this.comboBoxFontPropertySelection.SelectionChangeCommitted += this.comboBoxFontPropertySelection_SelectionChangeCommitted;
             // 
             // panelFontProperty
             // 
@@ -538,7 +529,6 @@ namespace TotalWinUICustomization
             this.windowsuiMockupControl.WindowColor = System.Drawing.SystemColors.Window;
             this.windowsuiMockupControl.WindowFrameColor = System.Drawing.Color.Black;
             this.windowsuiMockupControl.WindowTextColor = System.Drawing.SystemColors.ControlText;
-            this.windowsuiMockupControl.ColorUiElementClicked += this.WindowsuiMockupControl_ColorUiElementClicked;
             // 
             // flowLayoutPanelMain
             // 
@@ -580,7 +570,6 @@ namespace TotalWinUICustomization
             this.Name = "MainForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Control Freak - Total Windows Customization";
-            this.Load += this.MainForm_Load;
             this.panelColorPropertyLeft.ResumeLayout(false);
             this.panelColorPropertyLeft.PerformLayout();
             this.flowLayoutPanelColor.ResumeLayout(false);

@@ -127,7 +127,6 @@ namespace TotalWinUICustomization
             this.window_MessageBox.Name = "window_MessageBox";
             this.window_MessageBox.Size = new System.Drawing.Size(390, 117);
             this.window_MessageBox.TabIndex = 11;
-            this.window_MessageBox.Click += this.window_MessageBox_Click;
             // 
             // button_MessageBox
             // 
@@ -137,7 +136,6 @@ namespace TotalWinUICustomization
             this.button_MessageBox.TabIndex = 13;
             this.button_MessageBox.Text = "OK";
             this.button_MessageBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.button_MessageBox.Click += this.window_MessageBox_Click;
             // 
             // toolTip_InfoWindow
             // 
@@ -152,7 +150,6 @@ namespace TotalWinUICustomization
             this.toolTip_InfoWindow.Size = new System.Drawing.Size(41, 17);
             this.toolTip_InfoWindow.TabIndex = 11;
             this.toolTip_InfoWindow.Text = "Tooltip";
-            this.toolTip_InfoWindow.Click += this.InfoWindowAndText_Click;
             // 
             // hyperlinkText
             // 
@@ -165,7 +162,6 @@ namespace TotalWinUICustomization
             this.hyperlinkText.TabIndex = 10;
             this.hyperlinkText.TabStop = true;
             this.hyperlinkText.Text = "Hyperlink";
-            this.hyperlinkText.Click += this.font_hyperlinkText_Click;
             // 
             // font_MessageBox
             // 
@@ -177,11 +173,10 @@ namespace TotalWinUICustomization
             this.font_MessageBox.Size = new System.Drawing.Size(83, 15);
             this.font_MessageBox.TabIndex = 1;
             this.font_MessageBox.Text = "Message Text";
-            this.font_MessageBox.Click += this.window_MessageBox_Click;
             // 
             // titleBar_MessageBox
             // 
-            this.titleBar_MessageBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.titleBar_MessageBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.titleBar_MessageBox.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.titleBar_MessageBox.Controls.Add(this.font_MessageBoxTitleBar);
@@ -191,7 +186,6 @@ namespace TotalWinUICustomization
             this.titleBar_MessageBox.Margin = new System.Windows.Forms.Padding(0);
             this.titleBar_MessageBox.Name = "titleBar_MessageBox";
             this.titleBar_MessageBox.Size = new System.Drawing.Size(386, 30);
-            this.titleBar_MessageBox.Click += this.ActiveTitleBar_Click;
             // 
             // font_MessageBoxTitleBar
             // 
@@ -204,7 +198,6 @@ namespace TotalWinUICustomization
             this.font_MessageBoxTitleBar.Size = new System.Drawing.Size(80, 15);
             this.font_MessageBoxTitleBar.TabIndex = 2;
             this.font_MessageBoxTitleBar.Text = "Message Box";
-            this.font_MessageBoxTitleBar.Click += this.ActiveTitleBar_Click;
             // 
             // buttonX_MessageBox
             // 
@@ -217,7 +210,6 @@ namespace TotalWinUICustomization
             this.buttonX_MessageBox.TabIndex = 9;
             this.buttonX_MessageBox.Text = "✕";
             this.buttonX_MessageBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.buttonX_MessageBox.Click += this.controlBox_MessageBox_Click;
             // 
             // panelActiveWindow
             // 
@@ -253,7 +245,6 @@ namespace TotalWinUICustomization
             this.menuBar.Name = "menuBar";
             this.menuBar.Size = new System.Drawing.Size(512, 26);
             this.menuBar.TabIndex = 11;
-            this.menuBar.Click += this.menuBar_Click;
             // 
             // font_menuNormal
             // 
@@ -264,7 +255,6 @@ namespace TotalWinUICustomization
             this.font_menuNormal.Size = new System.Drawing.Size(40, 13);
             this.font_menuNormal.TabIndex = 1;
             this.font_menuNormal.Text = "Normal";
-            this.font_menuNormal.Click += this.font_menuNormal_Click;
             // 
             // font_menuDisabled
             // 
@@ -275,7 +265,6 @@ namespace TotalWinUICustomization
             this.font_menuDisabled.Size = new System.Drawing.Size(48, 13);
             this.font_menuDisabled.TabIndex = 2;
             this.font_menuDisabled.Text = "Disabled";
-            this.font_menuDisabled.Click += this.font_menuDisabled_Click;
             // 
             // font_menuSelected
             // 
@@ -287,7 +276,6 @@ namespace TotalWinUICustomization
             this.font_menuSelected.Size = new System.Drawing.Size(49, 13);
             this.font_menuSelected.TabIndex = 3;
             this.font_menuSelected.Text = "Selected";
-            this.font_menuSelected.Click += this.font_menuSelected_Click;
             // 
             // textbox_ActiveWindow
             // 
@@ -302,7 +290,6 @@ namespace TotalWinUICustomization
             this.textbox_ActiveWindow.Margin = new System.Windows.Forms.Padding(0);
             this.textbox_ActiveWindow.Name = "textbox_ActiveWindow";
             this.textbox_ActiveWindow.Size = new System.Drawing.Size(512, 137);
-            this.textbox_ActiveWindow.Click += this.textbox_ActiveWindow_Click;
             // 
             // scrollbarClickInterceptor
             // 
@@ -313,7 +300,6 @@ namespace TotalWinUICustomization
             this.scrollbarClickInterceptor.Size = new System.Drawing.Size(28, 130);
             this.scrollbarClickInterceptor.TabIndex = 10;
             this.scrollbarClickInterceptor.TabStop = false;
-            this.scrollbarClickInterceptor.Click += this.ScrollBar_Clicked;
             // 
             // font_ActiveWindow
             // 
@@ -326,7 +312,6 @@ namespace TotalWinUICustomization
             this.font_ActiveWindow.TabIndex = 9;
             this.font_ActiveWindow.Text = "Window Text";
             this.font_ActiveWindow.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.font_ActiveWindow.Click += this.font_ActiveWindow_Click;
             // 
             // selectedText
             // 
@@ -339,7 +324,6 @@ namespace TotalWinUICustomization
             this.selectedText.Size = new System.Drawing.Size(73, 13);
             this.selectedText.TabIndex = 1;
             this.selectedText.Text = "Selected Text";
-            this.selectedText.Click += this.selectedText_Click;
             // 
             // ScrollBarActiveWindow
             // 
@@ -351,8 +335,6 @@ namespace TotalWinUICustomization
             this.ScrollBarActiveWindow.Size = new System.Drawing.Size(26, 132);
             this.ScrollBarActiveWindow.SmallChange = 0;
             this.ScrollBarActiveWindow.TabIndex = 0;
-            this.ScrollBarActiveWindow.Scroll += this.ScrollBar_Clicked;
-            this.ScrollBarActiveWindow.ValueChanged += this.ScrollBar_Clicked;
             // 
             // titleBar_ActiveWindow
             // 
@@ -366,7 +348,6 @@ namespace TotalWinUICustomization
             this.titleBar_ActiveWindow.Name = "titleBar_ActiveWindow";
             this.titleBar_ActiveWindow.Size = new System.Drawing.Size(512, 30);
             this.titleBar_ActiveWindow.TabIndex = 8;
-            this.titleBar_ActiveWindow.Click += this.ActiveTitleBar_Click;
             // 
             // buttonMinimize_ActiveWindow
             // 
@@ -380,7 +361,6 @@ namespace TotalWinUICustomization
             this.buttonMinimize_ActiveWindow.TabIndex = 12;
             this.buttonMinimize_ActiveWindow.Text = "0";
             this.buttonMinimize_ActiveWindow.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.buttonMinimize_ActiveWindow.Click += this.controlBox_ActiveWindow_Click;
             // 
             // buttonMaximize_ActiveWindow
             // 
@@ -394,7 +374,6 @@ namespace TotalWinUICustomization
             this.buttonMaximize_ActiveWindow.TabIndex = 11;
             this.buttonMaximize_ActiveWindow.Text = "1";
             this.buttonMaximize_ActiveWindow.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.buttonMaximize_ActiveWindow.Click += this.controlBox_ActiveWindow_Click;
             // 
             // font_ActiveWindowTitleBar
             // 
@@ -407,7 +386,6 @@ namespace TotalWinUICustomization
             this.font_ActiveWindowTitleBar.Size = new System.Drawing.Size(92, 15);
             this.font_ActiveWindowTitleBar.TabIndex = 2;
             this.font_ActiveWindowTitleBar.Text = "Active Window";
-            this.font_ActiveWindowTitleBar.Click += this.ActiveTitleBar_Click;
             // 
             // buttonX_ActiveWindow
             // 
@@ -420,7 +398,6 @@ namespace TotalWinUICustomization
             this.buttonX_ActiveWindow.TabIndex = 10;
             this.buttonX_ActiveWindow.Text = "✕";
             this.buttonX_ActiveWindow.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.buttonX_ActiveWindow.Click += this.controlBox_ActiveWindow_Click;
             // 
             // panelInactiveWindow
             // 
@@ -435,7 +412,7 @@ namespace TotalWinUICustomization
             // 
             // titleBar_InactiveWindow
             // 
-            this.titleBar_InactiveWindow.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.titleBar_InactiveWindow.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.titleBar_InactiveWindow.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.titleBar_InactiveWindow.Controls.Add(this.buttonMinimize_InactiveWindow);
@@ -446,7 +423,6 @@ namespace TotalWinUICustomization
             this.titleBar_InactiveWindow.Margin = new System.Windows.Forms.Padding(0);
             this.titleBar_InactiveWindow.Name = "titleBar_InactiveWindow";
             this.titleBar_InactiveWindow.Size = new System.Drawing.Size(474, 30);
-            this.titleBar_InactiveWindow.Click += this.InactiveTitleBar_Click;
             // 
             // buttonMinimize_InactiveWindow
             // 
@@ -460,7 +436,6 @@ namespace TotalWinUICustomization
             this.buttonMinimize_InactiveWindow.TabIndex = 15;
             this.buttonMinimize_InactiveWindow.Text = "0";
             this.buttonMinimize_InactiveWindow.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.buttonMinimize_InactiveWindow.Click += this.controlBox_InactiveWindow_Click;
             // 
             // buttonMaximize_InactiveWindow
             // 
@@ -474,7 +449,6 @@ namespace TotalWinUICustomization
             this.buttonMaximize_InactiveWindow.TabIndex = 14;
             this.buttonMaximize_InactiveWindow.Text = "1";
             this.buttonMaximize_InactiveWindow.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.buttonMaximize_InactiveWindow.Click += this.controlBox_InactiveWindow_Click;
             // 
             // buttonX_InactiveWindow
             // 
@@ -487,7 +461,6 @@ namespace TotalWinUICustomization
             this.buttonX_InactiveWindow.TabIndex = 13;
             this.buttonX_InactiveWindow.Text = "✕";
             this.buttonX_InactiveWindow.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.buttonX_InactiveWindow.Click += this.controlBox_InactiveWindow_Click;
             // 
             // font_InactiveWindowTitleBar
             // 
@@ -500,7 +473,6 @@ namespace TotalWinUICustomization
             this.font_InactiveWindowTitleBar.Size = new System.Drawing.Size(101, 15);
             this.font_InactiveWindowTitleBar.TabIndex = 2;
             this.font_InactiveWindowTitleBar.Text = "Inactive Window";
-            this.font_InactiveWindowTitleBar.Click += this.InactiveTitleBar_Click;
             // 
             // border1
             // 
@@ -516,8 +488,8 @@ namespace TotalWinUICustomization
             // 
             // desktopWindow
             // 
-            this.desktopWindow.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.desktopWindow.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.desktopWindow.BackColor = System.Drawing.SystemColors.Desktop;
             this.desktopWindow.Controls.Add(this.iconClickInterceptor);
@@ -530,7 +502,6 @@ namespace TotalWinUICustomization
             this.desktopWindow.Name = "desktopWindow";
             this.desktopWindow.Size = new System.Drawing.Size(570, 370);
             this.desktopWindow.TabIndex = 14;
-            this.desktopWindow.Click += this.window_Desktop_Click;
             // 
             // iconClickInterceptor
             // 
@@ -540,7 +511,6 @@ namespace TotalWinUICustomization
             this.iconClickInterceptor.Size = new System.Drawing.Size(68, 73);
             this.iconClickInterceptor.TabIndex = 4;
             this.iconClickInterceptor.TabStop = false;
-            this.iconClickInterceptor.Click += this.iconClickInterceptor_Click;
             // 
             // border2
             // 
@@ -584,7 +554,6 @@ namespace TotalWinUICustomization
             this.inactiveBorderClickInterceptor1.Size = new System.Drawing.Size(481, 5);
             this.inactiveBorderClickInterceptor1.TabIndex = 7;
             this.inactiveBorderClickInterceptor1.TabStop = false;
-            this.inactiveBorderClickInterceptor1.Click += this.inactiveBorderClickInterceptor_Click;
             // 
             // inactiveBorderClickInterceptor3
             // 
@@ -594,7 +563,6 @@ namespace TotalWinUICustomization
             this.inactiveBorderClickInterceptor3.Size = new System.Drawing.Size(4, 202);
             this.inactiveBorderClickInterceptor3.TabIndex = 12;
             this.inactiveBorderClickInterceptor3.TabStop = false;
-            this.inactiveBorderClickInterceptor3.Click += this.inactiveBorderClickInterceptor_Click;
             // 
             // activeBorderClickInterceptor5
             // 
@@ -604,7 +572,6 @@ namespace TotalWinUICustomization
             this.activeBorderClickInterceptor5.Size = new System.Drawing.Size(4, 199);
             this.activeBorderClickInterceptor5.TabIndex = 13;
             this.activeBorderClickInterceptor5.TabStop = false;
-            this.activeBorderClickInterceptor5.Click += this.activeBorderClickInterceptor_Click;
             // 
             // inactiveBorderClickInterceptor2
             // 
@@ -614,7 +581,6 @@ namespace TotalWinUICustomization
             this.inactiveBorderClickInterceptor2.Size = new System.Drawing.Size(4, 34);
             this.inactiveBorderClickInterceptor2.TabIndex = 14;
             this.inactiveBorderClickInterceptor2.TabStop = false;
-            this.inactiveBorderClickInterceptor2.Click += this.inactiveBorderClickInterceptor_Click;
             // 
             // activeBorderClickInterceptor6
             // 
@@ -624,7 +590,6 @@ namespace TotalWinUICustomization
             this.activeBorderClickInterceptor6.Size = new System.Drawing.Size(4, 200);
             this.activeBorderClickInterceptor6.TabIndex = 15;
             this.activeBorderClickInterceptor6.TabStop = false;
-            this.activeBorderClickInterceptor6.Click += this.activeBorderClickInterceptor_Click;
             // 
             // activeBorderClickInterceptor7
             // 
@@ -634,7 +599,6 @@ namespace TotalWinUICustomization
             this.activeBorderClickInterceptor7.Size = new System.Drawing.Size(24, 4);
             this.activeBorderClickInterceptor7.TabIndex = 16;
             this.activeBorderClickInterceptor7.TabStop = false;
-            this.activeBorderClickInterceptor7.Click += this.activeBorderClickInterceptor_Click;
             // 
             // activeBorderClickInterceptor8
             // 
@@ -644,7 +608,6 @@ namespace TotalWinUICustomization
             this.activeBorderClickInterceptor8.Size = new System.Drawing.Size(385, 5);
             this.activeBorderClickInterceptor8.TabIndex = 18;
             this.activeBorderClickInterceptor8.TabStop = false;
-            this.activeBorderClickInterceptor8.Click += this.activeBorderClickInterceptor_Click;
             // 
             // activeBorderClickInterceptor9
             // 
@@ -654,7 +617,6 @@ namespace TotalWinUICustomization
             this.activeBorderClickInterceptor9.Size = new System.Drawing.Size(101, 4);
             this.activeBorderClickInterceptor9.TabIndex = 19;
             this.activeBorderClickInterceptor9.TabStop = false;
-            this.activeBorderClickInterceptor9.Click += this.activeBorderClickInterceptor_Click;
             // 
             // activeBorderClickInterceptor0
             // 
@@ -664,7 +626,6 @@ namespace TotalWinUICustomization
             this.activeBorderClickInterceptor0.Size = new System.Drawing.Size(514, 4);
             this.activeBorderClickInterceptor0.TabIndex = 20;
             this.activeBorderClickInterceptor0.TabStop = false;
-            this.activeBorderClickInterceptor0.Click += this.activeBorderClickInterceptor_Click;
             // 
             // activeBorderClickInterceptor3
             // 
@@ -674,7 +635,6 @@ namespace TotalWinUICustomization
             this.activeBorderClickInterceptor3.Size = new System.Drawing.Size(390, 4);
             this.activeBorderClickInterceptor3.TabIndex = 5;
             this.activeBorderClickInterceptor3.TabStop = false;
-            this.activeBorderClickInterceptor3.Click += this.activeBorderClickInterceptor_Click;
             // 
             // activeBorderClickInterceptor4
             // 
@@ -684,7 +644,6 @@ namespace TotalWinUICustomization
             this.activeBorderClickInterceptor4.Size = new System.Drawing.Size(392, 5);
             this.activeBorderClickInterceptor4.TabIndex = 6;
             this.activeBorderClickInterceptor4.TabStop = false;
-            this.activeBorderClickInterceptor4.Click += this.activeBorderClickInterceptor_Click;
             // 
             // activeBorderClickInterceptor2
             // 
@@ -694,7 +653,6 @@ namespace TotalWinUICustomization
             this.activeBorderClickInterceptor2.Size = new System.Drawing.Size(4, 119);
             this.activeBorderClickInterceptor2.TabIndex = 5;
             this.activeBorderClickInterceptor2.TabStop = false;
-            this.activeBorderClickInterceptor2.Click += this.activeBorderClickInterceptor_Click;
             // 
             // activeBorderClickInterceptor1
             // 
@@ -704,7 +662,6 @@ namespace TotalWinUICustomization
             this.activeBorderClickInterceptor1.Size = new System.Drawing.Size(4, 119);
             this.activeBorderClickInterceptor1.TabIndex = 5;
             this.activeBorderClickInterceptor1.TabStop = false;
-            this.activeBorderClickInterceptor1.Click += this.activeBorderClickInterceptor_Click;
             // 
             // WindowsUIMockupControl
             // 
