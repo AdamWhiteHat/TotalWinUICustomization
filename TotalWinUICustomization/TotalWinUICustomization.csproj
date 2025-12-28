@@ -2,11 +2,11 @@
 
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
-		<TargetFramework>net8.0-windows</TargetFramework>
-		<Nullable>annotations</Nullable>
+		<TargetFramework>net48-windows</TargetFramework>
 		<UseWindowsForms>true</UseWindowsForms>
 		<ApplicationVisualStyles>false</ApplicationVisualStyles>
 		<ImplicitUsings>disable</ImplicitUsings>
+		<ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -16,8 +16,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\CommonClassesLibrary\CommonClassesLibrary.csproj" />
-	  <ProjectReference Include="..\OverlayControlsLibrary\OverlayControlsLibrary.csproj" />
+		<ProjectReference Include="..\CommonClassesLibrary\CommonClassesLibrary.csproj" />
+		<ProjectReference Include="..\OverlayControlsLibrary\OverlayControlsLibrary.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="System.Drawing.Design" />
 	</ItemGroup>
 
 	<ItemGroup>

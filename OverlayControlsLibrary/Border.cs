@@ -7,7 +7,6 @@ using System.Drawing.Design;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Windows.Forms.Design;
-using System.Windows.Forms.Design.Behavior;
 using System.Windows.Forms.VisualStyles;
 using System.Drawing;
 using CommonClassesLibrary;

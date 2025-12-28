@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design;
-using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Design;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Reflection;
@@ -14,15 +14,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.ComponentModel;
 using System.Windows.Forms.Design;
-using System.Windows.Forms.Design.Behavior;
-using TotalWinUICustomization.Types;
-using System.Drawing.Design;
-using TotalWinUICustomization.Controls;
 using CommonClassesLibrary;
+using TotalWinUICustomization.Controls;
+using TotalWinUICustomization.Types;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace TotalWinUICustomization
 {
-    public delegate void ColorUiElementClickedEventHandler(object? sender, ColorUiElementClickedEventArgs e);
+    public delegate void ColorUiElementClickedEventHandler(object sender, ColorUiElementClickedEventArgs e);
 
     [System.ComponentModel.DefaultEvent("ColorUiElementClicked")]
     public partial class WindowsUIMockupControl : UserControl
@@ -831,5 +830,95 @@ namespace TotalWinUICustomization
             }
         }
 
+
+        public void LoadSizes()
+        {
+            int borderWidth = RegistryHelper.GetWindowMetric("BorderWidth");
+            int paddedBorderWidth = RegistryHelper.GetWindowMetric("PaddedBorderWidth");
+            int padding = 2*borderWidth;
+            int fullPadding = 2*paddedBorderWidth;
+
+            int captionWidth = RegistryHelper.GetWindowMetric("CaptionWidth");
+            int captionHeight = RegistryHelper.GetWindowMetric("CaptionHeight");
+
+            SetTitlebarHeight(captionHeight + fullPadding);
+
+            SetTitlebarButtonSize(new Size(captionWidth + padding, captionHeight + padding));
+
+            int menuWidth = RegistryHelper.GetWindowMetric("MenuWidth");
+            int menuHeight = RegistryHelper.GetWindowMetric("MenuHeight");
+            SetMenuSize(new Size(menuWidth + fullPadding, menuHeight + fullPadding));
+
+            SetBorderSize(borderWidth);
+        }
+
+        public void SetBorderSize(int size)
+        {
+            int activeWidth = panelActiveWindow.Width - (size*2);
+            int inactiveWidth = panelInactiveWindow.Width - (size*2);
+
+            Padding middlePadding = new Padding(size, 0, size, 0);
+            Padding topPadding = new Padding(size, size, size, 0);
+            Padding bottomPadding = new Padding(size, 0, size, size);
+
+            titleBar_ActiveWindow.Width = activeWidth;
+            menuBar.Width = activeWidth;
+            textbox_ActiveWindow.Width = activeWidth;
+
+            titleBar_ActiveWindow.Margin = topPadding;
+            menuBar.Margin = middlePadding;
+            textbox_ActiveWindow.Margin = bottomPadding;
+
+            int menuTop = titleBar_ActiveWindow.Height + size;
+            int textboxTop = menuTop + menuBar.Height;
+
+            int activeHeight = panelActiveWindow.Height - textboxTop - size;
+
+            textbox_ActiveWindow.Height = activeHeight;
+
+            //titleBar_ActiveWindow.Location = new Point(size, size);
+            //menuBar.Location = new Point(size, menuTop);
+            //textbox_ActiveWindow.Location = new Point(size, textboxTop);
+
+            Point titleLoc =     titleBar_ActiveWindow.Location;
+            Point menuLoc = menuBar.Location;
+            Point tbLoc = textbox_ActiveWindow.Location;
+
+
+            titleBar_MessageBox.Width = window_MessageBox.Width - (size * 2);
+            titleBar_MessageBox.Location = new Point(size, size);
+
+            titleBar_InactiveWindow.Width = inactiveWidth;
+            titleBar_InactiveWindow.Location = new Point(size, size);
+
+            int scrollLeft = panelActiveWindow.Width - ScrollBarActiveWindow.Width - size;
+
+            // scrollbarClickInterceptor
+        }
+
+        public void SetMenuSize(Size size)
+        {
+            menuBar.Height = size.Height;
+        }
+
+        public void SetTitlebarHeight(int height)
+        {
+            titleBar_ActiveWindow.Height = height;
+            titleBar_InactiveWindow.Height = height;
+        }
+
+        public void SetTitlebarButtonSize(Size size)
+        {
+            buttonMinimize_ActiveWindow.Size = size;
+            buttonMaximize_ActiveWindow.Size = size;
+            buttonX_ActiveWindow.Size = size;
+
+            buttonMinimize_InactiveWindow.Size = size;
+            buttonMaximize_InactiveWindow.Size = size;
+            buttonX_InactiveWindow.Size = size;
+
+            buttonX_MessageBox.Size = size;
+            buttonX_MessageBox.BringToFront();
+        }
     }
 }

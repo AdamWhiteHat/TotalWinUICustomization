@@ -12,7 +12,7 @@ namespace TotalWinUICustomization
 {
     public partial class MainForm : Form
     {
-        protected UIElementAssociation? CurrentUiElementSelected { get; set; }
+        protected UIElementAssociation CurrentUiElementSelected { get; set; }
 
         public MainForm()
         {
@@ -42,6 +42,8 @@ namespace TotalWinUICustomization
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            windowsuiMockupControl.LoadSizes();
+
             // Update control colors from registry
             foreach (var item in Enum.GetValues(typeof(WindowsUiElements)).OfType<WindowsUiElements>())
             {

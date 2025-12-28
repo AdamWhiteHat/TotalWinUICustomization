@@ -92,5 +92,32 @@ namespace TotalWinUICustomization
 
             throw new Exception($"{nameof(GetWindowsColor)} failed to get registry key value for {Enum.GetName(typeof(WindowsUiElements), uiElement)}.");
         }
+
+        public static string GetStringValue(string keyName, string valueName)
+        {
+            string result =null;
+            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(keyName, true))
+            {
+                if (key == null)
+                {
+                    throw new Exception($"{nameof(GetStringValue)} failed to get registry key value at {keyName}\\{valueName}");
+                }
+                result = (string)key.GetValue(valueName);
+            }
+
+            return result;
+        }
+
+        public static int GetIntegerValue(string keyName, string valueName)
+        {
+            string stringResult = GetStringValue(keyName, valueName);
+            return int.Parse(stringResult);
+        }
+
+        public static int GetWindowMetric(string valueName)
+        {
+            int rawValue = GetIntegerValue(Key_WindowMetrics, valueName);
+            return rawValue / -15;
+        }
     }
 }

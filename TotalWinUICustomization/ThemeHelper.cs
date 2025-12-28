@@ -51,8 +51,7 @@ MenuBar=255 255 255
         public static string GetThemeFile(WindowsUIMockupControl control)
         {
             string colorSection =
-                @$"
-
+                $@"
 [Control Panel\Colors]
 ActiveTitle={ColorHelper.ColorToString(control.ActiveTitleColor)}
 TitleText={ColorHelper.ColorToString(control.ActiveTitleTextColor)}
