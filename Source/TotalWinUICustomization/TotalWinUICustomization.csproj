@@ -1,0 +1,63 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net48-windows</TargetFramework>
+		<UseWindowsForms>true</UseWindowsForms>
+		<ApplicationVisualStyles>false</ApplicationVisualStyles>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<Title>TotalWinUICustomization</Title>
+		<Product>TotalWinUICustomization</Product>
+		<AssemblyName>TotalWinUICustomization</AssemblyName>
+		<AssemblyTitle>TotalWinUICustomization</AssemblyTitle>
+		<Description>A recreation of the Windows XP era Display Properties dialog for customizing windows' colors, fonts, and theme..</Description>
+		<Authors>AdamWhiteHad</Authors>
+		<RepositoryUrl>https://github.com/AdamWhiteHat/TotalWinUICustomization</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<MajorVersion Condition=" '$(MajorVersion)' == '' ">2</MajorVersion>
+		<MinorVersion Condition=" '$(MinorVersion)' == '' ">0</MinorVersion>
+		<PatchVersion Condition=" '$(PatchVersion)' == '' ">0</PatchVersion>
+
+		<VersionPrefix>$(MajorVersion).$(MinorVersion).$(PatchVersion)</VersionPrefix>
+		<ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
+		<BaseOutputPath>..\..\Binaries</BaseOutputPath>
+		<OutputPath>..\..\Binaries\Release</OutputPath>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\CommonClassesLibrary\CommonClassesLibrary.csproj" />
+		<ProjectReference Include="..\OverlayControlsLibrary\OverlayControlsLibrary.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="System.Drawing.Design" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="Properties\Resources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Update="Properties\Resources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+
+</Project>
