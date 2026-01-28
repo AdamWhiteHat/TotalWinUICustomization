@@ -9,11 +9,8 @@ namespace TotalWinUICustomization
 {
     public class ThemeHelper
     {
-        public static void CreateAndInstallTheme(WindowsUIMockupControl control)
+        public static void InstallThemeFile(string themeFile)
         {
-            // Get theme file content
-            string themeFile = GetThemeFile(control);
-
             // Save theme file to %LOCALAPPDATA%\Microsoft\Windows\Themes\Custom.theme
             string localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             string themesFolder = System.IO.Path.Combine(localAppData, "Microsoft\\Windows\\Themes");
@@ -62,7 +59,7 @@ namespace TotalWinUICustomization
         MenuBar=255 255 255        
          */
 
-        public static string GetThemeFile(WindowsUIMockupControl control)
+        public static string CreateThemeFile(WindowsUIMockupControl control)
         {
             string colorSection =
                 $@"
@@ -71,20 +68,20 @@ ActiveTitle={ColorHelper.ColorToString(control.ActiveTitleColor)}
 TitleText={ColorHelper.ColorToString(control.ActiveTitleTextColor)}
 InactiveTitle={ColorHelper.ColorToString(control.InactiveTitleColor)}
 InactiveTitleText={ColorHelper.ColorToString(control.InactiveTitleTextColor)}
-GradientActiveTitle{ColorHelper.ColorToString(control.ActiveTitleGradientColor)}
-GradientInactiveTitle{ColorHelper.ColorToString(control.InactiveTitleGradientColor)}
+GradientActiveTitle={ColorHelper.ColorToString(control.ActiveTitleGradientColor)}
+GradientInactiveTitle={ColorHelper.ColorToString(control.InactiveTitleGradientColor)}
 ButtonFace={ColorHelper.ColorToString(control.ButtonFaceColor)}
 ButtonText={ColorHelper.ColorToString(control.ButtonTextColor)}
 Window={ColorHelper.ColorToString(control.WindowColor)}
-WindowText{ColorHelper.ColorToString(control.WindowTextColor)}
+WindowText={ColorHelper.ColorToString(control.WindowTextColor)}
 Background={ColorHelper.ColorToString(control.DesktopBackgroundColor)}
-Menu{ColorHelper.ColorToString(control.MenuBarColor)}
-MenuText{ColorHelper.ColorToString(control.MenuTextColor)}
-MenuHilight{ColorHelper.ColorToString(control.MenuHighlightColor)}
+Menu={ColorHelper.ColorToString(control.MenuBarColor)}
+MenuText={ColorHelper.ColorToString(control.MenuTextColor)}
+MenuHilight={ColorHelper.ColorToString(control.MenuHighlightColor)}
 Hilight={ColorHelper.ColorToString(control.HilightColor)}
 HilightText={ColorHelper.ColorToString(control.HilightTextColor)}
-InfoText{ColorHelper.ColorToString(control.InfoTextColor)}
-InfoWindow{ColorHelper.ColorToString(control.InfoWindowColor)}
+InfoText={ColorHelper.ColorToString(control.InfoTextColor)}
+InfoWindow={ColorHelper.ColorToString(control.InfoWindowColor)}
 GrayText={ColorHelper.ColorToString(control.GrayTextColor)}
 HotTrackingColor={ColorHelper.ColorToString(control.HotTrackingColor)}
 Scrollbar={ColorHelper.ColorToString(control.ScrollbarColor)}

@@ -63,6 +63,16 @@ namespace TotalWinUICustomization.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap checkmark_16 {
+            get {
+                object obj = ResourceManager.GetObject("checkmark_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap file {
             get {
                 object obj = ResourceManager.GetObject("file", resourceCulture);
@@ -76,6 +86,16 @@ namespace TotalWinUICustomization.Properties {
         internal static System.Drawing.Bitmap refresh {
             get {
                 object obj = ResourceManager.GetObject("refresh", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap x_16 {
+            get {
+                object obj = ResourceManager.GetObject("x_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

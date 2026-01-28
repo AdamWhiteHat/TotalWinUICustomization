@@ -36,7 +36,6 @@ namespace TotalWinUICustomization
             this.panelColorPropertyLeft = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.comboBoxColorPropertySelection = new System.Windows.Forms.ComboBox();
-            this.font_ClickInterceptorBox = new OverlayControlsLibrary.ClickInterceptorBox();
             this.flowLayoutPanelColor = new System.Windows.Forms.FlowLayoutPanel();
             this.panelColorPropertyRight = new System.Windows.Forms.Panel();
             this.panelColorProperty1 = new System.Windows.Forms.Panel();
@@ -58,6 +57,7 @@ namespace TotalWinUICustomization
             this.comboBoxFontPropertySelection = new System.Windows.Forms.ComboBox();
             this.panelFontProperty = new System.Windows.Forms.Panel();
             this.panelInnerFontProperty = new System.Windows.Forms.Panel();
+            this.font_ClickInterceptorBox = new OverlayControlsLibrary.ClickInterceptorBox();
             this.panelFontPropertyColor = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
             this.buttonFontColor = new System.Windows.Forms.Button();
@@ -66,9 +66,13 @@ namespace TotalWinUICustomization
             this.label8 = new System.Windows.Forms.Label();
             this.colorPickerDialog = new System.Windows.Forms.ColorDialog();
             this.fontPickerDialog = new System.Windows.Forms.FontDialog();
-            this.windowsuiMockupControl = new TotalWinUICustomization.WindowsUIMockupControl();
             this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
+            this.windowsuiMockupControl = new TotalWinUICustomization.WindowsUIMockupControl();
             this.flowLayoutPanelBottom = new System.Windows.Forms.FlowLayoutPanel();
+            this.panelApplyChanges = new System.Windows.Forms.Panel();
+            this.labelChangesUnsaved = new System.Windows.Forms.LinkLabel();
+            this.buttonChangesDiscard = new System.Windows.Forms.Button();
+            this.buttonChangesApply = new System.Windows.Forms.Button();
             this.panelColorPropertyLeft.SuspendLayout();
             this.flowLayoutPanelColor.SuspendLayout();
             this.panelColorPropertyRight.SuspendLayout();
@@ -85,6 +89,7 @@ namespace TotalWinUICustomization
             this.thatchedPanel1.SuspendLayout();
             this.flowLayoutPanelMain.SuspendLayout();
             this.flowLayoutPanelBottom.SuspendLayout();
+            this.panelApplyChanges.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelColorPropertyLeft
@@ -120,15 +125,7 @@ namespace TotalWinUICustomization
             this.comboBoxColorPropertySelection.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxColorPropertySelection.Name = "comboBoxColorPropertySelection";
             this.comboBoxColorPropertySelection.Size = new System.Drawing.Size(269, 21);
-            // 
-            // font_ClickInterceptorBox
-            // 
-            this.font_ClickInterceptorBox.CausesValidation = false;
-            this.font_ClickInterceptorBox.Location = new System.Drawing.Point(1, 17);
-            this.font_ClickInterceptorBox.Name = "font_ClickInterceptorBox";
-            this.font_ClickInterceptorBox.Size = new System.Drawing.Size(340, 21);
-            this.font_ClickInterceptorBox.TabIndex = 7;
-            this.font_ClickInterceptorBox.TabStop = false;
+            this.comboBoxColorPropertySelection.TabIndex = 5;
             // 
             // flowLayoutPanelColor
             // 
@@ -197,6 +194,7 @@ namespace TotalWinUICustomization
             this.panelColorPropertySwatch1.MaximumSize = new System.Drawing.Size(29, 19);
             this.panelColorPropertySwatch1.MinimumSize = new System.Drawing.Size(29, 19);
             this.panelColorPropertySwatch1.Name = "panelColorPropertySwatch1";
+            this.panelColorPropertySwatch1.Size = new System.Drawing.Size(29, 19);
             this.panelColorPropertySwatch1.TabIndex = 0;
             // 
             // panelColorProperty2
@@ -274,8 +272,6 @@ namespace TotalWinUICustomization
             // 
             this.checkBoxFontItalic.Appearance = System.Windows.Forms.Appearance.Button;
             this.checkBoxFontItalic.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.checkBoxFontItalic.Checked = true;
-            this.checkBoxFontItalic.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxFontItalic.FlatAppearance.BorderSize = 2;
             this.checkBoxFontItalic.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.checkBoxFontItalic.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -319,8 +315,6 @@ namespace TotalWinUICustomization
             // 
             this.checkBoxFontBold.Appearance = System.Windows.Forms.Appearance.Button;
             this.checkBoxFontBold.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.checkBoxFontBold.Checked = true;
-            this.checkBoxFontBold.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxFontBold.FlatAppearance.BorderSize = 2;
             this.checkBoxFontBold.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.checkBoxFontBold.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -403,6 +397,15 @@ namespace TotalWinUICustomization
             this.panelInnerFontProperty.Size = new System.Drawing.Size(454, 45);
             this.panelInnerFontProperty.TabIndex = 22;
             // 
+            // font_ClickInterceptorBox
+            // 
+            this.font_ClickInterceptorBox.CausesValidation = false;
+            this.font_ClickInterceptorBox.Location = new System.Drawing.Point(1, 17);
+            this.font_ClickInterceptorBox.Name = "font_ClickInterceptorBox";
+            this.font_ClickInterceptorBox.Size = new System.Drawing.Size(340, 21);
+            this.font_ClickInterceptorBox.TabIndex = 7;
+            this.font_ClickInterceptorBox.TabStop = false;
+            // 
             // panelFontPropertyColor
             // 
             this.panelFontPropertyColor.Controls.Add(this.label5);
@@ -467,7 +470,7 @@ namespace TotalWinUICustomization
             this.label8.BackColor = System.Drawing.SystemColors.Control;
             this.label8.ForeColor = System.Drawing.Color.Black;
             this.label8.Location = new System.Drawing.Point(166, 16);
-            this.label8.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.label8.Margin = new System.Windows.Forms.Padding(5);
             this.label8.Name = "label8";
             this.label8.Padding = new System.Windows.Forms.Padding(2);
             this.label8.Size = new System.Drawing.Size(127, 17);
@@ -487,66 +490,66 @@ namespace TotalWinUICustomization
             this.fontPickerDialog.MinSize = 4;
             this.fontPickerDialog.ShowColor = true;
             // 
-            // windowsuiMockupControl
-            // 
-            this.windowsuiMockupControl.ActiveBorderColor = System.Drawing.Color.Gray;
-            this.windowsuiMockupControl.ActiveTitleColor = System.Drawing.SystemColors.ActiveCaption;
-            this.windowsuiMockupControl.ActiveTitleGradientColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.windowsuiMockupControl.ActiveTitleTextColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.windowsuiMockupControl.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.windowsuiMockupControl.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
-            this.windowsuiMockupControl.BackColor = System.Drawing.SystemColors.Desktop;
-            this.windowsuiMockupControl.ButtonFaceColor = System.Drawing.SystemColors.Control;
-            this.windowsuiMockupControl.ButtonTextColor = System.Drawing.SystemColors.ControlText;
-            this.windowsuiMockupControl.CaptionFont = null;
-            this.windowsuiMockupControl.DesktopBackgroundColor = System.Drawing.SystemColors.Desktop;
-            this.windowsuiMockupControl.GrayTextColor = System.Drawing.SystemColors.ControlText;
-            this.windowsuiMockupControl.HilightColor = System.Drawing.SystemColors.Highlight;
-            this.windowsuiMockupControl.HilightTextColor = System.Drawing.SystemColors.HighlightText;
-            this.windowsuiMockupControl.HotTrackingColor = System.Drawing.SystemColors.HotTrack;
-            this.windowsuiMockupControl.IconFont = null;
-            this.windowsuiMockupControl.InactiveBorderColor = System.Drawing.Color.Silver;
-            this.windowsuiMockupControl.InactiveTitleColor = System.Drawing.SystemColors.InactiveCaption;
-            this.windowsuiMockupControl.InactiveTitleGradientColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.windowsuiMockupControl.InactiveTitleTextColor = System.Drawing.SystemColors.InactiveCaptionText;
-            this.windowsuiMockupControl.InfoTextColor = System.Drawing.SystemColors.InfoText;
-            this.windowsuiMockupControl.InfoWindowColor = System.Drawing.SystemColors.Info;
-            this.windowsuiMockupControl.Location = new System.Drawing.Point(0, 0);
-            this.windowsuiMockupControl.Margin = new System.Windows.Forms.Padding(0);
-            this.windowsuiMockupControl.MaximumSize = new System.Drawing.Size(489, 321);
-            this.windowsuiMockupControl.MenuBarColor = System.Drawing.SystemColors.Menu;
-            this.windowsuiMockupControl.MenuFont = null;
-            this.windowsuiMockupControl.MenuHighlightColor = System.Drawing.SystemColors.MenuHighlight;
-            this.windowsuiMockupControl.MenuTextColor = System.Drawing.SystemColors.MenuText;
-            this.windowsuiMockupControl.MessageFont = null;
-            this.windowsuiMockupControl.MinimumSize = new System.Drawing.Size(570, 370);
-            this.windowsuiMockupControl.Name = "windowsuiMockupControl";
-            this.windowsuiMockupControl.ScrollbarColor = System.Drawing.SystemColors.Window;
-            this.windowsuiMockupControl.Size = new System.Drawing.Size(570, 370);
-            this.windowsuiMockupControl.SmCaptionFont = null;
-            this.windowsuiMockupControl.StatusFont = null;
-            this.windowsuiMockupControl.TabIndex = 1;
-            this.windowsuiMockupControl.WindowColor = System.Drawing.SystemColors.Window;
-            this.windowsuiMockupControl.WindowFrameColor = System.Drawing.Color.Black;
-            this.windowsuiMockupControl.WindowTextColor = System.Drawing.SystemColors.ControlText;
-            // 
             // flowLayoutPanelMain
             // 
             this.flowLayoutPanelMain.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.flowLayoutPanelMain.Controls.Add(this.windowsuiMockupControl);
             this.flowLayoutPanelMain.Controls.Add(this.flowLayoutPanelBottom);
+            this.flowLayoutPanelMain.Controls.Add(this.panelApplyChanges);
             this.flowLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanelMain.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanelMain.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanelMain.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanelMain.Name = "flowLayoutPanelMain";
-            this.flowLayoutPanelMain.Size = new System.Drawing.Size(570, 465);
+            this.flowLayoutPanelMain.Size = new System.Drawing.Size(570, 518);
             this.flowLayoutPanelMain.TabIndex = 4;
+            // 
+            // windowsuiMockupControl
+            // 
+            this.windowsuiMockupControl.ActiveBorderColor = System.Drawing.Color.Gray;
+            this.windowsuiMockupControl.ActiveTitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(180)))), ((int)(((byte)(209)))));
+            this.windowsuiMockupControl.ActiveTitleGradientColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(209)))), ((int)(((byte)(234)))));
+            this.windowsuiMockupControl.ActiveTitleTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.windowsuiMockupControl.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.windowsuiMockupControl.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
+            this.windowsuiMockupControl.BackColor = System.Drawing.SystemColors.Desktop;
+            this.windowsuiMockupControl.ButtonFaceColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.windowsuiMockupControl.ButtonTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.windowsuiMockupControl.CaptionFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.World);
+            this.windowsuiMockupControl.DesktopBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.windowsuiMockupControl.GrayTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.windowsuiMockupControl.HilightColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
+            this.windowsuiMockupControl.HilightTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.windowsuiMockupControl.HotTrackingColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
+            this.windowsuiMockupControl.IconFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
+            this.windowsuiMockupControl.InactiveBorderColor = System.Drawing.Color.Silver;
+            this.windowsuiMockupControl.InactiveTitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(205)))), ((int)(((byte)(219)))));
+            this.windowsuiMockupControl.InactiveTitleGradientColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(228)))), ((int)(((byte)(242)))));
+            this.windowsuiMockupControl.InactiveTitleTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.windowsuiMockupControl.InfoTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.windowsuiMockupControl.InfoWindowColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.windowsuiMockupControl.Location = new System.Drawing.Point(0, 0);
+            this.windowsuiMockupControl.Margin = new System.Windows.Forms.Padding(0);
+            this.windowsuiMockupControl.MaximumSize = new System.Drawing.Size(489, 321);
+            this.windowsuiMockupControl.MenuBarColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.windowsuiMockupControl.MenuFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
+            this.windowsuiMockupControl.MenuHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(153)))), ((int)(((byte)(255)))));
+            this.windowsuiMockupControl.MenuTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.windowsuiMockupControl.MessageFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
+            this.windowsuiMockupControl.MinimumSize = new System.Drawing.Size(570, 370);
+            this.windowsuiMockupControl.Name = "windowsuiMockupControl";
+            this.windowsuiMockupControl.ScrollbarColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.windowsuiMockupControl.Size = new System.Drawing.Size(570, 370);
+            this.windowsuiMockupControl.SmCaptionFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
+            this.windowsuiMockupControl.StatusFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World, ((byte)(0)));
+            this.windowsuiMockupControl.TabIndex = 1;
+            this.windowsuiMockupControl.WindowColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.windowsuiMockupControl.WindowFrameColor = System.Drawing.Color.Black;
+            this.windowsuiMockupControl.WindowTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             // 
             // flowLayoutPanelBottom
             // 
-            this.flowLayoutPanelBottom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.flowLayoutPanelBottom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayoutPanelBottom.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.flowLayoutPanelBottom.Controls.Add(this.flowLayoutPanelColor);
             this.flowLayoutPanelBottom.Controls.Add(this.panelFontProperty);
@@ -557,12 +560,63 @@ namespace TotalWinUICustomization
             this.flowLayoutPanelBottom.Size = new System.Drawing.Size(570, 92);
             this.flowLayoutPanelBottom.TabIndex = 20;
             // 
+            // panelApplyChanges
+            // 
+            this.panelApplyChanges.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelApplyChanges.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panelApplyChanges.Controls.Add(this.labelChangesUnsaved);
+            this.panelApplyChanges.Controls.Add(this.buttonChangesDiscard);
+            this.panelApplyChanges.Controls.Add(this.buttonChangesApply);
+            this.panelApplyChanges.Location = new System.Drawing.Point(3, 466);
+            this.panelApplyChanges.Name = "panelApplyChanges";
+            this.panelApplyChanges.Size = new System.Drawing.Size(564, 49);
+            this.panelApplyChanges.TabIndex = 21;
+            // 
+            // labelChangesUnsaved
+            // 
+            this.labelChangesUnsaved.ActiveLinkColor = System.Drawing.Color.DodgerBlue;
+            this.labelChangesUnsaved.AutoSize = true;
+            this.labelChangesUnsaved.Location = new System.Drawing.Point(78, 17);
+            this.labelChangesUnsaved.Name = "labelChangesUnsaved";
+            this.labelChangesUnsaved.Size = new System.Drawing.Size(115, 13);
+            this.labelChangesUnsaved.TabIndex = 3;
+            this.labelChangesUnsaved.TabStop = true;
+            this.labelChangesUnsaved.Text = "{0} pending changes...";
+            this.labelChangesUnsaved.VisitedLinkColor = System.Drawing.Color.Blue;
+            this.labelChangesUnsaved.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.labelChangesUnsaved_LinkClicked);
+            // 
+            // buttonChangesDiscard
+            // 
+            this.buttonChangesDiscard.BackColor = System.Drawing.Color.LavenderBlush;
+            this.buttonChangesDiscard.Image = global::TotalWinUICustomization.Properties.Resources.x_16;
+            this.buttonChangesDiscard.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonChangesDiscard.Location = new System.Drawing.Point(281, 8);
+            this.buttonChangesDiscard.Name = "buttonChangesDiscard";
+            this.buttonChangesDiscard.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+            this.buttonChangesDiscard.Size = new System.Drawing.Size(137, 30);
+            this.buttonChangesDiscard.TabIndex = 1;
+            this.buttonChangesDiscard.Text = "    Discard changes";
+            this.buttonChangesDiscard.UseVisualStyleBackColor = false;
+            // 
+            // buttonChangesApply
+            // 
+            this.buttonChangesApply.BackColor = System.Drawing.Color.Honeydew;
+            this.buttonChangesApply.Image = global::TotalWinUICustomization.Properties.Resources.checkmark_16;
+            this.buttonChangesApply.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonChangesApply.Location = new System.Drawing.Point(424, 4);
+            this.buttonChangesApply.Name = "buttonChangesApply";
+            this.buttonChangesApply.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
+            this.buttonChangesApply.Size = new System.Drawing.Size(137, 38);
+            this.buttonChangesApply.TabIndex = 0;
+            this.buttonChangesApply.Text = "   Apply changes...";
+            this.buttonChangesApply.UseVisualStyleBackColor = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(570, 465);
+            this.ClientSize = new System.Drawing.Size(570, 518);
             this.Controls.Add(this.flowLayoutPanelMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Margin = new System.Windows.Forms.Padding(2);
@@ -593,6 +647,8 @@ namespace TotalWinUICustomization
             this.thatchedPanel1.PerformLayout();
             this.flowLayoutPanelMain.ResumeLayout(false);
             this.flowLayoutPanelBottom.ResumeLayout(false);
+            this.panelApplyChanges.ResumeLayout(false);
+            this.panelApplyChanges.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -634,5 +690,9 @@ namespace TotalWinUICustomization
         private ThatchedPanel thatchedPanel1;
         private Label label7;
         private Label label8;
+        private Panel panelApplyChanges;
+        private Button buttonChangesDiscard;
+        private Button buttonChangesApply;
+        private LinkLabel labelChangesUnsaved;
     }
 }

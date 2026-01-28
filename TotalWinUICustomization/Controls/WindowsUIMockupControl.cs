@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design;
@@ -33,6 +34,8 @@ namespace TotalWinUICustomization
         /// for the system color the UI element represents
         /// </summary>
         public event ColorUiElementClickedEventHandler ColorUiElementClicked;
+
+        public static List<WindowsUiElements> AllWindowsUiElements =  Enum.GetValues(typeof(WindowsUiElements)).OfType<WindowsUiElements>().ToList();
 
         #region Color Properties
 
@@ -447,7 +450,7 @@ namespace TotalWinUICustomization
 
         #endregion
 
-        #region FontProperties
+        #region Font Properties
 
         public Font CaptionFont
         {
@@ -579,6 +582,22 @@ namespace TotalWinUICustomization
 
         #endregion
 
+        #region Pending Changes
+
+        /// <summary>
+        /// Returns true if <see cref="SettingUpdatesPending"/> contains any items.
+        /// </summary>
+        public bool IsDirty { get { return SettingUpdatesPending.Any(); } }
+
+        public int PendingChangesCount { get { return SettingUpdatesPending.Count; } }
+
+        /// <summary>
+        /// Represents a set of Windows UI changes that are being previewed, but have yet to be applied.
+        /// </summary>
+        public List<SettingUpdateAction> SettingUpdatesPending { get; private set; }
+
+        #endregion
+
         #region Constructor
 
         public WindowsUIMockupControl()
@@ -599,6 +618,8 @@ namespace TotalWinUICustomization
             BorderHelper.AddBorder(buttonMinimize_InactiveWindow, Border3DStyle.Raised);
             BorderHelper.AddBorder(buttonMaximize_InactiveWindow, Border3DStyle.Raised);
             BorderHelper.AddBorder(buttonX_InactiveWindow, Border3DStyle.Raised);
+
+            SettingUpdatesPending = new List<SettingUpdateAction>();
         }
 
         private void WindowsUIMockupControl_Load(object sender, EventArgs e)
@@ -646,6 +667,85 @@ namespace TotalWinUICustomization
             activeBorderClickInterceptor4.Click += activeBorderClickInterceptor_Click;
             activeBorderClickInterceptor2.Click += activeBorderClickInterceptor_Click;
             activeBorderClickInterceptor1.Click += activeBorderClickInterceptor_Click;
+
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            LoadSizes();
+            RefreshSettingsFromRegistry(AllWindowsUiElements);
+        }
+
+        /// <summary>
+        ///  Removes any pending updates that modify the given setting, if it exists.
+        ///  Returns true if a corresponding update for the setting was found, false otherwise.
+        /// </summary>
+        public bool RemovePendingUpdate(WindowsUiElements settingToRemove)
+        {
+            return RemovePendingUpdates(new List<WindowsUiElements>() { settingToRemove });
+        }
+
+        /// <summary>
+        ///  Remove any pending updates that modify the supplied settings, if they exist.
+        ///  Returns true if any updates to remove were found (and removed). Returns false if no corresponding updates were found.
+        /// </summary>
+        /// <param name="settingsToRemove"></param>
+        /// <returns>True a corresponding update was found and removed. False if there was nothing to remove.</returns>
+        public bool RemovePendingUpdates(List<WindowsUiElements> settingsToRemove)
+        {
+            List<SettingUpdateAction> updatesToRemove = SearchPendingUpdates(settingsToRemove);
+            if (!updatesToRemove.Any())
+            {
+                return false;
+            }
+
+            foreach (var update in updatesToRemove)
+            {
+                SettingUpdatesPending.Remove(update);
+            }
+
+            RefreshSettingsFromRegistry(settingsToRemove);
+
+            return true;
+        }
+
+        public bool PendingUpdateForSettingExists(WindowsUiElements settingToFind)
+        {
+            return SettingUpdatesPending.Any(sua => sua.Setting == settingToFind);
+        }
+
+        public SettingUpdateAction SearchPendingUpdates(WindowsUiElements settingToFind)
+        {
+            return SearchPendingUpdates(new List<WindowsUiElements>() { settingToFind }).FirstOrDefault();
+        }
+
+        public List<SettingUpdateAction> SearchPendingUpdates(List<WindowsUiElements> settingsToFind)
+        {
+            return SettingUpdatesPending.Where(sua => settingsToFind.Contains(sua.Setting)).ToList();
+        }
+
+        public void RefreshSettingFromRegistry(WindowsUiElements settingToRefresh)
+        {
+            RefreshSettingsFromRegistry(new List<WindowsUiElements>() { settingToRefresh });
+        }
+
+        public void RefreshSettingsFromRegistry(List<WindowsUiElements> settingsToRefresh)
+        {
+            // Update control colors from registry
+            foreach (var item in settingsToRefresh)
+            {
+                if (Types.Helpers.SystemFonts.Contains(item))
+                {
+                    Font font = RegistryHelper.GetWindowsFont(item);
+                    UpdateControlFont(item, font, true);
+                }
+                else
+                {
+                    Color itemColor = RegistryHelper.GetWindowsColor(item);
+                    UpdateControlColor(item, itemColor, true);
+                }
+            }
         }
 
         #endregion
@@ -762,8 +862,39 @@ namespace TotalWinUICustomization
             ColorUiElementClicked?.Invoke(this, new ColorUiElementClickedEventArgs(elementClicked));
         }
 
+        private object GetCurrentSystemSettingValue(WindowsUiElements setting)
+        {
+            if (Types.Helpers.SystemFonts.Contains(setting))
+            {
+                Font font = RegistryHelper.GetWindowsFont(setting);
+                return font;
+            }
+            else
+            {
+                Color color = RegistryHelper.GetWindowsColor(setting);
+                return color;
+            }
+        }
+
         public void UpdateControlFont(WindowsUiElements fontGroup, Font font)
         {
+            UpdateControlFont(fontGroup, font, false);
+        }
+
+        private void UpdateControlFont(WindowsUiElements fontGroup, Font font, bool isInitializing)
+        {
+            if (!isInitializing)
+            {
+                RemovePendingUpdate(fontGroup);
+
+                Font currentValue = (Font)GetCurrentSystemSettingValue(fontGroup);
+                if (!currentValue.Equals(font))
+                {
+                    SettingUpdateAction updateAction = new SettingUpdateAction(fontGroup, font);
+                    SettingUpdatesPending.Add(updateAction);
+                }
+            }
+
             switch (fontGroup)
             {
                 case WindowsUiElements.CaptionFont:
@@ -794,6 +925,23 @@ namespace TotalWinUICustomization
 
         public void UpdateControlColor(WindowsUiElements uiElement, Color color)
         {
+            UpdateControlColor(uiElement, color, false);
+        }
+
+        private void UpdateControlColor(WindowsUiElements uiElement, Color color, bool isInitializing)
+        {
+            if (!isInitializing)
+            {
+                RemovePendingUpdate(uiElement);
+
+                Color currentValue = (Color)GetCurrentSystemSettingValue(uiElement);
+                if (!currentValue.Equals(color))
+                {
+                    SettingUpdateAction updateAction = new SettingUpdateAction(uiElement, color);
+                    SettingUpdatesPending.Add(updateAction);
+                }
+            }
+
             switch (uiElement)
             {
                 case WindowsUiElements.InactiveTitle:
@@ -873,6 +1021,41 @@ namespace TotalWinUICustomization
             }
         }
 
+        private void QueuePendingUpdate(SettingUpdateAction updateAction)
+        {
+            // Remove previous set value for this setting, if it exists
+            RemovePendingUpdate(updateAction.Setting);
+
+            // Add change as pending
+            SettingUpdatesPending.Add(updateAction);
+        }
+
+        public void AcceptChanges()
+        {
+            List<SettingUpdateAction> successfullyApplied = new List<SettingUpdateAction>();
+
+            string themeFile = ThemeHelper.CreateThemeFile(this);            
+
+            // Apply settings, keeping track of which return success
+            foreach (var updateAction in SettingUpdatesPending)
+            {
+                if (updateAction.ApplyAction())
+                {
+                    successfullyApplied.Add(updateAction);
+                }
+            }
+
+            ThemeHelper.InstallThemeFile(themeFile);
+
+            // Remove successfully applied
+            SettingUpdatesPending = SettingUpdatesPending.Except(successfullyApplied, new SettingOnlyComparer()).ToList();
+        }
+
+        public void AbortChanges()
+        {
+            var settingsToRemove = SettingUpdatesPending.Select(sua => sua.Setting).ToList();
+            RemovePendingUpdates(settingsToRemove);
+        }
 
         public void LoadSizes()
         {
