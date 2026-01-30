@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
 using TotalWinUICustomization.Controls;
@@ -14,15 +16,37 @@ namespace TotalWinUICustomization
     {
         protected UIElementAssociation CurrentUiElementSelected { get; set; }
 
+        protected bool SuppressUpdateEvents = false;
+        protected ThreadsafeInterlock SuppressUpdateEventsController;
         protected bool IsDirty { get { return windowsuiMockupControl.IsDirty; } }
 
-        private static string _titleText = "Control Freak - Total Windows Customization";
-        private static string _pendingChangesFormatText = "{0} pending changes...";
+        private static readonly string _titleText = "Control Freak - Total Windows Customization";
+        private static readonly string _pendingChangesFormatText = "{0} pending changes...";
+
+        protected float DPI
+        {
+            get
+            {
+                if (_dpi == -1)
+                {
+                    using (Graphics g = this.CreateGraphics())
+                    {
+                        _dpi = g.DpiY;
+                    }
+                }
+                return _dpi;
+            }
+        }
+        private float _dpi = -1;
 
         public MainForm()
         {
             this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             InitializeComponent();
+
+            FieldInfo supressUpdateEvents_FieldInfo =  this.GetType().GetField("SuppressUpdateEvents", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+
+            SuppressUpdateEventsController = new ThreadsafeInterlock(this, supressUpdateEvents_FieldInfo);
 
             fontPickerDialog.AllowVectorFonts = false;
             fontPickerDialog.AllowVerticalFonts = false;
@@ -118,7 +142,7 @@ namespace TotalWinUICustomization
             {
                 if (!source.Enabled)
                 {
-                    source.Text = "";
+                    source.ClearSelection();
                 }
             }
         }
@@ -143,19 +167,14 @@ namespace TotalWinUICustomization
                 if (match.Any())
                 {
                     FontFamily selectedFontFamily = match.Single();
-                    float? fontSize = GetSelectedFontSize();
-
                     FontStyle fontStyle = GetSelectedFontStyle();
 
+                    float? fontSize = GetSelectedFontSize();
                     if (fontSize.HasValue)
                     {
-                        return new Font(selectedFontFamily, fontSize.Value, fontStyle, GraphicsUnit.World);
+                        float logicalUnits_fontSize = (fontSize.Value * DPI) / 72.0f;
+                        return new Font(selectedFontFamily, logicalUnits_fontSize, fontStyle, GraphicsUnit.World);
                     }
-                    //else
-                    //{
-                    //    //throw new Exception("No font size selected.");
-                    //    return new Font(selectedFontFamily, selectedFontFamily.GetEmHeight(fontStyle), fontStyle );
-                    //}
                 }
             }
             return null;
@@ -165,7 +184,7 @@ namespace TotalWinUICustomization
         {
             if (float.TryParse(comboFontSize.Text, out float fontSize))
             {
-                return (float)Math.Round(fontSize, 1);
+                return (float)Math.Round(fontSize, 2);
             }
             if (string.IsNullOrWhiteSpace(comboFontSize.Text))
             {
@@ -195,76 +214,89 @@ namespace TotalWinUICustomization
                 return;
             }
 
-            int index = FontHelper.FontFamilies.IndexOf(font.FontFamily);
-            if (index == -1)
+            using (SuppressUpdateEventsController.GetToken())
             {
-                return;
-            }
 
-            if (comboBoxFontPropertySelection.SelectedIndex != index)
-            {
-                comboBoxFontPropertySelection.SelectedIndex = index;
+                int index = FontHelper.FontFamilies.IndexOf(font.FontFamily);
+                if (index == -1)
+                {
+                    return;
+                }
+
+                if (comboBoxFontPropertySelection.SelectedIndex != index)
+                {
+                    comboBoxFontPropertySelection.SelectedIndex = index;
+                }
             }
         }
 
-        public void SetFontSize(float fontSize)
+        public void SetFontSize(Font font)
         {
             if (!CurrentUiElementSelected.HasAssociatedFont)
             {
                 return;
             }
 
-            List<float> sizes = comboFontSize.Items.Cast<string>().Select(s => float.Parse(s)).ToList();
-            if (!sizes.Contains(fontSize))
+            float fontSize = (float)Math.Round(font.SizeInPoints,2);
+
+            using (SuppressUpdateEventsController.GetToken())
             {
-                sizes.Add(fontSize);
-                sizes = sizes.OrderByDescending(s => s).ToList();
+                List<float> sizes = comboFontSize.Items.Cast<string>().Select(s => float.Parse(s)).ToList();
+                if (!sizes.Contains(fontSize))
+                {
+                    sizes.Add(fontSize);
+                    sizes = sizes.OrderByDescending(s => s).ToList();
 
-                comboFontSize.SelectedIndexChanged -= comboFontSize_SelectedItemChanged;
-                comboFontSize.TextChanged -= comboFontSize_TextChanged;
+                    comboFontSize.SelectedIndexChanged -= comboFontSize_SelectedItemChanged;
+                    comboFontSize.TextChanged -= comboFontSize_TextChanged;
 
-                comboFontSize.Items.Clear();
-                comboFontSize.SelectedIndex = -1;
-                comboFontSize.Items.AddRange(sizes.Select(f => f.ToString()).ToArray());
+                    comboFontSize.Items.Clear();
+                    comboFontSize.SelectedIndex = -1;
+                    comboFontSize.Items.AddRange(sizes.Select(f => f.ToString()).ToArray());
 
-                comboFontSize.SelectedIndexChanged += comboFontSize_SelectedItemChanged;
-                comboFontSize.TextChanged += comboFontSize_TextChanged;
-            }
+                    comboFontSize.SelectedIndexChanged += comboFontSize_SelectedItemChanged;
+                    comboFontSize.TextChanged += comboFontSize_TextChanged;
+                }
 
-            int fontSizeIndex = comboFontSize.Items.IndexOf(fontSize.ToString());
-            if (comboFontSize.SelectedIndex != fontSizeIndex)
-            {
-                comboFontSize.SelectedIndex = fontSizeIndex;
+                int fontSizeIndex = comboFontSize.Items.IndexOf(fontSize.ToString());
+
+                comboFontSize.SelectedIndex = fontSizeIndex;                
             }
         }
 
         public void SetFontStyle(Font font)
         {
-            if (!CurrentUiElementSelected.HasAssociatedFont)
+            using (SuppressUpdateEventsController.GetToken())
             {
-                return;
-            }
+                if (!CurrentUiElementSelected.HasAssociatedFont)
+                {
+                    return;
+                }
 
-            if (checkBoxFontBold.Checked != font.Bold)
-            {
-                checkBoxFontBold.Checked = font.Bold;
-            }
-            if (checkBoxFontItalic.Checked != font.Italic)
-            {
-                checkBoxFontItalic.Checked = font.Italic;
+                if (checkBoxFontBold.Checked != font.Bold)
+                {
+                    checkBoxFontBold.Checked = font.Bold;
+                }
+                if (checkBoxFontItalic.Checked != font.Italic)
+                {
+                    checkBoxFontItalic.Checked = font.Italic;
+                }
             }
         }
 
         public void SetFontColor(Color color)
         {
-            if (!CurrentUiElementSelected.HasAssociatedFontColor)
+            using (SuppressUpdateEventsController.GetToken())
             {
-                return;
-            }
+                if (!CurrentUiElementSelected.HasAssociatedFontColor)
+                {
+                    return;
+                }
 
-            if (!panelFontColorSwatch.BackColor.Equals(color))
-            {
-                panelFontColorSwatch.BackColor = color;
+                if (!panelFontColorSwatch.BackColor.Equals(color))
+                {
+                    panelFontColorSwatch.BackColor = color;
+                }
             }
         }
 
@@ -278,135 +310,145 @@ namespace TotalWinUICustomization
         {
             UIElementAssociation clickedElement = CurrentUiElementSelected;
 
-            #region ControlElement
-
-            // Update UI Element Color Property
-            if (clickedElement.HasControlElement)
+            using (SuppressUpdateEventsController.GetToken())
             {
-                panelColorPropertyLeft.Enable();
-                panelColorProperty1.Enable();
 
-                if (comboBoxColorPropertySelection.SelectedIndex == -1 || (WindowsUiElements)comboBoxColorPropertySelection.SelectedItem != clickedElement.ControlElement)
-                {
-                    comboBoxColorPropertySelection.SelectedItem = clickedElement.ControlElement.Value;
-                }
+                #region ControlElement
 
-                Color currentElementColor = Color.Empty;
-
-                WindowsUiElements setting = clickedElement.ControlElement.Value;
-                SettingUpdateAction pending = windowsuiMockupControl.SearchPendingUpdates(setting);
-                if (pending != default(SettingUpdateAction))
-                {
-                    currentElementColor = pending.ColorValue;
-                }
-                else
-                {
-                    currentElementColor = RegistryHelper.GetWindowsColor(setting);
-                }
-
-                if (currentElementColor != Color.Empty)
-                {
-                    panelColorPropertySwatch1.BackColor = currentElementColor;
-                }
-            }
-            else
-            {
-                //comboBoxColorPropertySelection.ClearSelection();
-                panelColorPropertyLeft.Disable();
-                panelColorProperty1.Disable();
-            }
-
-            #endregion
-
-            #region AssociatedFont
-
-            // Update associated font
-            if (clickedElement.HasAssociatedFont)
-            {
-                panelFontPropertyLeft.Enable();
-                panelFontPropertyRight.Enable();
-
-                Font font=null;
-
-
-                WindowsUiElements setting = clickedElement.AssociatedFont.Value;
-                SettingUpdateAction pending = windowsuiMockupControl.SearchPendingUpdates(setting);
-                if (pending != default(SettingUpdateAction))
-                {
-                    font = pending.FontValue;
-                }
-                else
-                {
-                    font = RegistryHelper.GetWindowsFont(setting);
-                }
-
-                if (font != null)
-                {
-                    SetFontComboBoxFont(font);
-
-                    float fontSize = (float)Math.Round(font.Size,1);
-                    SetFontSize(fontSize);
-
-                    SetFontStyle(font);
-                }
-
-                if (!clickedElement.HasControlElement && !clickedElement.HasAssociatedFontColor)
+                // Update UI Element Color Property
+                if (clickedElement.HasControlElement)
                 {
                     panelColorPropertyLeft.Enable();
-                    comboBoxColorPropertySelection.SelectedItem = clickedElement.AssociatedFont.Value;
-                }
-            }
-            else
-            {
-                panelFontPropertyLeft.Disable();
-                panelFontPropertyRight.Disable();
-            }
+                    panelColorProperty1.Enable();
 
-            #endregion
+                    if (comboBoxColorPropertySelection.SelectedIndex == -1 || (WindowsUiElements)comboBoxColorPropertySelection.SelectedItem != clickedElement.ControlElement)
+                    {
+                        comboBoxColorPropertySelection.SelectedItem = clickedElement.ControlElement.Value;
+                    }
 
-            #region AssociatedFontColor
+                    Color currentElementColor = Color.Empty;
 
-            // Update associated font color
-            if (clickedElement.HasAssociatedFontColor)
-            {
-                panelFontPropertyColor.Enable();
+                    WindowsUiElements setting = clickedElement.ControlElement.Value;
+                    SettingUpdateAction pending = windowsuiMockupControl.SearchPendingUpdates(setting);
+                    if (pending != default(SettingUpdateAction))
+                    {
+                        currentElementColor = pending.ColorValue;
+                    }
+                    else
+                    {
+                        currentElementColor = RegistryHelper.GetWindowsColor(setting);
+                    }
 
-                Color currentFontColor = Color.Empty;
-
-                WindowsUiElements setting = clickedElement.AssociatedFontColor.Value;
-                SettingUpdateAction pending = windowsuiMockupControl.SearchPendingUpdates(setting);
-                if (pending != default(SettingUpdateAction))
-                {
-                    currentFontColor = pending.ColorValue;
+                    if (currentElementColor != Color.Empty)
+                    {
+                        panelColorPropertySwatch1.BackColor = currentElementColor;
+                    }
                 }
                 else
                 {
-                    currentFontColor = RegistryHelper.GetWindowsColor(setting);
+                    panelColorPropertyLeft.Disable();
+                    panelColorProperty1.Disable();
                 }
 
-                if (currentFontColor != Color.Empty)
+                #endregion
+
+                #region AssociatedFont
+
+                // Update associated font
+                if (clickedElement.HasAssociatedFont)
                 {
-                    panelFontColorSwatch.BackColor = currentFontColor;
-                }
+                    panelFontPropertyLeft.Enable();
+                    panelFontPropertyRight.Enable();
 
-                if (!clickedElement.HasControlElement)
+                    Font font = null;
+
+                    WindowsUiElements setting = clickedElement.AssociatedFont.Value;
+                    SettingUpdateAction pending = windowsuiMockupControl.SearchPendingUpdates(setting);
+                    if (pending != default(SettingUpdateAction))
+                    {
+                        font = pending.FontValue;
+                    }
+                    else
+                    {
+                        using (Graphics g = this.CreateGraphics())
+                        {
+                            font = RegistryHelper.GetWindowsFont(setting, g);
+                        }
+                    }
+
+                    if (font != null)
+                    {
+                        SetFontComboBoxFont(font);
+
+                        SetFontSize(font);
+
+                        SetFontStyle(font);
+                    }
+
+                    if (!clickedElement.HasControlElement && !clickedElement.HasAssociatedFontColor)
+                    {
+                        panelColorPropertyLeft.Enable();
+                        comboBoxColorPropertySelection.SelectedItem = clickedElement.AssociatedFont.Value;
+                    }
+                }
+                else
                 {
-                    panelColorPropertyLeft.Enable();
-                    comboBoxColorPropertySelection.SelectedItem = clickedElement.AssociatedFontColor.Value;
+                    panelFontPropertyLeft.Disable();
+                    panelFontPropertyRight.Disable();
                 }
-            }
-            else
-            {
-                panelFontPropertyColor.Disable();
-            }
 
-            #endregion
+                #endregion
+
+                #region AssociatedFontColor
+
+                // Update associated font color
+                if (clickedElement.HasAssociatedFontColor)
+                {
+                    panelFontPropertyColor.Enable();
+
+                    Color currentFontColor = Color.Empty;
+
+                    WindowsUiElements setting = clickedElement.AssociatedFontColor.Value;
+                    SettingUpdateAction pending = windowsuiMockupControl.SearchPendingUpdates(setting);
+                    if (pending != default(SettingUpdateAction))
+                    {
+                        currentFontColor = pending.ColorValue;
+                    }
+                    else
+                    {
+                        currentFontColor = RegistryHelper.GetWindowsColor(setting);
+                    }
+
+                    if (currentFontColor != Color.Empty)
+                    {
+                        panelFontColorSwatch.BackColor = currentFontColor;
+                    }
+
+                    if (!clickedElement.HasControlElement)
+                    {
+                        panelColorPropertyLeft.Enable();
+                        comboBoxColorPropertySelection.SelectedItem = clickedElement.AssociatedFontColor.Value;
+                    }
+                }
+                else
+                {
+                    panelFontPropertyColor.Disable();
+                }
+
+                #endregion
+
+            }
 
             UpdateDirtyIndicators();
         }
 
         private void comboBoxColorPropertySelection_SelectionChangeCommitted(object sender, EventArgs e)
         {
+            if (SuppressUpdateEvents)
+            {
+                return;
+            }
+
             CurrentUiElementSelected = null;
 
             WindowsUiElements? selectedProperty = GetSelectedComboBoxUIProperty();
@@ -443,6 +485,11 @@ namespace TotalWinUICustomization
 
         private void comboBoxFontPropertySelection_SelectionChangeCommitted(object sender, EventArgs e)
         {
+            if (SuppressUpdateEvents)
+            {
+                return;
+            }
+
             if (CurrentUiElementSelected == null)
             {
                 return;
@@ -458,12 +505,17 @@ namespace TotalWinUICustomization
                 return;
             }
 
-            Font oldFont = RegistryHelper.GetWindowsFont(CurrentUiElementSelected.AssociatedFont.Value);
+
+
+            Font oldFont;
+            using (Graphics g = this.CreateGraphics())
+            {
+                oldFont = RegistryHelper.GetWindowsFont(CurrentUiElementSelected.AssociatedFont.Value, g);
+            }
             if (!oldFont.Equals(newFont))
             {
                 windowsuiMockupControl.UpdateControlFont(CurrentUiElementSelected.AssociatedFont.Value, newFont);
                 UpdateDirtyIndicators();
-                //RegistryHelper.SetWindowsFont(CurrentUiElementSelected.AssociatedFont.Value, selectedFont);
             }
             else
             {
@@ -500,6 +552,11 @@ namespace TotalWinUICustomization
 
         private void comboFontSize_SelectedItemChanged(object sender, EventArgs e)
         {
+            if (SuppressUpdateEvents)
+            {
+                return;
+            }
+
             if (CurrentUiElementSelected == null)
             {
                 comboFontSize.SelectedIndex = -1;
@@ -517,18 +574,27 @@ namespace TotalWinUICustomization
                 return;
             }
 
-            Font oldFont = RegistryHelper.GetWindowsFont(CurrentUiElementSelected.AssociatedFont.Value);
-            if (newFontSize == oldFont.Size)
+            Font oldFont;
+            using (Graphics g = this.CreateGraphics())
+            {
+                oldFont = RegistryHelper.GetWindowsFont(CurrentUiElementSelected.AssociatedFont.Value, g);
+            }
+
+            if (newFontSize == oldFont.SizeInPoints)
             {
                 return;
             }
 
             Font newFont = GetSelectedComboBoxFont();
+            if (newFont == null)
+            {
+                return;
+            }
+
             if (!oldFont.Equals(newFont))
             {
                 windowsuiMockupControl.UpdateControlFont(CurrentUiElementSelected.AssociatedFont.Value, newFont);
                 UpdateDirtyIndicators();
-                //RegistryHelper.SetWindowsFont(CurrentUiElementSelected.AssociatedFont.Value, newFont);
             }
             else
             {
@@ -541,6 +607,11 @@ namespace TotalWinUICustomization
 
         private void checkBoxFontStyle_CheckedChanged(object sender, EventArgs e)
         {
+            if (SuppressUpdateEvents)
+            {
+                return;
+            }
+
             if (CurrentUiElementSelected == null)
             {
                 return;
@@ -550,7 +621,12 @@ namespace TotalWinUICustomization
                 return;
             }
 
-            Font oldFont = RegistryHelper.GetWindowsFont(CurrentUiElementSelected.AssociatedFont.Value);
+            Font oldFont;
+            using (Graphics g = this.CreateGraphics())
+            {
+                oldFont = RegistryHelper.GetWindowsFont(CurrentUiElementSelected.AssociatedFont.Value, g);
+            }
+
             Font newFont = GetSelectedComboBoxFont();
             if (newFont == null)
             {
@@ -561,7 +637,6 @@ namespace TotalWinUICustomization
             {
                 windowsuiMockupControl.UpdateControlFont(CurrentUiElementSelected.AssociatedFont.Value, newFont);
                 UpdateDirtyIndicators();
-                //RegistryHelper.SetWindowsFont(CurrentUiElementSelected.AssociatedFont.Value, newFont);
             }
             else
             {
@@ -599,7 +674,6 @@ namespace TotalWinUICustomization
             {
                 windowsuiMockupControl.UpdateControlColor(selectedProperty.Value, newColor);
                 UpdateDirtyIndicators();
-                //RegistryHelper.SetWindowsColor(selectedProperty.Value, selectedColor);
             }
             else
             {
@@ -612,6 +686,11 @@ namespace TotalWinUICustomization
 
         private void comboFontSize_TextChanged(object sender, EventArgs e)
         {
+            if (SuppressUpdateEvents)
+            {
+                return;
+            }
+
             float? size = GetSelectedFontSize();
             if (!size.HasValue)
             {
@@ -639,13 +718,18 @@ namespace TotalWinUICustomization
                 return;
             }
 
+            CurrentFontState fontState = SaveCurrentFontState();
+
             panelInnerFontProperty.Enabled = false;
 
             Font oldFont = null;
             SettingUpdateAction found = windowsuiMockupControl.SearchPendingUpdates(CurrentUiElementSelected.AssociatedFont.Value);
             if (found == default(SettingUpdateAction))
             {
-                oldFont = RegistryHelper.GetWindowsFont(CurrentUiElementSelected.AssociatedFont.Value);
+                using (Graphics g = this.CreateGraphics())
+                {
+                    oldFont = RegistryHelper.GetWindowsFont(CurrentUiElementSelected.AssociatedFont.Value, g);
+                }
             }
             fontPickerDialog.Font = oldFont;
 
@@ -673,42 +757,97 @@ namespace TotalWinUICustomization
                 Font newFont = fontPickerDialog.Font;
                 if (!newFont.Equals(oldFont))
                 {
-                    SetFontComboBoxFont(newFont);
-                    SetFontStyle(newFont);
+                    panelInnerFontProperty.Enabled = true;
+                    using (SuppressUpdateEventsController.GetToken())
+                    {
+                        SetFontComboBoxFont(newFont);
+                        SetFontStyle(newFont);
 
-                    float fontSize = (float)Math.Round(newFont.Size, 1);
-                    SetFontSize(fontSize);
+                        SetFontSize(newFont);
 
-                    windowsuiMockupControl.UpdateControlFont(CurrentUiElementSelected.AssociatedFont.Value, newFont);
-                    UpdateDirtyIndicators();
-                    //RegistryHelper.SetWindowsFont(CurrentUiElementSelected.AssociatedFont.Value, newFont);
+                        windowsuiMockupControl.UpdateControlFont(CurrentUiElementSelected.AssociatedFont.Value, newFont);
+
+                    }
+                }
+                else
+                {
+                    RestoreCurrentFontState(fontState);
                 }
 
                 if (fontHasColor)
                 {
                     Color newColor = fontPickerDialog.Color;
-
                     if (!newColor.Equals(oldColor))
                     {
-                        SetFontColor(newColor);
+                        using (SuppressUpdateEventsController.GetToken())
+                        {
+                            SetFontColor(newColor);
 
-                        windowsuiMockupControl.UpdateControlColor(CurrentUiElementSelected.AssociatedFontColor.Value, newColor);
-                        UpdateDirtyIndicators();
-                        //RegistryHelper.SetWindowsColor(CurrentUiElementSelected.AssociatedFontColor.Value, newColor);
+                            windowsuiMockupControl.UpdateControlColor(CurrentUiElementSelected.AssociatedFontColor.Value, newColor);
+
+                        }
                     }
                 }
             }
             else
             {
-                UpdateComboboxes();
+                RestoreCurrentFontState(fontState);
             }
 
+            UpdateDirtyIndicators();
+        }
+
+        private CurrentFontState SaveCurrentFontState()
+        {
+            return new CurrentFontState()
+            {
+                //FontSelectedIndex =     comboBoxFontPropertySelection.SelectedIndex,
+                //FontSizeSelectedIndex = comboFontSize.SelectedIndex,
+                //BoldChecked =           checkBoxFontBold.Checked,
+                //ItalicChecked=          checkBoxFontItalic.Checked,
+                Font = GetSelectedComboBoxFont(),
+                HasFontColor = CurrentUiElementSelected.HasAssociatedFontColor,
+                FontColor = CurrentUiElementSelected.HasAssociatedFontColor ? panelFontColorSwatch.BackColor : Color.Empty
+            };
+        }
+
+        private void RestoreCurrentFontState(CurrentFontState state)
+        {
             panelInnerFontProperty.Enabled = true;
+            using (SuppressUpdateEventsController.GetToken())
+            {
+                //comboBoxFontPropertySelection.SelectedIndex = state.FontSelectedIndex;
+                //comboFontSize.SelectedIndex = state.FontSizeSelectedIndex;
+                //checkBoxFontBold.Checked = state.BoldChecked;
+                //checkBoxFontItalic.Checked = state.ItalicChecked;
+                SetFontComboBoxFont(state.Font);
+                SetFontSize(state.Font);
+                SetFontStyle(state.Font);
+            }
         }
 
         #endregion
 
         #region IsDirty state
+
+        private void ButtonChangesApply_Click(object sender, EventArgs e)
+        {
+            if (IsDirty)
+            {
+                windowsuiMockupControl.AcceptChanges();
+                MessageBox.Show("Settings applied.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            UpdateDirtyIndicators();
+        }
+
+        private void ButtonChangesDiscard_Click(object sender, EventArgs e)
+        {
+            if (IsDirty)
+            {
+                windowsuiMockupControl.AbortChanges();
+            }
+            UpdateDirtyIndicators();
+        }
 
         private void UpdateDirtyIndicators()
         {
@@ -730,41 +869,6 @@ namespace TotalWinUICustomization
             }
         }
 
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (IsDirty)
-            {
-                var dialogResult = MessageBox.Show(string.Format("You have {0} unsaved changes. Are you sure you want to exit and lose your changes?", windowsuiMockupControl.PendingChangesCount), "Unsaved changes", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (dialogResult != DialogResult.Yes)
-                {
-                    e.Cancel = true;
-                }
-                else
-                {
-                    windowsuiMockupControl.AbortChanges();
-                }
-            }
-        }
-
-        private void ButtonChangesDiscard_Click(object sender, EventArgs e)
-        {
-            if (IsDirty)
-            {
-                windowsuiMockupControl.AbortChanges();
-            }
-            UpdateDirtyIndicators();
-        }
-
-        private void ButtonChangesApply_Click(object sender, EventArgs e)
-        {
-            if (IsDirty)
-            {
-                windowsuiMockupControl.AcceptChanges();
-                MessageBox.Show("Settings applied.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            UpdateDirtyIndicators();
-        }
-
         private void labelChangesUnsaved_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             PendingChangesForm editPendingChanges = new PendingChangesForm(this, windowsuiMockupControl.SettingUpdatesPending);
@@ -782,8 +886,35 @@ namespace TotalWinUICustomization
             }
         }
 
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (IsDirty)
+            {
+                var dialogResult = MessageBox.Show(string.Format("You have {0} unsaved changes. Are you sure you want to exit and lose your changes?", windowsuiMockupControl.PendingChangesCount), "Unsaved changes", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (dialogResult != DialogResult.Yes)
+                {
+                    e.Cancel = true;
+                }
+                else
+                {
+                    windowsuiMockupControl.AbortChanges();
+                }
+            }
+        }
 
         #endregion
 
+    }
+
+    public class CurrentFontState
+    {
+        public Font Font { get; set; }
+        public bool HasFontColor { get; set; }
+        public Color FontColor { get; set; }
+
+        public int FontSelectedIndex { get; set; }
+        public int FontSizeSelectedIndex { get; set; }
+        public bool BoldChecked { get; set; }
+        public bool ItalicChecked { get; set; }
     }
 }

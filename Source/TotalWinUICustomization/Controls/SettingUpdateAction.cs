@@ -78,11 +78,11 @@ namespace TotalWinUICustomization.Controls
             Display = ToString();
         }
 
-        public bool ApplyAction()
+        public bool ApplyAction(Graphics g)
         {
             if (FontValue != null)
             {
-                RegistryHelper.SetWindowsFont(Setting, FontValue);
+                RegistryHelper.SetWindowsFont(Setting, FontValue, g);
                 return true;
             }
             else if (ColorValue != Color.Empty)
@@ -156,7 +156,7 @@ namespace TotalWinUICustomization.Controls
                 {
                     fontStyleString += " 𝐼𝑡𝑎𝑙𝑖𝑐";
                 }
-                valueString = $"{FontValue.Name.Trim()}{fontStyleString}, {FontValue.Size}pt".Trim();
+                valueString = $"{FontValue.Name.Trim()}{fontStyleString}, {FontValue.SizeInPoints}pt".Trim();
             }
             else if (ColorValue != Color.Empty)
             {

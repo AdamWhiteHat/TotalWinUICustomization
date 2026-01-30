@@ -53,11 +53,11 @@ namespace TotalWinUICustomization
             this.checkBoxFontBold = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
             this.panelFontPropertyLeft = new System.Windows.Forms.Panel();
+            this.font_ClickInterceptorBox = new OverlayControlsLibrary.ClickInterceptorBox();
             this.label2 = new System.Windows.Forms.Label();
             this.comboBoxFontPropertySelection = new System.Windows.Forms.ComboBox();
             this.panelFontProperty = new System.Windows.Forms.Panel();
             this.panelInnerFontProperty = new System.Windows.Forms.Panel();
-            this.font_ClickInterceptorBox = new OverlayControlsLibrary.ClickInterceptorBox();
             this.panelFontPropertyColor = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
             this.buttonFontColor = new System.Windows.Forms.Button();
@@ -67,12 +67,12 @@ namespace TotalWinUICustomization
             this.colorPickerDialog = new System.Windows.Forms.ColorDialog();
             this.fontPickerDialog = new System.Windows.Forms.FontDialog();
             this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
-            this.windowsuiMockupControl = new TotalWinUICustomization.WindowsUIMockupControl();
             this.flowLayoutPanelBottom = new System.Windows.Forms.FlowLayoutPanel();
             this.panelApplyChanges = new System.Windows.Forms.Panel();
             this.labelChangesUnsaved = new System.Windows.Forms.LinkLabel();
             this.buttonChangesDiscard = new System.Windows.Forms.Button();
             this.buttonChangesApply = new System.Windows.Forms.Button();
+            this.windowsuiMockupControl = new TotalWinUICustomization.WindowsUIMockupControl();
             this.panelColorPropertyLeft.SuspendLayout();
             this.flowLayoutPanelColor.SuspendLayout();
             this.panelColorPropertyRight.SuspendLayout();
@@ -350,6 +350,15 @@ namespace TotalWinUICustomization
             this.panelFontPropertyLeft.Size = new System.Drawing.Size(288, 45);
             this.panelFontPropertyLeft.TabIndex = 20;
             // 
+            // font_ClickInterceptorBox
+            // 
+            this.font_ClickInterceptorBox.CausesValidation = false;
+            this.font_ClickInterceptorBox.Location = new System.Drawing.Point(0, 17);
+            this.font_ClickInterceptorBox.Name = "font_ClickInterceptorBox";
+            this.font_ClickInterceptorBox.Size = new System.Drawing.Size(340, 21);
+            this.font_ClickInterceptorBox.TabIndex = 7;
+            this.font_ClickInterceptorBox.TabStop = false;
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -377,6 +386,7 @@ namespace TotalWinUICustomization
             // panelFontProperty
             // 
             this.panelFontProperty.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panelFontProperty.Controls.Add(this.font_ClickInterceptorBox);
             this.panelFontProperty.Controls.Add(this.panelInnerFontProperty);
             this.panelFontProperty.Controls.Add(this.thatchedPanel1);
             this.panelFontProperty.Location = new System.Drawing.Point(0, 45);
@@ -387,7 +397,6 @@ namespace TotalWinUICustomization
             // 
             // panelInnerFontProperty
             // 
-            this.panelInnerFontProperty.Controls.Add(this.font_ClickInterceptorBox);
             this.panelInnerFontProperty.Controls.Add(this.panelFontPropertyLeft);
             this.panelInnerFontProperty.Controls.Add(this.panelFontPropertyRight);
             this.panelInnerFontProperty.Controls.Add(this.panelFontPropertyColor);
@@ -396,15 +405,6 @@ namespace TotalWinUICustomization
             this.panelInnerFontProperty.Name = "panelInnerFontProperty";
             this.panelInnerFontProperty.Size = new System.Drawing.Size(454, 45);
             this.panelInnerFontProperty.TabIndex = 22;
-            // 
-            // font_ClickInterceptorBox
-            // 
-            this.font_ClickInterceptorBox.CausesValidation = false;
-            this.font_ClickInterceptorBox.Location = new System.Drawing.Point(1, 17);
-            this.font_ClickInterceptorBox.Name = "font_ClickInterceptorBox";
-            this.font_ClickInterceptorBox.Size = new System.Drawing.Size(340, 21);
-            this.font_ClickInterceptorBox.TabIndex = 7;
-            this.font_ClickInterceptorBox.TabStop = false;
             // 
             // panelFontPropertyColor
             // 
@@ -504,49 +504,6 @@ namespace TotalWinUICustomization
             this.flowLayoutPanelMain.Size = new System.Drawing.Size(570, 518);
             this.flowLayoutPanelMain.TabIndex = 4;
             // 
-            // windowsuiMockupControl
-            // 
-            this.windowsuiMockupControl.ActiveBorderColor = System.Drawing.Color.Gray;
-            this.windowsuiMockupControl.ActiveTitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(180)))), ((int)(((byte)(209)))));
-            this.windowsuiMockupControl.ActiveTitleGradientColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(209)))), ((int)(((byte)(234)))));
-            this.windowsuiMockupControl.ActiveTitleTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.windowsuiMockupControl.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.windowsuiMockupControl.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
-            this.windowsuiMockupControl.BackColor = System.Drawing.SystemColors.Desktop;
-            this.windowsuiMockupControl.ButtonFaceColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.windowsuiMockupControl.ButtonTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.windowsuiMockupControl.CaptionFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.World);
-            this.windowsuiMockupControl.DesktopBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.windowsuiMockupControl.GrayTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.windowsuiMockupControl.HilightColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
-            this.windowsuiMockupControl.HilightTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.windowsuiMockupControl.HotTrackingColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
-            this.windowsuiMockupControl.IconFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
-            this.windowsuiMockupControl.InactiveBorderColor = System.Drawing.Color.Silver;
-            this.windowsuiMockupControl.InactiveTitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(205)))), ((int)(((byte)(219)))));
-            this.windowsuiMockupControl.InactiveTitleGradientColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(228)))), ((int)(((byte)(242)))));
-            this.windowsuiMockupControl.InactiveTitleTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.windowsuiMockupControl.InfoTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.windowsuiMockupControl.InfoWindowColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.windowsuiMockupControl.Location = new System.Drawing.Point(0, 0);
-            this.windowsuiMockupControl.Margin = new System.Windows.Forms.Padding(0);
-            this.windowsuiMockupControl.MaximumSize = new System.Drawing.Size(489, 321);
-            this.windowsuiMockupControl.MenuBarColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.windowsuiMockupControl.MenuFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
-            this.windowsuiMockupControl.MenuHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(153)))), ((int)(((byte)(255)))));
-            this.windowsuiMockupControl.MenuTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.windowsuiMockupControl.MessageFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
-            this.windowsuiMockupControl.MinimumSize = new System.Drawing.Size(570, 370);
-            this.windowsuiMockupControl.Name = "windowsuiMockupControl";
-            this.windowsuiMockupControl.ScrollbarColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.windowsuiMockupControl.Size = new System.Drawing.Size(570, 370);
-            this.windowsuiMockupControl.SmCaptionFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
-            this.windowsuiMockupControl.StatusFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World, ((byte)(0)));
-            this.windowsuiMockupControl.TabIndex = 1;
-            this.windowsuiMockupControl.WindowColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.windowsuiMockupControl.WindowFrameColor = System.Drawing.Color.Black;
-            this.windowsuiMockupControl.WindowTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            // 
             // flowLayoutPanelBottom
             // 
             this.flowLayoutPanelBottom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -610,6 +567,49 @@ namespace TotalWinUICustomization
             this.buttonChangesApply.TabIndex = 0;
             this.buttonChangesApply.Text = "   Apply changes...";
             this.buttonChangesApply.UseVisualStyleBackColor = false;
+            // 
+            // windowsuiMockupControl
+            // 
+            this.windowsuiMockupControl.ActiveBorderColor = System.Drawing.Color.Gray;
+            this.windowsuiMockupControl.ActiveTitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(180)))), ((int)(((byte)(209)))));
+            this.windowsuiMockupControl.ActiveTitleGradientColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(209)))), ((int)(((byte)(234)))));
+            this.windowsuiMockupControl.ActiveTitleTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.windowsuiMockupControl.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.windowsuiMockupControl.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
+            this.windowsuiMockupControl.BackColor = System.Drawing.SystemColors.Desktop;
+            this.windowsuiMockupControl.ButtonFaceColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.windowsuiMockupControl.ButtonTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.windowsuiMockupControl.CaptionFont = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World, ((byte)(0)));
+            this.windowsuiMockupControl.DesktopBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.windowsuiMockupControl.GrayTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.windowsuiMockupControl.HilightColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(212)))));
+            this.windowsuiMockupControl.HilightTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.windowsuiMockupControl.HotTrackingColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
+            this.windowsuiMockupControl.IconFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
+            this.windowsuiMockupControl.InactiveBorderColor = System.Drawing.Color.Silver;
+            this.windowsuiMockupControl.InactiveTitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(205)))), ((int)(((byte)(219)))));
+            this.windowsuiMockupControl.InactiveTitleGradientColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(228)))), ((int)(((byte)(242)))));
+            this.windowsuiMockupControl.InactiveTitleTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.windowsuiMockupControl.InfoTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.windowsuiMockupControl.InfoWindowColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(225)))));
+            this.windowsuiMockupControl.Location = new System.Drawing.Point(0, 0);
+            this.windowsuiMockupControl.Margin = new System.Windows.Forms.Padding(0);
+            this.windowsuiMockupControl.MaximumSize = new System.Drawing.Size(489, 321);
+            this.windowsuiMockupControl.MenuBarColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.windowsuiMockupControl.MenuFont = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.World);
+            this.windowsuiMockupControl.MenuHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(212)))));
+            this.windowsuiMockupControl.MenuTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.windowsuiMockupControl.MessageFont = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
+            this.windowsuiMockupControl.MinimumSize = new System.Drawing.Size(570, 370);
+            this.windowsuiMockupControl.Name = "windowsuiMockupControl";
+            this.windowsuiMockupControl.ScrollbarColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this.windowsuiMockupControl.Size = new System.Drawing.Size(570, 370);
+            this.windowsuiMockupControl.SmCaptionFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
+            this.windowsuiMockupControl.StatusFont = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World, ((byte)(0)));
+            this.windowsuiMockupControl.TabIndex = 1;
+            this.windowsuiMockupControl.WindowColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.windowsuiMockupControl.WindowFrameColor = System.Drawing.Color.Black;
+            this.windowsuiMockupControl.WindowTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             // 
             // MainForm
             // 

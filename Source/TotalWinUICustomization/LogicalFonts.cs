@@ -10,10 +10,11 @@ namespace TotalWinUICustomization
 {
     public static class LogicalFonts
     {
-        public static byte[] ToBytes(Font font)
+        public static byte[] ToBytes(Font font, Graphics g)
         {
             var logicalFont = new LOGFONT();
-            font.ToLogFont(logicalFont);
+
+            font.ToLogFont(logicalFont, g);
 
             return new byte[][]
             {
@@ -39,7 +40,7 @@ namespace TotalWinUICustomization
             .ToArray();
         }
 
-        public static Font FromBytes(byte[] fontBytes)
+        public static Font FromBytes(byte[] fontBytes, Graphics g)
         {
             LOGFONT lOGFONT = new LOGFONT();
             lOGFONT.lfHeight = BitConverter.ToInt32(fontBytes, 0);
@@ -65,7 +66,11 @@ namespace TotalWinUICustomization
             }
             lOGFONT.lfFaceName = Encoding.Unicode.GetString(array).TrimEnd(default(char));
 
-            Font result = Font.FromLogFont(lOGFONT);
+
+            IntPtr dc = g.GetHdc();
+            Font result = Font.FromLogFont(lOGFONT, dc);
+            g.ReleaseHdc(dc);
+
             return result;
         }
     }

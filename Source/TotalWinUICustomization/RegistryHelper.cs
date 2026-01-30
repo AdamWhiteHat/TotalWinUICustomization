@@ -35,20 +35,36 @@ namespace TotalWinUICustomization
         public static string Key_Themes = @"Software\Microsoft\Windows\CurrentVersion\Themes";
         private static string Value_CurrentTheme = "CurrentTheme"; // @"C:\Users\CodeNinja\AppData\Local\Microsoft\Windows\Themes\Custom.theme"
 
-        public static void SetWindowsFont(WindowsUiElements fontGroup, Font font)
+        public static void SetWindowsFont(WindowsUiElements fontGroup, Font font, Graphics g)
         {
             string fontKey = Enum.GetName(typeof(WindowsUiElements), fontGroup);
-            SetBytesValue(Key_WindowMetrics, fontKey, LogicalFonts.ToBytes(font));
+            SetBytesValue(Key_WindowMetrics, fontKey, LogicalFonts.ToBytes(font, g));
         }
 
-        public static Font GetWindowsFont(WindowsUiElements fontGroup)
+        public static Font GetWindowsFont(WindowsUiElements fontGroup, Graphics g)
         {
             string fontKey = Enum.GetName(typeof(WindowsUiElements), fontGroup);
 
             byte[] bytes = GetBytesValue(Key_WindowMetrics, fontKey);
             if (bytes != null)
-            {
-                Font result = LogicalFonts.FromBytes(bytes);
+            {                
+                Font result = LogicalFonts.FromBytes(bytes, g);
+
+                byte[] checkBytes = LogicalFonts.ToBytes(result, g);
+
+                if(bytes.Length != checkBytes.Length)
+                {
+                    throw new Exception($"{nameof(GetWindowsFont)} failed to get registry key value for {Enum.GetName(typeof(WindowsUiElements), fontGroup)}. Length mismatch.");
+                }
+
+                foreach(var index in Enumerable.Range(0, bytes.Length))
+                {
+                    if(bytes[index] != checkBytes[index])
+                    {
+                        throw new Exception($"{nameof(GetWindowsFont)} failed to get registry key value for {Enum.GetName(typeof(WindowsUiElements), fontGroup)}. Content mismatch at byte index {index}.");
+                    }
+                }
+
                 return result;
             }
             throw new Exception($"{nameof(GetWindowsFont)} failed to get registry key value for {Enum.GetName(typeof(WindowsUiElements), fontGroup)}.");

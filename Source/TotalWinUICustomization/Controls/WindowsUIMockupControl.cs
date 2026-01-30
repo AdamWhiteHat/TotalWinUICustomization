@@ -677,6 +677,8 @@ namespace TotalWinUICustomization
             RefreshSettingsFromRegistry(AllWindowsUiElements);
         }
 
+        #region Pending Update Methods
+
         /// <summary>
         ///  Removes any pending updates that modify the given setting, if it exists.
         ///  Returns true if a corresponding update for the setting was found, false otherwise.
@@ -737,8 +739,11 @@ namespace TotalWinUICustomization
             {
                 if (Types.Helpers.SystemFonts.Contains(item))
                 {
-                    Font font = RegistryHelper.GetWindowsFont(item);
-                    UpdateControlFont(item, font, true);
+                    using (Graphics g = this.CreateGraphics())
+                    {
+                        Font font = RegistryHelper.GetWindowsFont(item, g);
+                        UpdateControlFont(item, font, true);
+                    }
                 }
                 else
                 {
@@ -747,6 +752,8 @@ namespace TotalWinUICustomization
                 }
             }
         }
+
+        #endregion
 
         #endregion
 
@@ -866,7 +873,11 @@ namespace TotalWinUICustomization
         {
             if (Types.Helpers.SystemFonts.Contains(setting))
             {
-                Font font = RegistryHelper.GetWindowsFont(setting);
+                Font font;
+                using (Graphics g = this.CreateGraphics())
+                {
+                    font = RegistryHelper.GetWindowsFont(setting, g);
+                }
                 return font;
             }
             else
@@ -1034,16 +1045,20 @@ namespace TotalWinUICustomization
         {
             List<SettingUpdateAction> successfullyApplied = new List<SettingUpdateAction>();
 
-            string themeFile = ThemeHelper.CreateThemeFile(this);            
+            string themeFile = ThemeHelper.CreateThemeFile(this);
+
+            Graphics g = this.CreateGraphics();
 
             // Apply settings, keeping track of which return success
             foreach (var updateAction in SettingUpdatesPending)
             {
-                if (updateAction.ApplyAction())
+                if (updateAction.ApplyAction(g))
                 {
                     successfullyApplied.Add(updateAction);
                 }
             }
+
+            g.Dispose();
 
             ThemeHelper.InstallThemeFile(themeFile);
 
